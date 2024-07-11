@@ -1,0 +1,1305 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 5 - R Code &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_5/group3_lab5_r';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 5 - Julia Code" href="group3_lab5_julia.html" />
+    <link rel="prev" title="Lab 5 - Python Code" href="group3_lab5_python.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Intro to Partialling-out and Lasso Cross-validation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_2_md.html">2. Multicollinearity, Precision Adjustment, and DAGs for Good and Bad controls</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_r.html">Lab 2 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_julia.html">Lab 2 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_julia.html">Lab 3 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_4_md.html">4. Bootstraping and Causal Forest Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_python.html">Lab 4 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_r.html">Lab 4 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_julia.html">Lab 4 - Julia Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_5_md.html">5. Double Machine Learning</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="group3_lab5_python.html">Lab 5 - Python Code</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lab 5 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group3_lab5_julia.html">Lab 5 - Julia Code</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_5/group3_lab5_r.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_5/group3_lab5_r.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 5 - R Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replication-and-data-analysis">Replication and Data analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptives">1. Descriptives</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-table-vale">1.1. Descriptive table (vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-graphs-vale">1.2. Descriptive graphs (vale)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-analysis">2. Linear Regression analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-1-y-beta-0-beta-1-t-epsilon-vale">2.1. Regression 1: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \epsilon\)</span>   (Vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-2-y-beta-0-beta-1-t-beta-2-x-epsilon-vale">2.2. Regression 2: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \beta_2 X + \epsilon\)</span>  (vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.3.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.4.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-methods-dml">3. Non-Linear Methods DML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-regression-tree">DML function for Regression tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-boosting-trees">DML function for Boosting Trees</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-lasso-and-random-forest">DML function for Lasso and Random Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">3.1. Lasso</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-trees">3.2. Regression Trees</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting-trees">3.3. Boosting Trees</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">3.4. Random Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#table-and-coefficient-plot">3.5. Table and Coefficient plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#table">Table</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-plot">Coefficient Plot</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model">3.6. Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-5-r-code">
+<h1>Lab 5 - R Code<a class="headerlink" href="#lab-5-r-code" title="Link to this heading">#</a></h1>
+<p>Authors: Valerie Dube, Erzo Garay, Juan Marcos Guerrero y Matias Villalba</p>
+<section id="replication-and-data-analysis">
+<h2>Replication and Data analysis<a class="headerlink" href="#replication-and-data-analysis" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">hdm</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">xtable</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">randomForest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">rpart</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">nnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gbm</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">rpart.plot</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">keras</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">xtable</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">randomForest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>randomForest 4.7-1.1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Type rfNews() to see new features/changes/bug fixes.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded glmnet 4.1-8
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded gbm 2.2.2
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This version of gbm is no longer under development. Consider transitioning to gbm3, https://github.com/gbm-developers/gbm3
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;ggplot2&#39;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following object is masked from &#39;package:randomForest&#39;:
+
+    margin
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ls</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">WeightIt</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">cobalt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> cobalt (Version 4.5.5, Build Date: 2024-04-02)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="descriptives">
+<h3>1. Descriptives<a class="headerlink" href="#descriptives" title="Link to this heading">#</a></h3>
+<section id="descriptive-table-vale">
+<h4>1.1. Descriptive table (vale)<a class="headerlink" href="#descriptive-table-vale" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data and see first observations</span>
+<span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;../../data/processed_esti.csv&quot;</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in file(file, &quot;rt&quot;):
+&quot;cannot open file &#39;../../data/processed_esti.csv&#39;: No such file or directory&quot;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">):</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">connection</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;../../data/processed_esti.csv&quot;</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">header</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">sep</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="n">quote</span><span class="p">,</span> 
+ <span class="o">.</span>     <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">fill</span><span class="p">,</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;data.frame&#39;:	1739 obs. of  15 variables:
+ $ y                       : int  1 0 0 0 1 1 1 0 0 1 ...
+ $ w                       : int  1 0 1 0 1 1 1 0 1 1 ...
+ $ gender_female           : int  0 0 0 1 1 0 1 0 0 1 ...
+ $ gender_male             : int  1 1 1 0 0 1 0 1 1 0 ...
+ $ gender_transgender      : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ethnicgrp_asian         : int  0 0 0 0 1 0 0 0 0 0 ...
+ $ ethnicgrp_black         : int  0 0 1 0 0 0 0 1 0 1 ...
+ $ ethnicgrp_mixed_multiple: int  1 0 0 0 0 0 0 0 0 0 ...
+ $ ethnicgrp_other         : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ethnicgrp_white         : int  0 1 0 1 0 1 1 0 1 0 ...
+ $ partners1               : int  0 0 0 1 0 0 0 0 1 0 ...
+ $ postlaunch              : int  1 0 1 0 1 1 0 1 0 0 ...
+ $ msm                     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ age                     : int  27 19 26 20 24 24 24 21 27 21 ...
+ $ imd_decile              : int  5 6 4 2 3 2 4 2 2 6 ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">by</span><span class="p">(</span><span class="n">data</span><span class="p">[,</span><span class="w"> </span><span class="o">!</span><span class="nf">names</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="s">&#39;y&#39;</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data$w: 0
+       w     gender_female     gender_male     gender_transgender
+ Min.   :0   Min.   :0.0000   Min.   :0.0000   Min.   :0.000000  
+ 1st Qu.:0   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.000000  
+ Median :0   Median :1.0000   Median :0.0000   Median :0.000000  
+ Mean   :0   Mean   :0.5807   Mean   :0.4181   Mean   :0.001223  
+ 3rd Qu.:0   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.000000  
+ Max.   :0   Max.   :1.0000   Max.   :1.0000   Max.   :1.000000  
+ ethnicgrp_asian   ethnicgrp_black   ethnicgrp_mixed_multiple ethnicgrp_other  
+ Min.   :0.00000   Min.   :0.00000   Min.   :0.00000          Min.   :0.00000  
+ 1st Qu.:0.00000   1st Qu.:0.00000   1st Qu.:0.00000          1st Qu.:0.00000  
+ Median :0.00000   Median :0.00000   Median :0.00000          Median :0.00000  
+ Mean   :0.05501   Mean   :0.09291   Mean   :0.09291          Mean   :0.01711  
+ 3rd Qu.:0.00000   3rd Qu.:0.00000   3rd Qu.:0.00000          3rd Qu.:0.00000  
+ Max.   :1.00000   Max.   :1.00000   Max.   :1.00000          Max.   :1.00000  
+ ethnicgrp_white    partners1        postlaunch          msm        
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+ Median :1.0000   Median :0.0000   Median :0.0000   Median :0.0000  
+ Mean   :0.7421   Mean   :0.2922   Mean   :0.4731   Mean   :0.1381  
+ 3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.0000  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+      age          imd_decile   
+ Min.   :16.00   Min.   :1.000  
+ 1st Qu.:20.00   1st Qu.:2.000  
+ Median :23.00   Median :3.000  
+ Mean   :23.05   Mean   :3.484  
+ 3rd Qu.:26.00   3rd Qu.:4.000  
+ Max.   :30.00   Max.   :9.000  
+------------------------------------------------------------ 
+data$w: 1
+       w     gender_female     gender_male     gender_transgender
+ Min.   :1   Min.   :0.0000   Min.   :0.0000   Min.   :0.000000  
+ 1st Qu.:1   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.000000  
+ Median :1   Median :1.0000   Median :0.0000   Median :0.000000  
+ Mean   :1   Mean   :0.5874   Mean   :0.4093   Mean   :0.003257  
+ 3rd Qu.:1   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.000000  
+ Max.   :1   Max.   :1.0000   Max.   :1.0000   Max.   :1.000000  
+ ethnicgrp_asian   ethnicgrp_black   ethnicgrp_mixed_multiple
+ Min.   :0.00000   Min.   :0.00000   Min.   :0.00000         
+ 1st Qu.:0.00000   1st Qu.:0.00000   1st Qu.:0.00000         
+ Median :0.00000   Median :0.00000   Median :0.00000         
+ Mean   :0.07166   Mean   :0.08035   Mean   :0.08469         
+ 3rd Qu.:0.00000   3rd Qu.:0.00000   3rd Qu.:0.00000         
+ Max.   :1.00000   Max.   :1.00000   Max.   :1.00000         
+ ethnicgrp_other    ethnicgrp_white    partners1        postlaunch    
+ Min.   :0.000000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:0.000000   1st Qu.:1.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+ Median :0.000000   Median :1.0000   Median :0.0000   Median :1.0000  
+ Mean   :0.009772   Mean   :0.7535   Mean   :0.3008   Mean   :0.5559  
+ 3rd Qu.:0.000000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+ Max.   :1.000000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+      msm              age          imd_decile  
+ Min.   :0.0000   Min.   :16.00   Min.   :1.00  
+ 1st Qu.:0.0000   1st Qu.:20.00   1st Qu.:2.00  
+ Median :0.0000   Median :23.00   Median :3.00  
+ Mean   :0.1238   Mean   :23.16   Mean   :3.46  
+ 3rd Qu.:0.0000   3rd Qu.:26.00   3rd Qu.:4.00  
+ Max.   :1.0000   Max.   :30.00   Max.   :9.00  
+</pre></div>
+</div>
+</div>
+</div>
+<p>The observations for each variable are generally balanced between the control and treatment groups. Additionally, most participants are white, with an average age of approximately 23. The mean IMD decile scores are around 3.5, indicating that participants in both groups tend to come from more deprived areas.</p>
+</section>
+<section id="descriptive-graphs-vale">
+<h4>1.2. Descriptive graphs (vale)<a class="headerlink" href="#descriptive-graphs-vale" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#Generating propensity score weights for the ATT</span>
+<span class="n">w.out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">WeightIt</span><span class="o">::</span><span class="nf">weightit</span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gender_male</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ethnicgrp_white</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">partners1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">imd_decile</span><span class="p">,</span>
+<span class="w">                            </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<span class="w">                            </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;glm&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="n">estimand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ATT&quot;</span><span class="p">)</span>
+
+<span class="nf">bal.tab</span><span class="p">(</span><span class="n">w.out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balance Measures
+                    Type Diff.Adj
+prop.score      Distance  -0.0025
+age              Contin.  -0.0009
+gender_male       Binary   0.0004
+ethnicgrp_white   Binary  -0.0001
+partners1         Binary  -0.0010
+imd_decile       Contin.   0.0021
+
+Effective sample sizes
+           Control Treated
+Unadjusted  818.       921
+Adjusted    815.66     921
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">bal.plot</span><span class="p">(</span><span class="n">w.out</span><span class="p">,</span><span class="w"> </span><span class="n">var.name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gender_male&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d35a06876dc825fc55e417a5a76763eeae1008bdcbe0c08dffd7d8e9491693ea.png" src="../../_images/d35a06876dc825fc55e417a5a76763eeae1008bdcbe0c08dffd7d8e9491693ea.png" />
+</div>
+</div>
+<p>As we saw in section 1.1., there is a similar percentage of males and females participants in each treatment group in the sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">bal.plot</span><span class="p">(</span><span class="n">w.out</span><span class="p">,</span><span class="w"> </span><span class="n">var.name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;partners1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9d81b29602ee32598081820c3c8f2ac93706688dd654ef2f6261f4206f28a04a.png" src="../../_images/9d81b29602ee32598081820c3c8f2ac93706688dd654ef2f6261f4206f28a04a.png" />
+</div>
+</div>
+<p>In a similar manner, we note an equal percentage of participants with 2 or more sexual partners as well as those with 1 sexual partner in the last 12 months from the beginning of the study, per treatment or control group.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">bal.plot</span><span class="p">(</span><span class="n">w.out</span><span class="p">,</span><span class="w"> </span><span class="n">var.name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;age&quot;</span><span class="p">)</span>
+<span class="nf">bal.plot</span><span class="p">(</span><span class="n">w.out</span><span class="p">,</span><span class="w"> </span><span class="n">var.name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;imd_decile&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b5b0e6cda3ca6c501bb8123ec01b3cb03028365dbdbedf2fca32220d1d646ceb.png" src="../../_images/b5b0e6cda3ca6c501bb8123ec01b3cb03028365dbdbedf2fca32220d1d646ceb.png" />
+<img alt="../../_images/c529d754e265ba70ce313302de0ede283371bbb20a1c445e4e990f67c7a9facf.png" src="../../_images/c529d754e265ba70ce313302de0ede283371bbb20a1c445e4e990f67c7a9facf.png" />
+</div>
+</div>
+<p>We can see a higher percentage of participants aged between 23 and 27 in the treatment group. Also, there is a higher perceptange of participants aged between 21 and 22 and 27 and 29 in the control group.</p>
+<p>In the case of the IMD decile, an index that measures poverty in the UK, we can see the same proportion of participants in each group.</p>
+</section>
+</section>
+<section id="linear-regression-analysis">
+<h3>2. Linear Regression analysis<a class="headerlink" href="#linear-regression-analysis" title="Link to this heading">#</a></h3>
+<section id="regression-1-y-beta-0-beta-1-t-epsilon-vale">
+<h4>2.1. Regression 1: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \epsilon\)</span>   (Vale)<a class="headerlink" href="#regression-1-y-beta-0-beta-1-t-epsilon-vale" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = y ~ w, data = data)
+
+Coefficients:
+(Intercept)            w  
+     0.2115       0.2652  
+</pre></div>
+</div>
+</div>
+</div>
+<p>We found that the adjusted R-squared is 0.076 and the ATE is approximately 0.27. This means that the treatment explains only 7.6% of the increase in the STI tests between the control and treatment groups. Additionally, receiving the treatment (i.e. being invited to use the internet-based sexual health service) increases, on average, the probability of taking an STI test by 26.5%.</p>
+</section>
+<section id="regression-2-y-beta-0-beta-1-t-beta-2-x-epsilon-vale">
+<h4>2.2. Regression 2: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \beta_2 X + \epsilon\)</span>  (vale)<a class="headerlink" href="#regression-2-y-beta-0-beta-1-t-beta-2-x-epsilon-vale" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gender_female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ethnicgrp_white</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ethnicgrp_black</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ethnicgrp_mixed_multiple</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">partners1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">postlaunch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">imd_decile</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">msm</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = y ~ w + age + gender_female + ethnicgrp_white + 
+    ethnicgrp_black + ethnicgrp_mixed_multiple + partners1 + 
+    postlaunch + imd_decile, data = data)
+
+Coefficients:
+             (Intercept)                         w                       age  
+               -0.163972                  0.255827                  0.012437  
+           gender_female           ethnicgrp_white           ethnicgrp_black  
+                0.092892                  0.049888                 -0.039745  
+ethnicgrp_mixed_multiple                 partners1                postlaunch  
+               -0.035726                 -0.059088                  0.077025  
+              imd_decile  
+               -0.004108  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compared to the previous regression, when we include additional variables (age, gender, ethnic group, number of sexual partners, the indicator for Randomised after SH:24 made publicly available, the indicator for men who have sex with men, and the socioeconomic level measured by deciles), we observe an increase in the adjusted R-squared of approximately 0.3 percentage points (from 0.1). Additionally, the ATE decreases by 0.003 percentage points, indicating a negative bias.</p>
+<p>It is worth mentioning that we omit gender_male to avoid collinearity with gender_female. Similarly, we exclude the less relevant ethnic group (i.e. the one with fewer observations) to prevent the same issue.</p>
+</section>
+<section id="id1">
+<h4>2.3.<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>We observe that the ATE using double lasso is akin to the OLS with confounders, along with the adjusted R-squared.</p>
+</section>
+<section id="id2">
+<h4>2.4.<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>In general, the three ATEs are very similar, but we consider that the models that include the cofounders (OLS with controls and DL) are better estimated.</p>
+</section>
+</section>
+<section id="non-linear-methods-dml">
+<h3>3. Non-Linear Methods DML<a class="headerlink" href="#non-linear-methods-dml" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="nf">ls</span><span class="p">())</span>
+<span class="n">DML</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">read.table</span><span class="p">(</span><span class="s">&quot;../../../data/processed_esti.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="bp">T</span><span class="w"> </span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">))</span>
+<span class="c1">#DML &lt;- as.data.frame(read.table(&quot;C:/Users/Erzo/Documents/GitHub/CausalAI-Course/data/processed_esti.csv&quot;, header=T ,sep=&quot;,&quot;))</span>
+
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">1234</span><span class="p">)</span>
+<span class="n">training</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">DML</span><span class="p">),</span><span class="w"> </span><span class="nf">nrow</span><span class="p">(</span><span class="n">DML</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="m">3</span><span class="o">/</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">replace</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">data_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">DML</span><span class="p">[</span><span class="n">training</span><span class="p">,]</span>
+<span class="n">data_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">DML</span><span class="p">[</span><span class="o">-</span><span class="n">training</span><span class="p">,]</span>
+<span class="n">Y_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_test</span><span class="o">$</span><span class="n">y</span>
+
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="m">1</span><span class="p">])</span><span class="w">         </span><span class="c1"># outcome: growth rate</span>
+<span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">         </span><span class="c1"># treatment: initial wealth</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">)])</span><span class="w"> </span><span class="c1"># controls: country characteristics</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dml-function-for-regression-tree">
+<h3>DML function for Regression tree<a class="headerlink" href="#dml-function-for-regression-tree" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">DML2.for.PLM.tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span><span class="w"> </span><span class="n">dreg</span><span class="p">,</span><span class="w"> </span><span class="n">yreg</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">nobs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nrow</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="w"> </span><span class="c1">#number of observations</span>
+<span class="w">  </span><span class="n">foldid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep.int</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nfold</span><span class="p">,</span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ceiling</span><span class="p">(</span><span class="n">nobs</span><span class="o">/</span><span class="n">nfold</span><span class="p">))[</span><span class="nf">sample.int</span><span class="p">(</span><span class="n">nobs</span><span class="p">)]</span><span class="w"> </span><span class="c1">#define folds indices</span>
+<span class="w">  </span><span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nobs</span><span class="p">,</span><span class="w"> </span><span class="n">foldid</span><span class="p">)</span><span class="w">  </span><span class="c1">#split observation indices into folds</span>
+<span class="w">  </span><span class="n">ytil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dtil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">nobs</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;fold: &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">for</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">I</span><span class="p">)){</span>
+<span class="w">    </span><span class="n">datitanow</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanoy</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanowpredict</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanoypredict</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">)]</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">dfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dreg</span><span class="p">(</span><span class="n">datitanoy</span><span class="p">)</span><span class="w"> </span><span class="c1">#take a fold out</span>
+<span class="w">    </span><span class="n">yfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">yreg</span><span class="p">(</span><span class="n">datitanow</span><span class="p">)</span><span class="w"> </span><span class="c1"># take a foldt out</span>
+<span class="w">    </span><span class="n">dhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">dfit</span><span class="p">,</span><span class="w"> </span><span class="n">datitanoypredict</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1">#predict the left-out fold</span>
+<span class="w">    </span><span class="n">yhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">yfit</span><span class="p">,</span><span class="w"> </span><span class="n">datitanowpredict</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1">#predict the left-out fold</span>
+<span class="w">    </span><span class="n">dtil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residual for the left-out fold</span>
+<span class="w">    </span><span class="n">ytil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residial for the left-out fold</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">rfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">ytil</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">dtil</span><span class="p">)</span><span class="w">    </span><span class="c1">#estimate the main parameter by regressing one residual on the other</span>
+<span class="w">  </span><span class="n">coef.est</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1">#extract coefficient</span>
+<span class="w">  </span><span class="n">se</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">])</span><span class="w"> </span><span class="c1">#record robust standard error</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;\ncoef (se) = %g (%g)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="p">))</span><span class="w">  </span><span class="c1">#printing output</span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">coef.est</span><span class="w"> </span><span class="o">=</span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="o">=</span><span class="n">se</span><span class="p">,</span><span class="w"> </span><span class="n">dtil</span><span class="o">=</span><span class="n">dtil</span><span class="p">,</span><span class="w"> </span><span class="n">ytil</span><span class="o">=</span><span class="n">ytil</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1">#save output and residuals</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dml-function-for-boosting-trees">
+<h3>DML function for Boosting Trees<a class="headerlink" href="#dml-function-for-boosting-trees" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">DML2.for.PLM.boosttree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span><span class="w"> </span><span class="n">dreg</span><span class="p">,</span><span class="w"> </span><span class="n">yreg</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">nobs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nrow</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="w"> </span><span class="c1">#number of observations</span>
+<span class="w">  </span><span class="n">foldid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep.int</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nfold</span><span class="p">,</span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ceiling</span><span class="p">(</span><span class="n">nobs</span><span class="o">/</span><span class="n">nfold</span><span class="p">))[</span><span class="nf">sample.int</span><span class="p">(</span><span class="n">nobs</span><span class="p">)]</span><span class="w"> </span><span class="c1">#define folds indices</span>
+<span class="w">  </span><span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nobs</span><span class="p">,</span><span class="w"> </span><span class="n">foldid</span><span class="p">)</span><span class="w">  </span><span class="c1">#split observation indices into folds</span>
+<span class="w">  </span><span class="n">ytil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dtil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">nobs</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;fold: &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">for</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">I</span><span class="p">)){</span>
+<span class="w">    </span><span class="n">datitanow</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanoy</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanowpredict</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">datitanoypredict</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">)]</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="n">dfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dreg</span><span class="p">(</span><span class="n">datitanoy</span><span class="p">)</span><span class="w"> </span><span class="c1">#take a fold out</span>
+<span class="w">    </span><span class="n">best.boostt</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gbm.perf</span><span class="p">(</span><span class="n">dfit</span><span class="p">,</span><span class="w"> </span><span class="n">plot.it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="c1"># cross-validation to determine when to stop</span>
+<span class="w">    </span><span class="n">yfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">yreg</span><span class="p">(</span><span class="n">datitanow</span><span class="p">)</span><span class="w"> </span><span class="c1"># take a foldt out</span>
+<span class="w">    </span><span class="n">best.boosty</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">gbm.perf</span><span class="p">(</span><span class="n">yfit</span><span class="p">,</span><span class="w"> </span><span class="n">plot.it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="c1"># cross-validation to determine when to stop</span>
+<span class="w">    </span><span class="n">dhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">dfit</span><span class="p">,</span><span class="w"> </span><span class="n">datitanoypredict</span><span class="p">,</span><span class="w"> </span><span class="n">n.trees</span><span class="o">=</span><span class="n">best.boostt</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">yhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">yfit</span><span class="p">,</span><span class="w"> </span><span class="n">datitanowpredict</span><span class="p">,</span><span class="w"> </span><span class="n">n.trees</span><span class="o">=</span><span class="n">best.boosty</span><span class="p">)</span><span class="w"> </span><span class="c1">#predict the left-out fold</span>
+<span class="w">    </span><span class="n">dtil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residual for the left-out fold</span>
+<span class="w">    </span><span class="n">ytil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residial for the left-out fold</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">rfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">ytil</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">dtil</span><span class="p">)</span><span class="w">    </span><span class="c1">#estimate the main parameter by regressing one residual on the other</span>
+<span class="w">  </span><span class="n">coef.est</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1">#extract coefficient</span>
+<span class="w">  </span><span class="n">se</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">])</span><span class="w"> </span><span class="c1">#record robust standard error</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;\ncoef (se) = %g (%g)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="p">))</span><span class="w">  </span><span class="c1">#printing output</span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">coef.est</span><span class="w"> </span><span class="o">=</span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="o">=</span><span class="n">se</span><span class="p">,</span><span class="w"> </span><span class="n">dtil</span><span class="o">=</span><span class="n">dtil</span><span class="p">,</span><span class="w"> </span><span class="n">ytil</span><span class="o">=</span><span class="n">ytil</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1">#save output and residuals</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dml-function-for-lasso-and-random-forest">
+<h3>DML function for Lasso and Random Forest<a class="headerlink" href="#dml-function-for-lasso-and-random-forest" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">DML2.for.PLM</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">dreg</span><span class="p">,</span><span class="w"> </span><span class="n">yreg</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">nobs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nrow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="c1">#number of observations</span>
+<span class="w">  </span><span class="n">foldid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep.int</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nfold</span><span class="p">,</span><span class="n">times</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ceiling</span><span class="p">(</span><span class="n">nobs</span><span class="o">/</span><span class="n">nfold</span><span class="p">))[</span><span class="nf">sample.int</span><span class="p">(</span><span class="n">nobs</span><span class="p">)]</span><span class="w"> </span><span class="c1">#define folds indices</span>
+<span class="w">  </span><span class="n">I</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">nobs</span><span class="p">,</span><span class="w"> </span><span class="n">foldid</span><span class="p">)</span><span class="w">  </span><span class="c1">#split observation indices into folds</span>
+<span class="w">  </span><span class="n">ytil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dtil</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">nobs</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="s">&quot;fold: &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">for</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">I</span><span class="p">)){</span>
+<span class="w">    </span><span class="n">dfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dreg</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],],</span><span class="w"> </span><span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]])</span><span class="w"> </span><span class="c1">#take a fold out</span>
+<span class="w">    </span><span class="n">yfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">yreg</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],],</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]])</span><span class="w"> </span><span class="c1"># take a foldt out</span>
+<span class="w">    </span><span class="n">dhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">dfit</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],],</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">#predict the left-out fold</span>
+<span class="w">    </span><span class="n">yhat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">yfit</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],],</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">#predict the left-out fold</span>
+<span class="w">    </span><span class="n">dtil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">dhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residual for the left-out fold</span>
+<span class="w">    </span><span class="n">ytil</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yhat</span><span class="p">)</span><span class="w"> </span><span class="c1">#record residial for the left-out fold</span>
+<span class="w">    </span><span class="nf">cat</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">rfit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">ytil</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">dtil</span><span class="p">)</span><span class="w">    </span><span class="c1">#estimate the main parameter by regressing one residual on the other</span>
+<span class="w">  </span><span class="n">coef.est</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w">  </span><span class="c1">#extract coefficient</span>
+<span class="w">  </span><span class="n">se</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">rfit</span><span class="p">)[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">])</span><span class="w"> </span><span class="c1">#record robust standard error</span>
+<span class="w">  </span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;\ncoef (se) = %g (%g)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="p">))</span><span class="w">  </span><span class="c1">#printing output</span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">coef.est</span><span class="w"> </span><span class="o">=</span><span class="n">coef.est</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="o">=</span><span class="n">se</span><span class="p">,</span><span class="w"> </span><span class="n">dtil</span><span class="o">=</span><span class="n">dtil</span><span class="p">,</span><span class="w"> </span><span class="n">ytil</span><span class="o">=</span><span class="n">ytil</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1">#save output and residuals</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="lasso">
+<h4>3.1. Lasso<a class="headerlink" href="#lasso" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;\nDML with Lasso \n&quot;</span><span class="p">))</span>
+<span class="n">dreg_lasso</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">d</span><span class="p">){</span><span class="w"> </span><span class="nf">rlasso</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">#ML method= lasso from hdm</span>
+<span class="n">yreg_lasso</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">){</span><span class="w"> </span><span class="nf">rlasso</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">#ML method = lasso from hdm</span>
+<span class="n">DML2.lasso</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">DML2.for.PLM</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">dreg_lasso</span><span class="p">,</span><span class="w"> </span><span class="n">yreg_lasso</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+
+<span class="n">coef_lasso</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">se_lasso</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">prRes_lassoD</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_lassoY</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_lasso</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">coef_lasso</span><span class="p">,</span><span class="n">se_lasso</span><span class="p">,</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_lassoD</span><span class="p">),</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_lassoY</span><span class="p">));</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">prRes_lasso</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span><span class="s">&quot;Standard Error&quot;</span><span class="p">,</span><span class="s">&quot;RMSE D&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">);</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">prRes_lasso</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lasso&quot;</span><span class="p">)</span>
+<span class="n">prRes_lasso</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DML with Lasso 
+fold: 
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">rlasso</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">post</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">):</span> <span class="n">no</span> <span class="n">se</span> <span class="n">pudo</span> <span class="n">encontrar</span> <span class="n">la</span> <span class="n">función</span> <span class="s2">&quot;rlasso&quot;</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">DML2</span><span class="o">.</span><span class="k">for</span><span class="o">.</span><span class="n">PLM</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dreg_lasso</span><span class="p">,</span> <span class="n">yreg_lasso</span><span class="p">,</span> <span class="n">nfold</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">dreg</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]],</span> <span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="n">I</span><span class="p">[[</span><span class="n">b</span><span class="p">]]])</span>   <span class="c1"># at line 8 of file &lt;text&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The message treatment providing information about Internet-accessed sexually transmitted
+infection testing predicts an increase in the probability that a person will get tested
+by 25.13 percentage points compared to receiving information about nearby clinics offering
+in-person testing.
+By providing both groups with information about testing, we mitigate the potential reminder
+effect, as both groups are equally prompted to consider testing. This approach allows us to
+isolate the impact of the type of information “Internet-accessed testing” versus “in-person clinic
+testing” on the likelihood of getting tested. Through randomized assignment, we establish causality
+rather than mere correlation, confirming that the intervention’s effect is driven by the unique
+advantages of Internet-accessed testing, such as increased privacy, reduced embarrassment, and
+convenience</p>
+</section>
+<section id="regression-trees">
+<h4>3.2. Regression Trees<a class="headerlink" href="#regression-trees" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tree</span>
+<span class="n">X_basic</span><span class="w"> </span><span class="o">&lt;-</span><span class="w">  </span><span class="s">&quot;gender_transgender + ethnicgrp_asian + ethnicgrp_black + ethnicgrp_mixed_multiple+ ethnicgrp_other + ethnicgrp_white + partners1 + postlaunch + msm + age+ imd_decile&quot;</span>
+<span class="n">y_form_tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">X_basic</span><span class="p">))</span>
+<span class="n">t_form_tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">X_basic</span><span class="p">))</span>
+<span class="n">yreg_tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">dataa</span><span class="p">){</span><span class="nf">rpart</span><span class="p">(</span><span class="n">y_form_tree</span><span class="p">,</span><span class="w"> </span><span class="n">dataa</span><span class="p">,</span><span class="w"> </span><span class="n">minbucket</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.001</span><span class="p">)}</span>
+<span class="n">treg_tree</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">dataa</span><span class="p">){</span><span class="nf">rpart</span><span class="p">(</span><span class="n">t_form_tree</span><span class="p">,</span><span class="w"> </span><span class="n">dataa</span><span class="p">,</span><span class="w"> </span><span class="n">minbucket</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">cp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.001</span><span class="p">)}</span>
+<span class="n">DML2.tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">DML2.for.PLM.tree</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span><span class="w"> </span><span class="n">treg_tree</span><span class="p">,</span><span class="w"> </span><span class="n">yreg_tree</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+
+<span class="n">coef_tree</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">se_tree</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">prRes_treeD</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_treeY</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_tree</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">coef_tree</span><span class="p">,</span><span class="n">se_tree</span><span class="p">,</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_treeD</span><span class="p">),</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_treeY</span><span class="p">));</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">prRes_tree</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span><span class="s">&quot;Standard Error&quot;</span><span class="p">,</span><span class="s">&quot;RMSE D&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">);</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">prRes_tree</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Regression Tree&quot;</span><span class="p">)</span>
+<span class="n">prRes_tree</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The message treatment providing information about Internet-accessed sexually transmitted
+infection testing predicts an increase in the probability that a person will get tested
+by 23.08 percentage points compared to receiving information about nearby clinics offering
+in-person testing.
+By providing both groups with information about testing, we mitigate the potential reminder
+effect, as both groups are equally prompted to consider testing. This approach allows us to
+isolate the impact of the type of information “Internet-accessed testing” versus “in-person clinic
+testing” on the likelihood of getting tested. Through randomized assignment, we establish causality
+rather than mere correlation, confirming that the intervention’s effect is driven by the unique
+advantages of Internet-accessed testing, such as increased privacy, reduced embarrassment, and
+convenience</p>
+</section>
+<section id="boosting-trees">
+<h4>3.3. Boosting Trees<a class="headerlink" href="#boosting-trees" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">yreg_treeboost</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">dataa</span><span class="p">){</span><span class="nf">gbm</span><span class="p">(</span><span class="n">y_form_tree</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">dataa</span><span class="p">,</span><span class="w"> </span><span class="n">distribution</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gaussian&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bag.fraction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">interaction.depth</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">n.trees</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">shrinkage</span><span class="o">=</span><span class="n">.</span><span class="m">01</span><span class="p">)}</span>
+<span class="n">treg_treeboost</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">dataa</span><span class="p">){</span><span class="nf">gbm</span><span class="p">(</span><span class="n">t_form_tree</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">dataa</span><span class="p">,</span><span class="w"> </span><span class="n">distribution</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gaussian&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bag.fraction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">interaction.depth</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">n.trees</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">shrinkage</span><span class="o">=</span><span class="n">.</span><span class="m">01</span><span class="p">)}</span>
+<span class="n">DML2.boosttree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">DML2.for.PLM.boosttree</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span><span class="w"> </span><span class="n">treg_treeboost</span><span class="p">,</span><span class="w"> </span><span class="n">yreg_treeboost</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+
+<span class="n">coef_boosttree</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">se_boosttree</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">prRes_boosttreeD</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_boosttreeY</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_boosttree</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">coef_boosttree</span><span class="p">,</span><span class="n">se_boosttree</span><span class="p">,</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_boosttreeD</span><span class="p">),</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_boosttreeY</span><span class="p">));</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">prRes_boosttree</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span><span class="s">&quot;Standard Error&quot;</span><span class="p">,</span><span class="s">&quot;RMSE D&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">);</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">prRes_boosttree</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Regression Tree&quot;</span><span class="p">)</span>
+<span class="n">prRes_boosttree</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The message treatment providing information about Internet-accessed sexually transmitted
+infection testing predicts an increase in the probability that a person will get tested
+by 25.28 percentage points compared to receiving information about nearby clinics offering
+in-person testing.
+By providing both groups with information about testing, we mitigate the potential reminder
+effect, as both groups are equally prompted to consider testing. This approach allows us to
+isolate the impact of the type of information “Internet-accessed testing” versus “in-person clinic
+testing” on the likelihood of getting tested. Through randomized assignment, we establish causality
+rather than mere correlation, confirming that the intervention’s effect is driven by the unique
+advantages of Internet-accessed testing, such as increased privacy, reduced embarrassment, and
+convenience</p>
+</section>
+<section id="random-forest">
+<h4>3.4. Random Forest<a class="headerlink" href="#random-forest" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;\nDML with Random Forest \n&quot;</span><span class="p">))</span>
+<span class="n">dreg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">d</span><span class="p">){</span><span class="w"> </span><span class="nf">randomForest</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">#ML method=Forest</span>
+<span class="n">yreg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">){</span><span class="w"> </span><span class="nf">randomForest</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">#ML method=Forest</span>
+<span class="n">DML2.RF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">DML2.for.PLM</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">dreg</span><span class="p">,</span><span class="w"> </span><span class="n">yreg</span><span class="p">,</span><span class="w"> </span><span class="n">nfold</span><span class="o">=</span><span class="m">10</span><span class="p">)</span>
+
+<span class="n">coef_RF</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">se_RF</span><span class="o">&lt;-</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">prRes_RFD</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_RFY</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes_RF</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">coef_RF</span><span class="p">,</span><span class="n">se_RF</span><span class="p">,</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_RFD</span><span class="p">),</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes_RFY</span><span class="p">));</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">prRes_RF</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span><span class="s">&quot;Standard Error&quot;</span><span class="p">,</span><span class="s">&quot;RMSE D&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">);</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">prRes_RF</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Random Forest&quot;</span><span class="p">)</span>
+<span class="n">prRes_RF</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The message treatment providing information about Internet-accessed sexually transmitted
+infection testing predicts an increase in the probability that a person will get tested
+by 24.14 percentage points compared to receiving information about nearby clinics offering
+in-person testing.
+By providing both groups with information about testing, we mitigate the potential reminder
+effect, as both groups are equally prompted to consider testing. This approach allows us to
+isolate the impact of the type of information “Internet-accessed testing” versus “in-person clinic
+testing” on the likelihood of getting tested. Through randomized assignment, we establish causality
+rather than mere correlation, confirming that the intervention’s effect is driven by the unique
+advantages of Internet-accessed testing, such as increased privacy, reduced embarrassment, and
+convenience</p>
+</section>
+<section id="table-and-coefficient-plot">
+<h4>3.5. Table and Coefficient plot<a class="headerlink" href="#table-and-coefficient-plot" title="Link to this heading">#</a></h4>
+<section id="table">
+<h5>Table<a class="headerlink" href="#table" title="Link to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">prRes.D</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">dtil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes.Y</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="nf">mean</span><span class="p">((</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">ytil</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">));</span>
+<span class="n">prRes</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes.D</span><span class="p">),</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">prRes.Y</span><span class="p">));</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">prRes</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;RMSE D&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">);</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">prRes</span><span class="p">)</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lasso&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Reg Tree&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Boost Tree&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Random Forest&quot;</span><span class="p">)</span>
+
+<span class="n">table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">)</span>
+<span class="c1"># Point Estimate</span>
+<span class="n">table</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">1</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">coef.est</span><span class="p">)</span>
+<span class="c1"># SE</span>
+<span class="n">table</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.lasso</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.tree</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.boosttree</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="n">table</span><span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">DML2.RF</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="c1"># RMSE Y</span>
+<span class="n">table</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">3</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">])</span>
+<span class="c1"># RMSE D</span>
+<span class="n">table</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">])</span>
+<span class="n">table</span><span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">prRes</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">4</span><span class="p">])</span>
+<span class="c1"># print results</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span><span class="s">&quot;Standard Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE Y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RMSE D&quot;</span><span class="p">)</span>
+<span class="nf">rownames</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lasso&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Reg Tree&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Boost Tree&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Random Forest&quot;</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="coefficient-plot">
+<h5>Coefficient Plot<a class="headerlink" href="#coefficient-plot" title="Link to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">table_ci</span><span class="o">&lt;-</span><span class="nf">as.data.frame</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Lower_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">2.576</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Upper_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2.576</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Lower_5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Upper_5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Lower_10</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1.645</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+<span class="n">table_ci</span><span class="o">$</span><span class="n">CI_Upper_10</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1.645</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table_ci</span><span class="o">$</span><span class="s">&#39;Standard Error&#39;</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">table_ci</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rownames</span><span class="p">(</span><span class="n">table_ci</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Estimate</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_errorbar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Lower_5</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Upper_5</span><span class="p">),</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_errorbar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Lower_10</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Upper_10</span><span class="p">),</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_errorbar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Lower_1</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CI_Upper_1</span><span class="p">),</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;green&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Estimated Coefficients with Confidence Intervals&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Method&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f1e706014b01d5cf109fa5d4bf838f65566108de0df7638cf3717951c1d8aa11.png" src="../../_images/f1e706014b01d5cf109fa5d4bf838f65566108de0df7638cf3717951c1d8aa11.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="model">
+<h4>3.6. Model<a class="headerlink" href="#model" title="Link to this heading">#</a></h4>
+<p>To choose the best model, we must compare the RMSEs of the outcome variable Y. In this case, the model with the lowest RMSE for Y
+is generated by Lasso (0.4716420), whereas the lowest for the treatment is generated by Boosting Trees (0.4983734). Therefore, DML
+could be employed with Y cleaned using Lasso and the treatment using Boosting Trees.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./labs\lab_5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="group3_lab5_python.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 5 - Python Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="group3_lab5_julia.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 5 - Julia Code</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#replication-and-data-analysis">Replication and Data analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptives">1. Descriptives</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-table-vale">1.1. Descriptive table (vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-graphs-vale">1.2. Descriptive graphs (vale)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-analysis">2. Linear Regression analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-1-y-beta-0-beta-1-t-epsilon-vale">2.1. Regression 1: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \epsilon\)</span>   (Vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-2-y-beta-0-beta-1-t-beta-2-x-epsilon-vale">2.2. Regression 2: <span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 T + \beta_2 X + \epsilon\)</span>  (vale)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.3.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.4.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-methods-dml">3. Non-Linear Methods DML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-regression-tree">DML function for Regression tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-boosting-trees">DML function for Boosting Trees</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dml-function-for-lasso-and-random-forest">DML function for Lasso and Random Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">3.1. Lasso</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-trees">3.2. Regression Trees</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boosting-trees">3.3. Boosting Trees</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">3.4. Random Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#table-and-coefficient-plot">3.5. Table and Coefficient plot</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#table">Table</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-plot">Coefficient Plot</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model">3.6. Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

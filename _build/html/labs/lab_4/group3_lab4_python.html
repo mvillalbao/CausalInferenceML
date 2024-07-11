@@ -1,0 +1,2027 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 4 - Python Code &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_4/group3_lab4_python';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 4 - R Code" href="group3_lab4_r.html" />
+    <link rel="prev" title="4. Bootstraping and Causal Forest Analysis" href="../lab_4_md.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Intro to Partialling-out and Lasso Cross-validation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_2_md.html">2. Multicollinearity, Precision Adjustment, and DAGs for Good and Bad controls</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_r.html">Lab 2 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_julia.html">Lab 2 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_julia.html">Lab 3 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_4_md.html">4. Bootstraping and Causal Forest Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lab 4 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group3_lab4_r.html">Lab 4 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group3_lab4_julia.html">Lab 4 - Julia Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_5_md.html">5. Double Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_python.html">Lab 5 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_r.html">Lab 5 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_julia.html">Lab 5 - Julia Code</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_4/group3_lab4_python.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_4/group3_lab4_python.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 4 - Python Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstraping">Bootstraping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-base">Data base</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-function">Bootstrap function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">Standard error</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t4-distribution">t4 distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-distribution">Female distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#black-distribution">Black distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest">Causal Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">1. Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest-estimation-and-results">2. Causal Forest estimation and results</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Causal Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ate">2.2. ATE</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#run-best-linear-predictor-analysis">2.3. Run best linear predictor analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#look-at-school-wise-heterogeneity">2.4. Look at school-wise heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-ignoring-clusters-how-do-the-results-change">2.5. Analysis ignoring clusters. How do the results change?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-without-fitting-the-propensity-score">2.6. Analysis without fitting the propensity score</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">2.7. The code plot six plots in the Make some plots section, so explain what you find there.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-school-level-covariates-by-treatment-heterogeneity">2.8. Visualize school-level covariates by treatment heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cate-by-school">2.9. CATE by school</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-4-python-code">
+<h1>Lab 4 - Python Code<a class="headerlink" href="#lab-4-python-code" title="Link to this heading">#</a></h1>
+<p>Authors: Valerie Dube, Erzo Garay, Juan Marcos Guerrero y Matias Villalba</p>
+<section id="bootstraping">
+<h2>Bootstraping<a class="headerlink" href="#bootstraping" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span><span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-base">
+<h2>Data base<a class="headerlink" href="#data-base" title="Link to this heading">#</a></h2>
+<p>The data is not created randomly; it is extracted from the “penn_jae.dat” database. This database is imported and filtered so that the variable “tg” becomes “t4,” which is a dummy variable identifying those treated with t4 versus individuals in the control group. Additionally, the logarithm of the variable “inuidur1” is created.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Penn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../../data/penn_jae.csv&#39;</span><span class="p">)</span>
+<span class="n">Penn</span><span class="o">=</span> <span class="n">Penn</span><span class="p">[(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">Penn</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">][[</span><span class="s1">&#39;tg&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">Penn</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tg&#39;</span><span class="p">:</span> <span class="s1">&#39;t4&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">Penn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;../../../data/penn_jae.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">Penn</span><span class="o">=</span> <span class="n">Penn</span><span class="p">[(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">Penn</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;tg&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">][[</span><span class="s1">&#39;tg&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py:873,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">869</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
+<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
+<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="c1"># Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">873</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">874</span>             <span class="n">handle</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">875</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">876</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">880</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="c1"># Binary mode</span>
+<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../../../data/penn_jae.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;dep1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;dep&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;dep2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;dep&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;log_inuidur1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;inuidur1&#39;</span><span class="p">])</span>
+<span class="n">Penn</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;dep&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    Unnamed: 0   abdt   t4  inuidur1  inuidur2  female  black  hispanic  \
+0            1  10824  0.0        18        18       0      0         0   
+3            4  10824  0.0         1         1       0      0         0   
+4            5  10747  0.0        27        27       0      0         0   
+11          12  10607  1.0         9         9       0      0         0   
+12          13  10831  0.0        27        27       0      0         0   
+
+    othrace  q1  ...  agelt35  agegt54  durable  nondurable  lusd  husd  muld  \
+0         0   0  ...        0        0        0           0     0     1     0   
+3         0   0  ...        0        0        0           0     1     0     0   
+4         0   0  ...        0        0        0           0     1     0     0   
+11        0   0  ...        1        0        0           0     0     0     1   
+12        0   0  ...        0        1        1           0     1     0     0   
+
+    dep1  dep2  log_inuidur1  
+0      0     1      2.890372  
+3      0     0      0.000000  
+4      0     0      3.295837  
+11     0     0      2.197225  
+12     1     0      3.295837  
+
+[5 rows x 26 columns]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrap-function">
+<h2>Bootstrap function<a class="headerlink" href="#bootstrap-function" title="Link to this heading">#</a></h2>
+<p>A function is created with the specified linear regression “log(inuidur1)~t4+ (female+black+othrace+dep1+dep2+q2+q3+q4+q5+q6+agelt35+agegt54+durable+lusd+husd),” which outputs information about the estimated coefficients (dep1 and dep2 are dummy variables created from dep; ultimately, it is the same as treating dep as a categorical variable).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_estimates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;t4&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;othrace&#39;</span><span class="p">,</span> <span class="s1">&#39;dep1&#39;</span><span class="p">,</span> <span class="s1">&#39;dep2&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="s1">&#39;q6&#39;</span><span class="p">,</span> <span class="s1">&#39;agelt35&#39;</span><span class="p">,</span> <span class="s1">&#39;agegt54&#39;</span><span class="p">,</span> <span class="s1">&#39;durable&#39;</span><span class="p">,</span> <span class="s1">&#39;lusd&#39;</span><span class="p">,</span> <span class="s1">&#39;husd&#39;</span><span class="p">]]</span>
+    <span class="n">X</span><span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> 
+    <span class="n">B</span> <span class="o">=</span> <span class="n">Penn</span><span class="p">[</span><span class="s1">&#39;log_inuidur1&#39;</span><span class="p">]</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">B</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">coef_</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">intercept</span><span class="p">,</span><span class="n">coef</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">get_indices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">num_samples</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Penn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">Penn</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">boot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">func</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+    <span class="n">coeff_1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">coeff_2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">coeff_3</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+        <span class="n">coeff_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">get_indices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">n</span><span class="p">))[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">coeff_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">get_indices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">n</span><span class="p">))[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> 
+        <span class="n">coeff_3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">get_indices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">n</span><span class="p">))[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">coeff_1_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coeff_1</span><span class="p">),</span><span class="s1">&#39;std_error&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">coeff_1</span><span class="p">)}</span>   
+    <span class="n">coeff_2_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coeff_2</span><span class="p">),</span><span class="s1">&#39;std_error&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">coeff_2</span><span class="p">)}</span>   
+    <span class="n">coeff_3_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coeff_3</span><span class="p">),</span><span class="s1">&#39;std_error&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">coeff_3</span><span class="p">)}</span>   
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;coeff_1_statistics&#39;</span><span class="p">:</span><span class="n">coeff_1_statistics</span><span class="p">,</span><span class="s1">&#39;coeff_2_statistics&#39;</span><span class="p">:</span><span class="n">coeff_2_statistics</span><span class="p">,</span><span class="s1">&#39;coeff_3_statistics&#39;</span><span class="p">:</span><span class="n">coeff_3_statistics</span><span class="p">},</span> <span class="n">coeff_1</span><span class="p">,</span> <span class="n">coeff_2</span><span class="p">,</span><span class="n">coeff_3</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-error">
+<h2>Standard error<a class="headerlink" href="#standard-error" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">boot</span><span class="p">(</span><span class="n">Penn</span><span class="p">,</span><span class="n">get_estimates</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result for coefficient term t4 &#39;</span><span class="p">,</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_1_statistics&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result for coefficient term female&#39;</span><span class="p">,</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_2_statistics&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result for coefficient term black&#39;</span><span class="p">,</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_3_statistics&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Result for coefficient term t4  {&#39;estimated_value&#39;: -0.06988404525587032, &#39;std_error&#39;: 0.03580097798905932}
+Result for coefficient term female {&#39;estimated_value&#39;: 0.12750195812651027, &#39;std_error&#39;: 0.03530038686565401}
+Result for coefficient term black {&#39;estimated_value&#39;: -0.2917027856008439, &#39;std_error&#39;: 0.06050929944267628}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Variable&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;t4&quot;</span><span class="p">,</span> <span class="s2">&quot;female&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Estimate&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_1_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">],</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_2_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">],</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_3_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;estimated_value&#39;</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Standard Error&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_1_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;std_error&#39;</span><span class="p">],</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_2_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;std_error&#39;</span><span class="p">],</span>
+        <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;coeff_3_statistics&#39;</span><span class="p">][</span><span class="s1">&#39;std_error&#39;</span><span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Variable  Estimate  Standard Error
+0       t4 -0.070467        0.036035
+1   female  0.127009        0.035710
+2    black -0.293443        0.059621
+</pre></div>
+</div>
+</div>
+</div>
+<section id="t4-distribution">
+<h3>t4 distribution<a class="headerlink" href="#t4-distribution" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram - t4&#39;s coefficient (Density)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Erzo\AppData\Local\Temp\ipykernel_13076\562490230.py:2: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  ax = sns.distplot(results[1], bins=20)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &quot;Histogram - t4&#39;s coefficient (Density)&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/404a46ad474e00ce1e85f3e76b00a8624e26a9bf681114463bafecd1b3295c6a.png" src="../../_images/404a46ad474e00ce1e85f3e76b00a8624e26a9bf681114463bafecd1b3295c6a.png" />
+</div>
+</div>
+</section>
+<section id="female-distribution">
+<h3>Female distribution<a class="headerlink" href="#female-distribution" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram - female&#39;s coefficient (Density)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Erzo\AppData\Local\Temp\ipykernel_13076\889737210.py:2: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  ax = sns.distplot(results[2], bins=20)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &quot;Histogram - female&#39;s coefficient (Density)&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/9eb56df76cd8d2b293597c3fc40ce4486ad357ba7fafae70f1c51aaf551c0fa6.png" src="../../_images/9eb56df76cd8d2b293597c3fc40ce4486ad357ba7fafae70f1c51aaf551c0fa6.png" />
+</div>
+</div>
+</section>
+<section id="black-distribution">
+<h3>Black distribution<a class="headerlink" href="#black-distribution" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram - black&#39;s coefficient (Density)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Erzo\AppData\Local\Temp\ipykernel_13076\825763745.py:2: UserWarning: 
+
+`distplot` is a deprecated function and will be removed in seaborn v0.14.0.
+
+Please adapt your code to use either `displot` (a figure-level function with
+similar flexibility) or `histplot` (an axes-level function for histograms).
+
+For a guide to updating your code to use the new functions, please see
+https://gist.github.com/mwaskom/de44147ed2974457ad6372750bbe5751
+
+  ax = sns.distplot(results[3], bins=20)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &quot;Histogram - black&#39;s coefficient (Density)&quot;)
+</pre></div>
+</div>
+<img alt="../../_images/c2e4bb9699c2ef56e2ca8de40f3c07cab1fbdfafb9faaf39f84ff07082bb2471.png" src="../../_images/c2e4bb9699c2ef56e2ca8de40f3c07cab1fbdfafb9faaf39f84ff07082bb2471.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="causal-forest">
+<h2>Causal Forest<a class="headerlink" href="#causal-forest" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Libraries</span>
+<span class="kn">import</span> <span class="nn">statistics</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c1"># Causal forest libraries</span>
+<span class="kn">from</span> <span class="nn">econml.grf</span> <span class="kn">import</span> <span class="n">RegressionForest</span>
+<span class="kn">from</span> <span class="nn">econml.dml</span> <span class="kn">import</span> <span class="n">CausalForestDML</span>
+<span class="kn">from</span> <span class="nn">econml.cate_interpreter</span> <span class="kn">import</span> <span class="n">SingleTreeCateInterpreter</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="preprocessing">
+<h3>1. Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import synthetic data from data folder</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/synthetic_data.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>schoolid</th>
+      <th>Z</th>
+      <th>Y</th>
+      <th>S3</th>
+      <th>C1</th>
+      <th>C2</th>
+      <th>C3</th>
+      <th>XC</th>
+      <th>X1</th>
+      <th>X2</th>
+      <th>X3</th>
+      <th>X4</th>
+      <th>X5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>76</td>
+      <td>1</td>
+      <td>0.081602</td>
+      <td>6</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>76</td>
+      <td>1</td>
+      <td>-0.385869</td>
+      <td>4</td>
+      <td>12</td>
+      <td>2</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>76</td>
+      <td>1</td>
+      <td>0.398184</td>
+      <td>6</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>76</td>
+      <td>1</td>
+      <td>-0.175037</td>
+      <td>6</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>76</td>
+      <td>1</td>
+      <td>0.884583</td>
+      <td>6</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 10391 entries, 0 to 10390
+Data columns (total 13 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   schoolid  10391 non-null  int64  
+ 1   Z         10391 non-null  int64  
+ 2   Y         10391 non-null  float64
+ 3   S3        10391 non-null  int64  
+ 4   C1        10391 non-null  int64  
+ 5   C2        10391 non-null  int64  
+ 6   C3        10391 non-null  int64  
+ 7   XC        10391 non-null  int64  
+ 8   X1        10391 non-null  float64
+ 9   X2        10391 non-null  float64
+ 10  X3        10391 non-null  float64
+ 11  X4        10391 non-null  float64
+ 12  X5        10391 non-null  float64
+dtypes: float64(6), int64(7)
+memory usage: 1.0 MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save school clusters in variable</span>
+<span class="n">school_id</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;schoolid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
+
+<span class="c1"># Create a dummy matrix (one-hot encoding) for school IDs</span>
+<span class="n">school_mat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;schoolid&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+<span class="n">school_mat</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;schoolid&#39;</span><span class="p">],</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Calculate the size of each school group</span>
+<span class="n">school_size</span> <span class="o">=</span> <span class="n">school_mat</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit treatment (w) OLS</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Z ~ &#39;</span> <span class="o">+</span> <span class="s1">&#39; + &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">]))</span>
+<span class="n">w_lm</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">glm</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print summary of the GLM model</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w_lm</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                 Generalized Linear Model Regression Results                  
+==============================================================================
+Dep. Variable:                      Z   No. Observations:                10391
+Model:                            GLM   Df Residuals:                    10379
+Model Family:                Binomial   Df Model:                           11
+Link Function:                  Logit   Scale:                          1.0000
+Method:                          IRLS   Log-Likelihood:                -6519.5
+Date:                Thu, 06 Jun 2024   Deviance:                       13039.
+Time:                        20:51:37   Pearson chi2:                 1.04e+04
+No. Iterations:                     4   Pseudo R-squ. (CS):           0.007280
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -1.0758      0.146     -7.348      0.000      -1.363      -0.789
+schoolid      -0.0005      0.001     -0.574      0.566      -0.002       0.001
+S3             0.1022      0.020      5.233      0.000       0.064       0.141
+C1            -0.0023      0.005     -0.431      0.666      -0.013       0.008
+C2            -0.0974      0.042     -2.313      0.021      -0.180      -0.015
+C3            -0.1378      0.045     -3.050      0.002      -0.226      -0.049
+XC             0.0277      0.018      1.568      0.117      -0.007       0.062
+X1            -0.0881      0.028     -3.103      0.002      -0.144      -0.032
+X2            -0.0004      0.033     -0.011      0.991      -0.066       0.065
+X3             0.0337      0.029      1.179      0.239      -0.022       0.090
+X4            -0.0201      0.027     -0.738      0.460      -0.074       0.033
+X5             0.0082      0.027      0.303      0.762      -0.045       0.062
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the previous OLS, we can observe that only the ctudent’s self-reported expectations for success (S3), student gender (C2), student first-generation status (C3), and school-level mean of students’ fixed mindsets (X1) variables are significat</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We define T, Y, and X_raw</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z&#39;</span><span class="p">]</span>
+<span class="n">X_raw</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;schoolid&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">])</span> <span class="c1"># School ID does not affect pscore</span>
+<span class="n">W</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create model matrices for categorical variables</span>
+<span class="n">C1_exp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_raw</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">XC_exp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_raw</span><span class="p">[</span><span class="s1">&#39;XC&#39;</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;XC&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combine these matrices with the rest of the data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_raw</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;XC&#39;</span><span class="p">]),</span> <span class="n">C1_exp</span><span class="p">,</span> <span class="n">XC_exp</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have a sample of 10,391 children from 76 schools, and we expand the categorical variables, resulting in 28 covariates, <span class="math notranslate nohighlight">\(X_i \in \mathbb{R}^{28}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>S3</th>
+      <th>C2</th>
+      <th>C3</th>
+      <th>X1</th>
+      <th>X2</th>
+      <th>X3</th>
+      <th>X4</th>
+      <th>X5</th>
+      <th>C1_1</th>
+      <th>C1_2</th>
+      <th>...</th>
+      <th>C1_11</th>
+      <th>C1_12</th>
+      <th>C1_13</th>
+      <th>C1_14</th>
+      <th>C1_15</th>
+      <th>XC_0</th>
+      <th>XC_1</th>
+      <th>XC_2</th>
+      <th>XC_3</th>
+      <th>XC_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.334544</td>
+      <td>0.648586</td>
+      <td>-1.310927</td>
+      <td>0.224077</td>
+      <td>-0.426757</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10386</th>
+      <td>7</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1.185986</td>
+      <td>-1.129889</td>
+      <td>1.009875</td>
+      <td>1.005063</td>
+      <td>-1.174702</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10387</th>
+      <td>7</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1.185986</td>
+      <td>-1.129889</td>
+      <td>1.009875</td>
+      <td>1.005063</td>
+      <td>-1.174702</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10388</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.185986</td>
+      <td>-1.129889</td>
+      <td>1.009875</td>
+      <td>1.005063</td>
+      <td>-1.174702</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10389</th>
+      <td>5</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.185986</td>
+      <td>-1.129889</td>
+      <td>1.009875</td>
+      <td>1.005063</td>
+      <td>-1.174702</td>
+      <td>False</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10390</th>
+      <td>5</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1.185986</td>
+      <td>-1.129889</td>
+      <td>1.009875</td>
+      <td>1.005063</td>
+      <td>-1.174702</td>
+      <td>True</td>
+      <td>False</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>10391 rows × 28 columns</p>
+</div></div></div>
+</div>
+<p>For each sample <span class="math notranslate nohighlight">\(i\)</span>, the authors consider potential outcomes <span class="math notranslate nohighlight">\(Y_i(0)\)</span> and <span class="math notranslate nohighlight">\(Y_i(1)\)</span>, representing the outcomes if the <span class="math notranslate nohighlight">\(i\)</span>-th sample had been assigned to control <span class="math notranslate nohighlight">\((W_i=0)\)</span> or treatment <span class="math notranslate nohighlight">\((W_i=1)\)</span>, respectively. We assume that we observe <span class="math notranslate nohighlight">\(Y_i = Y_i(W_i)\)</span>. The average treatment effect is defined as <span class="math notranslate nohighlight">\(\tau = \mathbb{E} [Y_i(1) - Y_i(0)]\)</span>, and the conditional average treatment effect function is <span class="math notranslate nohighlight">\(\tau(x) = \mathbb{E} [Y_i(1) - Y_i(0) \mid X_i = x]\)</span>.</p>
+</section>
+<section id="causal-forest-estimation-and-results">
+<h3>2. Causal Forest estimation and results<a class="headerlink" href="#causal-forest-estimation-and-results" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h4>2.1. Causal Forest<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>When using random forests, the authors aim to perform a non-parametric random effects modeling approach, where each school is presumed to influence the student’s outcome. However, the authors do not impose any assumptions about the distribution of these effects, specifically avoiding the assumption that school effects are Gaussian or additive.</p>
+<p>The causal forest (CF) method attempts to find neighbourhoods in the covariate space, also known as recursive partitioning. While a random forest is built from decision trees, a causal forest is built from causal trees, where the causal trees learn a low-dimensional representation of treatment effect heterogeneity. To built a CF, we use the post-treatment outcome vector (<span class="math notranslate nohighlight">\(Y\)</span>), the treatment vector (<span class="math notranslate nohighlight">\(T\)</span>), and the 28 parameters matrix (<span class="math notranslate nohighlight">\(X\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">forest_model</span> <span class="o">=</span> <span class="n">CausalForestDML</span><span class="p">(</span><span class="n">model_t</span><span class="o">=</span><span class="n">RegressionForest</span><span class="p">(),</span>
+                               <span class="n">model_y</span><span class="o">=</span><span class="n">RegressionForest</span><span class="p">(),</span>
+                               <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> 
+                               <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                               <span class="n">max_depth</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                               <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                               <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">tree_model</span> <span class="o">=</span> <span class="n">forest_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intrp</span> <span class="o">=</span> <span class="n">SingleTreeCateInterpreter</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">forest_model</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">intrp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">feature_names</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5033e1d234c839061b9a41ecd4ae8f22bb6f5aa80b7801edf33f6d83b1434285.png" src="../../_images/5033e1d234c839061b9a41ecd4ae8f22bb6f5aa80b7801edf33f6d83b1434285.png" />
+</div>
+</div>
+<p>We found that the greater CATE is in the group of students that attendts to a school with a mean fixed mindset level lower than 0.21 (that means, with larger values of growth mindset), and with a percentage of students who are from families whose incomes fall below the federal poverty line greater than -0.75.</p>
+</section>
+<section id="ate">
+<h4>2.2. ATE<a class="headerlink" href="#ate" title="Link to this heading">#</a></h4>
+<p>The package dml has a built-in function for average treatment effect estimation. First, we estimate the CATE (<span class="math notranslate nohighlight">\(\hat{\tau}\)</span>), where we can see it is around 0.2 and 0.4. Then, we find that the ATE value is around 0.25.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tau_hat</span> <span class="o">=</span> <span class="n">forest_model</span><span class="o">.</span><span class="n">effect</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span> <span class="c1"># tau(X) estimates</span>
+<span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.25106325917227695
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use this for assessing heterogeneity. See text above.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;CATE estimates&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;CATE estimates&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/a1e16e942fcfd9fbcbb74be7c33a76afe0f88cfab46b9ff7531f44795cd3bf5c.png" src="../../_images/a1e16e942fcfd9fbcbb74be7c33a76afe0f88cfab46b9ff7531f44795cd3bf5c.png" />
+</div>
+</div>
+<p>The causal forest CATE estimates exhibit some variation, from -0.2 to 0.6.</p>
+</section>
+<section id="run-best-linear-predictor-analysis">
+<h4>2.3. Run best linear predictor analysis<a class="headerlink" href="#run-best-linear-predictor-analysis" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming cf is an instance of an EconML estimator</span>
+<span class="c1"># and tau_hat is the estimated Conditional Average Treatment Effect (CATE)</span>
+
+<span class="c1"># Compare regions with high and low estimated CATEs</span>
+<span class="n">high_effect</span> <span class="o">=</span> <span class="n">tau_hat</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">)</span>
+
+<span class="c1"># Calculate average treatment effect for high and low effect subsets</span>
+<span class="n">ate_high</span> <span class="o">=</span> <span class="n">tree_model</span><span class="o">.</span><span class="n">ate_inference</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">high_effect</span><span class="p">])</span>
+<span class="n">ate_low</span> <span class="o">=</span> <span class="n">tree_model</span><span class="o">.</span><span class="n">ate_inference</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="o">~</span><span class="n">high_effect</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ate_high</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Uncertainty of Mean Point Estimate</caption>
+<tr>
+  <th>mean_point</th> <th>stderr_mean</th> <th>zstat</th> <th>pvalue</th> <th>ci_mean_lower</th> <th>ci_mean_upper</th>
+</tr>
+<tr>
+     <td>0.355</td>      <td>0.122</td>    <td>2.906</td>  <td>0.004</td>     <td>0.115</td>         <td>0.594</td>    
+</tr>
+</table>
+<table class="simpletable">
+<caption>Distribution of Point Estimate</caption>
+<tr>
+  <th>std_point</th> <th>pct_point_lower</th> <th>pct_point_upper</th>
+</tr>
+<tr>
+    <td>0.08</td>         <td>0.257</td>           <td>0.558</td>     
+</tr>
+</table>
+<table class="simpletable">
+<caption>Total Variance of Point Estimate</caption>
+<tr>
+  <th>stderr_point</th> <th>ci_point_lower</th> <th>ci_point_upper</th>
+</tr>
+<tr>
+      <td>0.146</td>         <td>0.079</td>          <td>0.669</td>    
+</tr>
+</table><br/><br/>Note: The stderr_mean is a conservative upper bound.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ate_low</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Uncertainty of Mean Point Estimate</caption>
+<tr>
+  <th>mean_point</th> <th>stderr_mean</th> <th>zstat</th> <th>pvalue</th> <th>ci_mean_lower</th> <th>ci_mean_upper</th>
+</tr>
+<tr>
+     <td>0.148</td>      <td>0.121</td>    <td>1.215</td>  <td>0.225</td>    <td>-0.091</td>         <td>0.386</td>    
+</tr>
+</table>
+<table class="simpletable">
+<caption>Distribution of Point Estimate</caption>
+<tr>
+  <th>std_point</th> <th>pct_point_lower</th> <th>pct_point_upper</th>
+</tr>
+<tr>
+    <td>0.082</td>       <td>-0.043</td>           <td>0.249</td>     
+</tr>
+</table>
+<table class="simpletable">
+<caption>Total Variance of Point Estimate</caption>
+<tr>
+  <th>stderr_point</th> <th>ci_point_lower</th> <th>ci_point_upper</th>
+</tr>
+<tr>
+      <td>0.146</td>        <td>-0.162</td>          <td>0.426</td>    
+</tr>
+</table><br/><br/>Note: The stderr_mean is a conservative upper bound.</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate 95% confidence interval for the difference in ATEs</span>
+<span class="n">difference_in_ate</span> <span class="o">=</span> <span class="mf">0.355</span> <span class="o">-</span> <span class="mf">0.148</span>
+<span class="n">ci_width</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.122</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.121</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;95% CI for difference in ATE: </span><span class="si">{</span><span class="n">difference_in_ate</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">ci_width</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>95% CI for difference in ATE: 0.207 +/- 0.337
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The fitted causal forest model should provide these values:</span>
+<span class="n">W_hat</span> <span class="o">=</span> <span class="n">tree_model</span><span class="o">.</span><span class="n">propensity_</span>  <span class="c1"># Estimated treatment probability (cf$W.hat)</span>
+<span class="n">Y_hat</span> <span class="o">=</span> <span class="n">tree_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>   <span class="c1"># Predicted outcome (cf$Y.hat)</span>
+
+<span class="c1"># Calculate dr.score</span>
+<span class="n">dr_score</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">tau_hat</span> <span class="o">+</span> 
+    <span class="n">W</span> <span class="o">/</span> <span class="n">W_hat</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">Y_hat</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">W_hat</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau_hat</span><span class="p">)</span> <span class="o">-</span>
+    <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">W</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">W_hat</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">Y_hat</span> <span class="o">+</span> <span class="n">W_hat</span> <span class="o">*</span> <span class="n">tau_hat</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Calculate school.score</span>
+<span class="n">school_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">school_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dr_score</span><span class="p">)</span> <span class="o">/</span> <span class="n">school_size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">140</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Calculate school.score</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">school_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">school_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dr_score</span><span class="p">)</span> <span class="o">/</span> <span class="n">school_size</span>
+
+<span class="ne">NameError</span>: name &#39;dr_score&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="look-at-school-wise-heterogeneity">
+<h4>2.4. Look at school-wise heterogeneity<a class="headerlink" href="#look-at-school-wise-heterogeneity" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up plot parameters</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>  <span class="c1"># Adjust the font size</span>
+
+<span class="c1"># Create the histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">school_score</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;School Treatment Effect Estimate&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save the plot as a PDF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;school_hist.pdf&#39;</span><span class="p">)</span>
+
+<span class="c1"># Close the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">142</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Create the histogram</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">school_score</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;School Treatment Effect Estimate&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/envs/personal/lib/python3.11/site-packages/matplotlib/pyplot.py:3236,</span> in <span class="ni">hist</span><span class="nt">(x, bins, range, density, weights, cumulative, bottom, histtype, align, orientation, rwidth, log, color, label, stacked, data, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3211</span> <span class="nd">@_copy_docstring_and_deprecators</span><span class="p">(</span><span class="n">Axes</span><span class="o">.</span><span class="n">hist</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3212</span> <span class="k">def</span> <span class="nf">hist</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3213</span>     <span class="n">x</span><span class="p">:</span> <span class="n">ArrayLike</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">],</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3234</span>     <span class="n">BarContainer</span> <span class="o">|</span> <span class="n">Polygon</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">BarContainer</span> <span class="o">|</span> <span class="n">Polygon</span><span class="p">],</span>
+<span class="g g-Whitespace">   </span><span class="mi">3235</span> <span class="p">]:</span>
+<span class="ne">-&gt; </span><span class="mi">3236</span>     <span class="k">return</span> <span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3237</span>         <span class="n">x</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3238</span>         <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3239</span>         <span class="nb">range</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3240</span>         <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3241</span>         <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3242</span>         <span class="n">cumulative</span><span class="o">=</span><span class="n">cumulative</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3243</span>         <span class="n">bottom</span><span class="o">=</span><span class="n">bottom</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3244</span>         <span class="n">histtype</span><span class="o">=</span><span class="n">histtype</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3245</span>         <span class="n">align</span><span class="o">=</span><span class="n">align</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3246</span>         <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3247</span>         <span class="n">rwidth</span><span class="o">=</span><span class="n">rwidth</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3248</span>         <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3249</span>         <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3250</span>         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3251</span>         <span class="n">stacked</span><span class="o">=</span><span class="n">stacked</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3252</span>         <span class="o">**</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span>
+<span class="g g-Whitespace">   </span><span class="mi">3253</span>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3254</span>     <span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/envs/personal/lib/python3.11/site-packages/matplotlib/__init__.py:1465,</span> in <span class="ni">_preprocess_data.&lt;locals&gt;.inner</span><span class="nt">(ax, data, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1462</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1463</span> <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1464</span>     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1465</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="n">sanitize_sequence</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1467</span>     <span class="n">bound</span> <span class="o">=</span> <span class="n">new_sig</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1468</span>     <span class="n">auto_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">bound</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_namer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1469</span>                   <span class="ow">or</span> <span class="n">bound</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_namer</span><span class="p">))</span>
+
+<span class="nn">File ~/opt/anaconda3/envs/personal/lib/python3.11/site-packages/matplotlib/axes/_axes.py:6834,</span> in <span class="ni">Axes.hist</span><span class="nt">(self, x, bins, range, density, weights, cumulative, bottom, histtype, align, orientation, rwidth, log, color, label, stacked, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6830</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">6831</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xi</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6832</span>         <span class="c1"># python&#39;s min/max ignore nan,</span>
+<span class="g g-Whitespace">   </span><span class="mi">6833</span>         <span class="c1"># np.minnan returns nan for all nan input</span>
+<span class="ne">-&gt; </span><span class="mi">6834</span>         <span class="n">xmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">6835</span>         <span class="n">xmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xmax</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">6836</span> <span class="k">if</span> <span class="n">xmin</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">:</span>  <span class="c1"># Only happens if we have seen a finite value.</span>
+
+<span class="ne">TypeError</span>: &#39;&lt;&#39; not supported between instances of &#39;ellipsis&#39; and &#39;float&#39;
+</pre></div>
+</div>
+<img alt="../../_images/7e8497670030d5d9b2c8eaf100ef052eba313ae05fbf5288b0ad64b663adab89.png" src="../../_images/7e8497670030d5d9b2c8eaf100ef052eba313ae05fbf5288b0ad64b663adab89.png" />
+</div>
+</div>
+</section>
+<section id="analysis-ignoring-clusters-how-do-the-results-change">
+<h4>2.5. Analysis ignoring clusters. How do the results change?<a class="headerlink" href="#analysis-ignoring-clusters-how-do-the-results-change" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming you have already defined X, Y, W, selected.idx, Y.hat, and W.hat</span>
+
+<span class="c1"># Create a causal forest model</span>
+<span class="n">cf_noclust</span> <span class="o">=</span> <span class="n">tree_model</span><span class="p">(</span><span class="n">tune_parameters</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+<span class="n">cf_noclust</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">selected</span><span class="o">.</span><span class="n">idx</span><span class="p">],</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">Y_hat</span><span class="o">=</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">W_hat</span><span class="o">=</span><span class="n">W_hat</span><span class="p">)</span>
+
+<span class="c1"># Calculate the average treatment effect (ATE)</span>
+<span class="n">ATE_noclust</span> <span class="o">=</span> <span class="n">cf_noclust</span><span class="o">.</span><span class="n">average_treatment_effect</span><span class="p">()</span>
+
+<span class="c1"># Print the 95% confidence interval for the ATE</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;95% CI for the ATE: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ATE_noclust</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE_noclust</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test calibration</span>
+<span class="n">cf_noclust_copy</span> <span class="o">=</span> <span class="n">cf_noclust</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">tau_hat_noclust</span> <span class="o">=</span> <span class="n">cf_noclust_copy</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># Assuming X is the same as in R</span>
+<span class="n">cf_noclust_copy</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="n">tau_hat_noclust</span>
+<span class="n">cf_noclust_copy</span><span class="o">.</span><span class="n">clusters</span> <span class="o">=</span> <span class="n">school_id</span>
+<span class="n">cf_noclust_copy</span><span class="o">.</span><span class="n">test_calibration</span><span class="p">()</span>
+
+<span class="c1"># Calculate loss</span>
+<span class="n">R_loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">Y_hat</span><span class="p">)</span> <span class="o">-</span> <span class="n">tau_hat</span> <span class="o">*</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="n">W_hat</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">R_loss_noclust</span> <span class="o">=</span> <span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">Y_hat</span><span class="p">)</span> <span class="o">-</span> <span class="n">tau_hat_noclust</span> <span class="o">*</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="n">W_hat</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">R_loss_crossfold</span> <span class="o">=</span> <span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">Y_hat</span><span class="p">)</span> <span class="o">-</span> <span class="n">tau_hat_crossfold</span> <span class="o">*</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="n">W_hat</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Print the differences in loss</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Difference in loss (no clustering): </span><span class="si">{</span><span class="n">R_loss_noclust</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">R_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Difference in loss (crossfold): </span><span class="si">{</span><span class="n">R_loss_crossfold</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">R_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Summary of ANOVA</span>
+<span class="c1"># Assuming dr.score and school_id are defined</span>
+<span class="n">summary_aov</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;dr.score&#39;</span><span class="p">:</span> <span class="n">dr_score</span><span class="p">,</span> <span class="s1">&#39;school.id&#39;</span><span class="p">:</span> <span class="n">school_id</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis-without-fitting-the-propensity-score">
+<h4>2.6. Analysis without fitting the propensity score<a class="headerlink" href="#analysis-without-fitting-the-propensity-score" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a causal forest model</span>
+<span class="n">cf_noprop</span> <span class="o">=</span> <span class="n">CausalForestDML</span><span class="p">(</span><span class="n">tune_parameters</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">equalize_cluster_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cf_noprop</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">selected</span><span class="o">.</span><span class="n">idx</span><span class="p">],</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">Y_hat</span><span class="o">=</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">W_hat</span><span class="o">=</span><span class="n">W_hat</span><span class="p">)</span>
+
+<span class="c1"># Calculate the average treatment effect (ATE)</span>
+<span class="n">ATE_noprop</span> <span class="o">=</span> <span class="n">cf_noprop</span><span class="o">.</span><span class="n">average_treatment_effect</span><span class="p">()</span>
+
+<span class="c1"># Print the 95% confidence interval for the ATE</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;95% CI for the ATE: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ATE_noprop</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE_noprop</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot the estimates</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">tau_hat_noprop</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau_hat_noprop</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau_hat_noprop</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Orthogonalized causal forest estimates&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Non-orthogonalized causal forest&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau_hat_noprop</span><span class="p">)],</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">tau_hat_noprop</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">
+<h4>2.7. The code plot six plots in the Make some plots section, so explain what you find there.<a class="headerlink" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the average treatment effect (ATE)</span>
+<span class="n">ATE_noprop</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cf_noprop</span><span class="o">.</span><span class="n">ate</span><span class="p">())</span>
+
+<span class="c1"># Print the 95% confidence interval for the ATE</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;95% CI for the ATE: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ATE_noprop</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mf">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE_noprop</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot histograms</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Estimated CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram (tau.hat)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tau_hat_noprop</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Estimated CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram (tau.hat.noprop)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">tau_hat_noclust</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Estimated CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Histogram (tau.hat.noclust)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Boxplots vs. X1 and X2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;X1&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;X1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Estimated CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Boxplot (tau.hat) vs. X1&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Plot school-wise average CATE estimate</span>
+<span class="n">school_avg_tauhat</span> <span class="o">=</span> <span class="p">(</span><span class="n">school_mat</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">tau_hat</span><span class="p">)</span> <span class="o">/</span> <span class="n">school_size</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">school_avg_tauhat</span><span class="p">,</span> <span class="n">school_pred</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">school_avg_tauhat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">school_pred</span><span class="p">)],</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">school_avg_tauhat</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">school_pred</span><span class="p">)],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Average CATE estimate in school&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;School-wise forest predictions&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;School-wise Average CATE Estimate vs. Predictions&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-school-level-covariates-by-treatment-heterogeneity">
+<h4>2.8. Visualize school-level covariates by treatment heterogeneity<a class="headerlink" href="#visualize-school-level-covariates-by-treatment-heterogeneity" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standardize school.X</span>
+<span class="n">school</span><span class="o">.</span><span class="n">X_std</span> <span class="o">=</span> <span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="c1"># Create terciles</span>
+<span class="n">tercile_bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">pred</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">pred</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>
+<span class="n">school</span><span class="o">.</span><span class="n">tercile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">pred</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">tercile_bins</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">])</span>
+
+<span class="c1"># Create a design matrix for terciles</span>
+<span class="n">school</span><span class="o">.</span><span class="n">tercile_mat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">tercile</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Calculate means</span>
+<span class="n">school</span><span class="o">.</span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">tercile_mat</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">school</span><span class="o">.</span><span class="n">tercile_mat</span><span class="p">),</span> <span class="n">school</span><span class="o">.</span><span class="n">tercile_mat</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">school</span><span class="o">.</span><span class="n">X_std</span><span class="p">)</span>
+
+<span class="c1"># Calculate MM and create color mapping</span>
+<span class="n">MM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">means</span><span class="p">))</span>
+<span class="n">school</span><span class="o">.</span><span class="n">col</span> <span class="o">=</span> <span class="p">[</span><span class="n">HC</span><span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">aa</span><span class="p">))]</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">school</span><span class="o">.</span><span class="n">means</span><span class="p">]</span>
+
+<span class="c1"># Create a DataFrame for plotting</span>
+<span class="n">DF_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;tercile&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">],</span> <span class="mi">9</span><span class="p">),</span>
+    <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="n">school</span><span class="o">.</span><span class="n">means</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+    <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">DF_plot</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;tercile&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;feature&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+           <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">MM</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">MM</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="p">))),</span> <span class="n">colnames</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="p">[</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Tercile&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tercile Plot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Calculate mean for XC.3</span>
+<span class="n">mean_XC3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;XC.3&#39;</span><span class="p">])</span>
+<span class="n">mean_XC3_low_tercile</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">school</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;XC.3&#39;</span><span class="p">][</span><span class="n">school</span><span class="o">.</span><span class="n">tercile</span> <span class="o">==</span> <span class="s2">&quot;low&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cate-by-school">
+<h4>2.9. CATE by school<a class="headerlink" href="#cate-by-school" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Order school.pred and then order the indices</span>
+<span class="nb">ord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">school_pred</span><span class="p">))</span>
+<span class="n">school_sort</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">[</span><span class="n">school_id</span><span class="p">]</span>
+
+<span class="c1"># Create a boxplot and save it to a PDF file</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">tau_hat_noclust</span><span class="p">[</span><span class="n">school_sort</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">school_sort</span><span class="p">)],</span>
+            <span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">school_sort</span><span class="p">),</span> <span class="n">widths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">patch_artist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">boxprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">),</span>
+            <span class="n">whiskerprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">),</span>
+            <span class="n">capprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">),</span>
+            <span class="n">medianprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">meanprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">markeredgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Add points for school mean CATE</span>
+<span class="n">school_mean_cate</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tau_hat_noclust</span><span class="p">[</span><span class="n">school_sort</span> <span class="o">==</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">school_sort</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">school_sort</span><span class="p">),</span> <span class="n">school_mean_cate</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add points for CATE w/o clustering</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">77</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">school_pred</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">)</span>
+
+<span class="c1"># Labels and legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;School&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated CATE&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">school_sort</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;School mean CATE&#39;</span><span class="p">,</span> <span class="s1">&#39;CATE w/o clustering&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Save the plot to a PDF file</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;school_boxplot.pdf&#39;</span><span class="p">)</span>
+
+<span class="c1"># Show plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs\lab_4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab_4_md.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Bootstraping and Causal Forest Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="group3_lab4_r.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 4 - R Code</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstraping">Bootstraping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-base">Data base</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-function">Bootstrap function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">Standard error</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t4-distribution">t4 distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-distribution">Female distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#black-distribution">Black distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest">Causal Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">1. Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest-estimation-and-results">2. Causal Forest estimation and results</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Causal Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ate">2.2. ATE</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#run-best-linear-predictor-analysis">2.3. Run best linear predictor analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#look-at-school-wise-heterogeneity">2.4. Look at school-wise heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-ignoring-clusters-how-do-the-results-change">2.5. Analysis ignoring clusters. How do the results change?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-without-fitting-the-propensity-score">2.6. Analysis without fitting the propensity score</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">2.7. The code plot six plots in the Make some plots section, so explain what you find there.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-school-level-covariates-by-treatment-heterogeneity">2.8. Visualize school-level covariates by treatment heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cate-by-school">2.9. CATE by school</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

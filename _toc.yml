@@ -1,0 +1,41 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: Labs
+    numbered: 1
+    chapters:
+    - file: labs/lab_1_md
+      sections:
+      - file: labs/lab_1/group3_lab1_python
+      - file: labs/lab_1/group3_lab1_r
+      - file: labs/lab_1/group3_lab1_julia
+    - file: labs/lab_2_md
+      sections:
+      - file: labs/lab_2/group3_lab2_python
+      - file: labs/lab_2/group3_lab2_r
+      - file: labs/lab_2/group3_lab2_julia
+    - file: labs/lab_3_md
+      sections:
+      - file: labs/lab_3/group3_lab3_python
+      - file: labs/lab_3/group3_lab3_r
+      - file: labs/lab_3/group3_lab3_julia
+    - file: labs/lab_4_md
+      sections:
+      - file: labs/lab_4/group3_lab4_python
+      - file: labs/lab_4/group3_lab4_r
+      - file: labs/lab_4/group3_lab4_julia
+    - file: labs/lab_5_md
+      sections:
+      - file: labs/lab_5/group3_lab5_python
+      - file: labs/lab_5/group3_lab5_r
+      - file: labs/lab_5/group3_lab5_julia
+  - caption: Reports
+    chapters:
+    - file: reports/000199908_r1
+    - file: reports/000199908_r2
+    - file: reports/000199908_r3
+    - file: reports/000199908_r4
+    - file: reports/000199908_r5

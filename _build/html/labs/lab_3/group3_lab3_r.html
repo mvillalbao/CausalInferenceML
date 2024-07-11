@@ -1,0 +1,1677 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Workgroup 3 &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_3/group3_lab3_r';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Lab 4" href="../lab_4_md.html" />
+    <link rel="prev" title="Lab 3 - Python Code" href="group3_lab3_python.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Lab 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_2_md.html">2. Lab 2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_r.html">Lab 2 - R Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_3_md.html">3. Lab 3</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Workgroup 3</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_4_md.html">4. Lab 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_python.html">Workgroup 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_r.html">Workgroup 4</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_5_md.html">5. Lab 5</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_python.html">Workgroup 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_r.html">Workgroup 5</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1 - Matias Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2 - Matías Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3 - Matías Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4 - Matias Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5 - Matias Villalba</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_3/group3_lab3_r.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_3/group3_lab3_r.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Workgroup 3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Workgroup 3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-orthogonality-proof">1. Neyman Orthogonality Proof</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-1">Demonstration 1:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-2">Demonstration 2:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-section">2. Code Section</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-learning">2.1. Orthogonal Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-design">Simulation Design</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#double-lasso-using-school-data">2.2. Double Lasso - Using School data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regressions">2.2.2. Regressions</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#a-ols">a. OLS</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#b-double-lasso-using-cross-validation">b. Double Lasso using cross validation</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#c-double-lasso-using-theoretical-lambda">c. Double Lasso using theoretical lambda</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#d-double-lasso-using-partialling-out-method">d. Double Lasso using partialling out method</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="workgroup-3">
+<h1>Workgroup 3<a class="headerlink" href="#workgroup-3" title="Link to this heading">#</a></h1>
+<p><strong>Group 3</strong>: Valerie Dube, Erzo Garay, Juan Marcos Guerrero y Matías Villalba,</p>
+<section id="neyman-orthogonality-proof">
+<h2>1. Neyman Orthogonality Proof<a class="headerlink" href="#neyman-orthogonality-proof" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(Y_{nx1}=\alpha D_{nx1}+W_{nxp}\beta_{px1}+\epsilon_{nx1}\\
+\widetilde{Y}_{nx1}=Y_{nx1}-W_{nxp}X_{{{Yw}_{px1}}}\\
+\widetilde{D}_{nx1}=D_{nx1}-W_{nxp}X_{{{Dw}_{px1}}}\\
+W=Matrix\ composed\ by\ one\ variable\ in\ each\ column\\
+X=Vector\ of\ coefficients\\
+n=N° observations\\
+p=N° confounders \\\ 
+\\\
+\\\
+M(a,\eta)=E[(\widetilde{Y}_{nx1}(\eta_{1})-a\widetilde{D}(\eta_{2})_{nx1})'(\widetilde{D}(\eta_{2})_{nx1})]=0\\
+\frac{\partial a}{\partial \eta}=-[\frac{\partial M}{\partial a}(\alpha,\eta_{0})]^{-1}[\frac{\partial M}{\partial \eta}(\alpha,\eta_{0})]\\
+\frac{\partial M}{\partial \eta}(\alpha,\eta_{0})=\frac{\partial M}{\partial \eta_{1}}(\alpha,X_{Yw},X_{Dw})+\frac{\partial M}{\partial \eta_{2}}(\alpha,X_{Yw},X_{Dw})\\
+S_{1}=\frac{\partial M}{\partial \eta_{1}}(\alpha,X_{Yw},X_{Dw})  ,  S_{2}=\frac{\partial M}{\partial \eta_{2}}(\alpha,X_{Yw},X_{Dw})\)</span></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="demonstration-1">
+<h1>Demonstration 1:<a class="headerlink" href="#demonstration-1" title="Link to this heading">#</a></h1>
+<p><span class="math notranslate nohighlight">\(Given\ the\ general\ formula\,\ before\ using\  (\alpha,X_{Yw},X_{Dw}): \widetilde{Y}_{nx1}=Y_{nx1}-W_{nxp}\eta_{{{1}_{px1}}}  ,\ \widetilde{D}_{nx1}=D_{nx1}-W_{nxp}\eta_{{{2}_{px1}}}: \\\
+\\\
+S_{1}=\frac{\partial M}{\partial \eta_{1}}|_{(\alpha,W_{Yw},W_{Dw})}\\\
+\\\
+=\frac{\partial E[(\widetilde{Y}_{nx1}(\eta_{1})-a\widetilde{D}(\eta_{2})_{nx1})'(\widetilde{D}(\eta_{2})_{nx1})}{\partial \eta_{1}}|_{(\alpha,W_{Yw},W_{Dw})}=\frac{\partial E[Y_{nx1}-W_{nxp}\eta_{{{1}_{px1}}}-aD_{nx1}+aW_{nxp}\eta_{{{2}_{px1}}})'(D_{nx1}-W_{nxp}\eta_{{{2}_{px1}}})}{\partial \eta_{1}}|_{(\alpha,W_{Yw},W_{Dw})}\\\
+\\\
+Substituting\ (\alpha,W_{Yw},W_{Dw})\ in\ (a,\eta_{1},\eta_{2})\\\
+\\\
+=\frac{\partial E[(\widetilde{Y}_{nx1}(\eta_{1})-a\widetilde{D}(\eta_{2})_{nx1})'(\widetilde{D}(\eta_{2})_{nx1})]}{\partial \eta_{1}}|_{(\alpha,W_{Yw},W_{Dw})}=E[(W_{nxp})'(D_{nx1}-W_{n*p}\eta_{{2}_{px1}})]|_{(\alpha,W_{Yw},W_{Dw})}\\
+=E[(W_{nxp})'(D_{nx1}-W_{n*p}X_{{{Dw}_{px1}}})]\\
+=E[W'_{pxn}D_{nx1}-W'_{pxn}W_{nxp}(W'_{pxn}W_{nxp})^{-1}(W'_{pxn}D_{nx1})]\\
+=E[W'_{pxn}D_{nx1}-I_{pxp}(W'_{pxn}D_{nx1})]=E[W'_{pxn}D_{nx1}-W'_{pxn}D_{nx1}]=E[0]\\
+S_{1}=0\)</span></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="demonstration-2">
+<h1>Demonstration 2:<a class="headerlink" href="#demonstration-2" title="Link to this heading">#</a></h1>
+<p><span class="math notranslate nohighlight">\(Given\ the\ general\ formula\,\ before\ using\  (\alpha,X_{Yw},X_{Dw}): \widetilde{Y}_{nx1}=y_{nx1}-W_{nxp}\eta_{{{1}_{px1}}}  ,\ \widetilde{D}_{nx1}=D_{nx1}-W_{nxp}\eta_{{{2}_{px1}}}\\\
+\\\
+S_{2}=\frac{\partial M}{\partial \eta_{2}}|_{(\alpha,W_{Yw},W_{Dw})}=0\\\
+\\
+=\frac{\partial E[(\widetilde{Y}_{nx1}(\eta_{1})-a\widetilde{D}(\eta_{2})_{nx1})'(\widetilde{D}(\eta_{2})_{nx1})}{\partial \eta_{2}}|_{(\alpha,W_{Yw},W_{Dw})}=\frac{\partial E[Y_{nx1}-W_{nxp}\eta_{{{1}_{px1}}}-aD_{nx1}+aW_{nxp}\eta_{{{2}_{px1}}})'(D_{nx1}-W_{nxp}\eta_{{{2}_{px1}}})}{\partial \eta_{2}}|_{(\alpha,W_{Yw},W_{Dw})}\\
+=\frac{\partial E[-Y_{1xn}'W_{nxp}\eta_{{2}_{px1}}+\eta'_{{1}_{1xn}}W'_{pxn}W_{pxn}\eta_{{2}_{px1}}+aD'_{1xn}W_{nxp}\eta_{{2}_{px1}}+a\eta'_{{2}_{1xp}}W'_{pxn}D_{nx1}-a\eta'_{{2}_{1xp}}W'_{pxn}W_{nxp}\eta_{{2}_{px1}}]}{\partial \eta_{2}}|_{(\alpha,W_{Yw},W_{Dw})}\\
+=E[-W'_{pxn}Y_{nx1}+W'_{pxn}W_{nxp}\eta_{{1}_{px1}}+aW'_{pxn}D_{nx1}+aW'_{pxn}D_{nx1}-aW'_{pxn}W_{nxp}\eta_{{2}_{px1}}-aW'_{pxn}W_{nxp}\eta_{{2}_{px1}}]|_{(\alpha,W_{Yw},W_{Dw})}\\\
+\\\
+Substituting\ (\alpha,W_{Yw},W_{Dw})\ in\ (a,\eta_{1},\eta_{2})\\\
+\\
+=E[-W'_{pxn}Y_{nx1}+W'_{pxn}W_{nxp}X_{{{yw}_{px1}}}+\alpha W'_{pxn}D_{nx1}+\alpha W'_{pxn}D_{nx1}-\alpha W'_{pxn}W_{nxp}X_{{{Dw}_{px1}}}-\alpha W'_{pxn}W_{nxp}X_{{{Dw}_{px1}}}]\\
+=E[-W'_{pxn}Y_{nx1}+W'_{pxn}W_{nxp}(W'_{pxn}W_{nxp})^{-1}(W'_{pxn}Y_{nx1})+\alpha W'_{pxn}D_{nx1}+\alpha W'_{pxn}D_{nx1}-\alpha W'_{pxn}W_{nxp}(W'_{pxn}W_{nxp})^{-1}(W'_{pxn}D_{nx1})-\alpha W'_{pxn}W_{nxp}(W'_{pxn}W_{nxp})^{-1}(W'_{pxn}D_{nx1})]\\
+=E[-W'_{pxn}Y_{nx1}+-W'_{pxn}Y_{nx1}+\alpha W'_{pxn}D_{nx1}+\alpha W'_{pxn}D_{nx1}-\alpha W'_{pxn}D_{nx1}-\alpha W'_{pxn}D_{nx1}]=E[0]=0\\
+S_{2}=0\)</span></p>
+<section id="code-section">
+<h2>2. Code Section<a class="headerlink" href="#code-section" title="Link to this heading">#</a></h2>
+<section id="orthogonal-learning">
+<h3>2.1. Orthogonal Learning<a class="headerlink" href="#orthogonal-learning" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install and load necessary packages</span>
+<span class="c1">#install.packages(c(&quot;glmnet&quot;, &quot;parallel&quot;, &quot;ggplot2&quot;, &quot;gridExtra&quot;, &quot;hdm&quot;, &quot;cowplot&quot;))</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">hdm</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">parallel</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gridExtra</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">cowplot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded glmnet 4.1-8
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-design">
+<h3>Simulation Design<a class="headerlink" href="#simulation-design" title="Link to this heading">#</a></h3>
+<p>We are going to simulate 3 different trials to show the properties we talked about orthogonal learning.</p>
+<p>For that we first define a function that runs a single observation of our simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">simulate_once</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">set.seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span>
+<span class="w">  </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span>
+<span class="w">  </span><span class="n">beta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">p</span><span class="p">)</span><span class="o">^</span><span class="m">2</span>
+<span class="w">  </span><span class="n">gamma</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">p</span><span class="p">)</span><span class="o">^</span><span class="m">2</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
+<span class="w">  </span><span class="n">sd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">D</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">gamma</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">4</span>
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">beta</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Single selection method</span>
+<span class="w">  </span><span class="n">r_lasso</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rlasso</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="w">  </span><span class="n">coef_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">r_lasso</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)]</span>
+<span class="w">  </span><span class="n">SX_IDs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">which</span><span class="p">(</span><span class="n">coef_matrix</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># In case all X coefficients are zero</span>
+<span class="w">  </span><span class="nf">if </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">SX_IDs</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">naive_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">D</span><span class="p">)</span>
+<span class="w">    </span><span class="n">naive_coef</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">naive_model</span><span class="p">))[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">X_D</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="w"> </span><span class="n">SX_IDs</span><span class="p">])</span>
+<span class="w">    </span><span class="n">naive_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X_D</span><span class="p">)</span>
+<span class="w">    </span><span class="n">naive_coef</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">naive_model</span><span class="p">))[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Regress residuals</span>
+<span class="w">  </span><span class="n">resY</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">residuals</span><span class="p">(</span><span class="nf">rlasso</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
+<span class="w">  </span><span class="n">resD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">residuals</span><span class="p">(</span><span class="nf">rlasso</span><span class="p">(</span><span class="n">D</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span>
+<span class="w">  </span><span class="n">orthogonal_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">resY</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">resD</span><span class="p">)</span>
+<span class="w">  </span><span class="n">orthogonal_coef</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">orthogonal_model</span><span class="p">))[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">naive_coef</span><span class="p">,</span><span class="w"> </span><span class="n">orthogonal_coef</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we define a function that runs the simulation on its enterity, using parallel computing and the function we previously defined.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">run_simulation</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">makeCluster</span><span class="p">(</span><span class="nf">detectCores</span><span class="p">())</span><span class="w">  </span><span class="c1"># Create a cluster using all available cores</span>
+<span class="w">  </span><span class="nf">on.exit</span><span class="p">({</span>
+<span class="w">    </span><span class="nf">stopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span><span class="c1"># Ensure the cluster is stopped when the function exits, even if there&#39;s an error</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">clusterExport</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;simulate_once&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rlasso&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;coef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;residuals&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;summary&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;set.seed&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;matrix&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rnorm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cbind&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lm&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;which&quot;</span><span class="p">))</span><span class="w">  </span><span class="c1"># Export necessary objects and functions to the cluster</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tryCatch</span><span class="p">({</span>
+<span class="w">    </span><span class="nf">parLapply</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">simulate_once</span><span class="p">)</span><span class="w">  </span><span class="c1"># Run the simulation in parallel</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">message</span><span class="p">(</span><span class="s">&quot;Error during parallel execution: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">stopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">stop</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">Naive</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sapply</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+<span class="w">  </span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sapply</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="p">])</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">Naive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Naive</span><span class="p">,</span><span class="w"> </span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Orthogonal</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Orto_breaks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span>
+<span class="n">Naive_breaks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we run the simulations with 100, 1000, and 10000 iterations and plot the histograms for the Naive and Orthogonal estimations</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">warn</span><span class="o">=</span><span class="m">-1</span><span class="p">)</span>
+<span class="n">Bs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">)</span>
+
+<span class="n">custom_theme</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">theme_classic</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span>
+<span class="w">    </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">panel.border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_rect</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span>
+<span class="w">    </span><span class="n">panel.grid.major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">panel.grid.minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">plot.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">()</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="nf">for </span><span class="p">(</span><span class="n">B</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">Bs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">start_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">()</span>
+<span class="w">  </span><span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">run_simulation</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Naive</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="o">$</span><span class="n">Naive</span>
+<span class="w">  </span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="o">$</span><span class="n">Orthogonal</span>
+<span class="w">  </span><span class="n">end_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">()</span>
+<span class="w">  </span><span class="n">elapsed_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">difftime</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span><span class="w"> </span><span class="n">start_time</span><span class="p">,</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;secs&quot;</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">df1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Orthogonal</span><span class="p">)</span>
+<span class="w">  </span><span class="n">df2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Naive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Naive</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">vlines_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">df1</span><span class="o">$</span><span class="n">Orthogonal</span><span class="p">),</span><span class="w"> </span><span class="m">10</span><span class="p">),</span>
+<span class="w">                        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimated Treatment Effect&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;True Effect&quot;</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">p1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Orthogonal</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">after_stat</span><span class="p">(</span><span class="n">density</span><span class="p">)),</span><span class="w">  </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Orto_breaks</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;lightblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;NA&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_density</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;darkblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_vline</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vlines_df</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span><span class="p">),</span><span class="w"> </span><span class="n">linewidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;Orthogonal estimation&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Estimated Treatment Effect&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimated Treatment Effect&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;True Effect&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_linetype_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimated Treatment Effect&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;True Effect&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="n">custom_theme</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">labs</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Legend&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Legend&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">    </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;horizontal&quot;</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">p2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ggplot</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Naive</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">after_stat</span><span class="p">(</span><span class="n">density</span><span class="p">)),</span><span class="w">  </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Naive_breaks</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;lightblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;NA&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_density</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;darkblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_vline</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">Naive</span><span class="p">)),</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_vline</span><span class="p">(</span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dashed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">scale_x_continuous</span><span class="p">(</span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;Naive estimation&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Estimated Treatment Effect&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">    </span><span class="n">custom_theme</span>
+<span class="w">  </span>
+<span class="w">    </span><span class="c1"># Extract the legend</span>
+<span class="w">  </span><span class="n">legend</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">suppressWarnings</span><span class="p">(</span><span class="nf">get_legend</span><span class="p">(</span><span class="n">p1</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># Remove the legends from the individual plots</span>
+<span class="w">  </span><span class="n">p1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">p2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+
+<span class="c1"># Arrange the plots and the legend</span>
+
+<span class="w">  </span><span class="n">combined_plot</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">plot_grid</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;v&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">combined_plot_with_legend</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">plot_grid</span><span class="p">(</span><span class="n">combined_plot</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">rel_heights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0.07</span><span class="p">))</span>
+<span class="w">  </span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">grid.arrange</span><span class="p">(</span><span class="n">combined_plot_with_legend</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Simulation with&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;iterations&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Time taken for&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;iteration simulation:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;seconds&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Time taken for 100 iteration simulation: 4.77 seconds&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can se that the orthogonal estimation yields on average a coeficient more centered on the true effect than the naive estimation. This method of estimation that utilizes the residuals of lasso regresion and helps reduce bias more efficiently than the naive estimation method. This is because it leverages the properties explained on the begining of this notebook rather than just controlling for a relevant set of covariates which may induce endogeneity.</p>
+<p>We have used parallel computing because it is supposed to allow us to achieve better processing times. It can significantly lower the running time of computations due to its ability to distribute the workload across multiple processing units.</p>
+<p>As an example, we can see how long it would have taken to run the simulation with 1000 iteration if we had not utilized parallel computing.</p>
+<p>Without parallel computing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">run_simulation</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Naive</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="w">  </span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">simulate_once</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Naive</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+<span class="w">    </span><span class="n">Orthogonal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="nf">return</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">Naive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Naive</span><span class="p">,</span><span class="w"> </span><span class="n">Orthogonal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Orthogonal</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">()</span>
+<span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">run_simulation</span><span class="p">(</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">Naive</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="o">$</span><span class="n">Naive</span>
+<span class="n">Orthogonal</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">results</span><span class="o">$</span><span class="n">Orthogonal</span>
+<span class="n">end_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Sys.time</span><span class="p">()</span>
+<span class="n">elapsed_time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">difftime</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span><span class="w"> </span><span class="n">start_time</span><span class="p">,</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;secs&quot;</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Time taken for 1000 iteration simulation:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;seconds&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Time taken for 1000 iteration simulation: 129.2 seconds&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that if we were to not use parallel computing, the processing time would be higher. It took 129 seconds to achieve what we achieved in 27.</p>
+</section>
+<section id="double-lasso-using-school-data">
+<h3>2.2. Double Lasso - Using School data<a class="headerlink" href="#double-lasso-using-school-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install necessary packages</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;tidyverse&quot;</span><span class="p">)</span><span class="w">  </span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;lme4&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stargazer&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;caTools&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;caret&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;glmnet&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;dependencies &#39;MASS&#39;, &#39;Matrix&#39;, &#39;lattice&#39; are not available&quot;also installing the dependencies &#39;fastmap&#39;, &#39;colorspace&#39;, &#39;sys&#39;, &#39;bit&#39;, &#39;ps&#39;, &#39;sass&#39;, &#39;cachem&#39;, &#39;nlme&#39;, &#39;farver&#39;, &#39;munsell&#39;, &#39;rappdirs&#39;, &#39;askpass&#39;, &#39;bit64&#39;, &#39;processx&#39;, &#39;highr&#39;, &#39;xfun&#39;, &#39;yaml&#39;, &#39;bslib&#39;, &#39;fontawesome&#39;, &#39;htmltools&#39;, &#39;tinytex&#39;, &#39;backports&#39;, &#39;ellipsis&#39;, &#39;glue&#39;, &#39;lifecycle&#39;, &#39;memoise&#39;, &#39;blob&#39;, &#39;tidyselect&#39;, &#39;vctrs&#39;, &#39;data.table&#39;, &#39;gtable&#39;, &#39;isoband&#39;, &#39;mgcv&#39;, &#39;scales&#39;, &#39;gargle&#39;, &#39;cellranger&#39;, &#39;curl&#39;, &#39;ids&#39;, &#39;rematch2&#39;, &#39;mime&#39;, &#39;openssl&#39;, &#39;timechange&#39;, &#39;fansi&#39;, &#39;utf8&#39;, &#39;systemfonts&#39;, &#39;textshaping&#39;, &#39;vroom&#39;, &#39;tzdb&#39;, &#39;progress&#39;, &#39;callr&#39;, &#39;fs&#39;, &#39;knitr&#39;, &#39;rmarkdown&#39;, &#39;selectr&#39;, &#39;stringi&#39;, &#39;broom&#39;, &#39;conflicted&#39;, &#39;cli&#39;, &#39;dbplyr&#39;, &#39;dplyr&#39;, &#39;dtplyr&#39;, &#39;forcats&#39;, &#39;ggplot2&#39;, &#39;googledrive&#39;, &#39;googlesheets4&#39;, &#39;haven&#39;, &#39;hms&#39;, &#39;httr&#39;, &#39;jsonlite&#39;, &#39;lubridate&#39;, &#39;magrittr&#39;, &#39;modelr&#39;, &#39;pillar&#39;, &#39;purrr&#39;, &#39;ragg&#39;, &#39;readr&#39;, &#39;readxl&#39;, &#39;reprex&#39;, &#39;rlang&#39;, &#39;rvest&#39;, &#39;stringr&#39;, &#39;tibble&#39;, &#39;tidyr&#39;, &#39;xml2&#39;
+
+Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;Packages which are only available in source form, and may need
+  compilation of C/C++/Fortran: &#39;fastmap&#39; &#39;colorspace&#39; &#39;sys&#39; &#39;bit&#39; &#39;ps&#39;
+  &#39;sass&#39; &#39;cachem&#39; &#39;nlme&#39; &#39;farver&#39; &#39;rappdirs&#39; &#39;askpass&#39; &#39;bit64&#39;
+  &#39;processx&#39; &#39;xfun&#39; &#39;yaml&#39; &#39;htmltools&#39; &#39;backports&#39; &#39;ellipsis&#39; &#39;glue&#39;
+  &#39;tidyselect&#39; &#39;vctrs&#39; &#39;data.table&#39; &#39;isoband&#39; &#39;mgcv&#39; &#39;scales&#39; &#39;curl&#39;
+  &#39;mime&#39; &#39;openssl&#39; &#39;timechange&#39; &#39;fansi&#39; &#39;utf8&#39; &#39;systemfonts&#39;
+  &#39;textshaping&#39; &#39;vroom&#39; &#39;tzdb&#39; &#39;fs&#39; &#39;stringi&#39; &#39;cli&#39; &#39;dplyr&#39; &#39;haven&#39;
+  &#39;jsonlite&#39; &#39;lubridate&#39; &#39;magrittr&#39; &#39;purrr&#39; &#39;ragg&#39; &#39;readr&#39; &#39;readxl&#39;
+  &#39;rlang&#39; &#39;tibble&#39; &#39;tidyr&#39; &#39;xml2&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  These will not be installed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>installing the source packages &#39;munsell&#39;, &#39;highr&#39;, &#39;bslib&#39;, &#39;fontawesome&#39;, &#39;tinytex&#39;, &#39;lifecycle&#39;, &#39;memoise&#39;, &#39;blob&#39;, &#39;gtable&#39;, &#39;gargle&#39;, &#39;cellranger&#39;, &#39;ids&#39;, &#39;rematch2&#39;, &#39;progress&#39;, &#39;callr&#39;, &#39;knitr&#39;, &#39;rmarkdown&#39;, &#39;selectr&#39;, &#39;broom&#39;, &#39;conflicted&#39;, &#39;dbplyr&#39;, &#39;dtplyr&#39;, &#39;forcats&#39;, &#39;ggplot2&#39;, &#39;googledrive&#39;, &#39;googlesheets4&#39;, &#39;hms&#39;, &#39;httr&#39;, &#39;modelr&#39;, &#39;pillar&#39;, &#39;reprex&#39;, &#39;rvest&#39;, &#39;stringr&#39;, &#39;tidyverse&#39;
+
+Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;munsell&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;highr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;fontawesome&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;tinytex&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;lifecycle&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;memoise&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;blob&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;cellranger&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;ids&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;rematch2&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;callr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;httr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;bslib&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;gtable&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;gargle&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;knitr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;conflicted&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;dtplyr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;forcats&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;hms&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;pillar&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;stringr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;progress&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;rmarkdown&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;selectr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;broom&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;dbplyr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;ggplot2&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;googledrive&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;googlesheets4&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;modelr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;reprex&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;rvest&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;tidyverse&quot;):
+&quot;installation of package &#39;tidyverse&#39; had non-zero exit status&quot;Warning message:
+&quot;dependencies &#39;Matrix&#39;, &#39;MASS&#39;, &#39;lattice&#39; are not available&quot;also installing the dependencies &#39;utf8&#39;, &#39;pillar&#39;, &#39;vctrs&#39;, &#39;glue&#39;, &#39;fs&#39;, &#39;pkgbuild&#39;, &#39;diffobj&#39;, &#39;fansi&#39;, &#39;rematch2&#39;, &#39;tibble&#39;, &#39;brio&#39;, &#39;callr&#39;, &#39;cli&#39;, &#39;desc&#39;, &#39;digest&#39;, &#39;jsonlite&#39;, &#39;lifecycle&#39;, &#39;magrittr&#39;, &#39;pkgload&#39;, &#39;processx&#39;, &#39;ps&#39;, &#39;rlang&#39;, &#39;waldo&#39;, &#39;testthat&#39;, &#39;nlme&#39;, &#39;minqa&#39;, &#39;nloptr&#39;, &#39;RcppEigen&#39;
+
+Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;Packages which are only available in source form, and may need
+  compilation of C/C++/Fortran: &#39;utf8&#39; &#39;vctrs&#39; &#39;glue&#39; &#39;fs&#39; &#39;diffobj&#39;
+  &#39;fansi&#39; &#39;tibble&#39; &#39;brio&#39; &#39;cli&#39; &#39;digest&#39; &#39;jsonlite&#39; &#39;magrittr&#39;
+  &#39;processx&#39; &#39;ps&#39; &#39;rlang&#39; &#39;testthat&#39; &#39;nlme&#39; &#39;minqa&#39; &#39;nloptr&#39;
+  &#39;RcppEigen&#39; &#39;lme4&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  These will not be installed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>installing the source packages &#39;pillar&#39;, &#39;pkgbuild&#39;, &#39;rematch2&#39;, &#39;callr&#39;, &#39;desc&#39;, &#39;lifecycle&#39;, &#39;pkgload&#39;, &#39;waldo&#39;
+
+Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;rematch2&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;callr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;desc&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;lifecycle&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;pillar&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;pkgbuild&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;waldo&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;lme4&quot;):
+&quot;installation of package &#39;pkgload&#39; had non-zero exit status&quot;Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;installing the source package &#39;stargazer&#39;
+
+also installing the dependency &#39;bitops&#39;
+
+Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;Packages which are only available in source form, and may need
+  compilation of C/C++/Fortran: &#39;bitops&#39; &#39;caTools&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  These will not be installed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;dependencies &#39;lattice&#39;, &#39;MASS&#39;, &#39;Matrix&#39; are not available&quot;also installing the dependencies &#39;parallelly&#39;, &#39;future&#39;, &#39;future.apply&#39;, &#39;colorspace&#39;, &#39;utf8&#39;, &#39;KernSmooth&#39;, &#39;lava&#39;, &#39;farver&#39;, &#39;munsell&#39;, &#39;fansi&#39;, &#39;pillar&#39;, &#39;tzdb&#39;, &#39;rpart&#39;, &#39;survival&#39;, &#39;nnet&#39;, &#39;prodlim&#39;, &#39;timechange&#39;, &#39;stringi&#39;, &#39;cli&#39;, &#39;glue&#39;, &#39;gtable&#39;, &#39;isoband&#39;, &#39;lifecycle&#39;, &#39;mgcv&#39;, &#39;rlang&#39;, &#39;scales&#39;, &#39;tibble&#39;, &#39;vctrs&#39;, &#39;class&#39;, &#39;proxy&#39;, &#39;data.table&#39;, &#39;dplyr&#39;, &#39;clock&#39;, &#39;ellipsis&#39;, &#39;gower&#39;, &#39;hardhat&#39;, &#39;ipred&#39;, &#39;lubridate&#39;, &#39;magrittr&#39;, &#39;purrr&#39;, &#39;tidyr&#39;, &#39;tidyselect&#39;, &#39;stringr&#39;, &#39;ggplot2&#39;, &#39;e1071&#39;, &#39;ModelMetrics&#39;, &#39;nlme&#39;, &#39;plyr&#39;, &#39;pROC&#39;, &#39;recipes&#39;, &#39;reshape2&#39;
+
+Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;Packages which are only available in source form, and may need
+  compilation of C/C++/Fortran: &#39;parallelly&#39; &#39;colorspace&#39; &#39;utf8&#39;
+  &#39;KernSmooth&#39; &#39;farver&#39; &#39;fansi&#39; &#39;tzdb&#39; &#39;rpart&#39; &#39;survival&#39; &#39;nnet&#39;
+  &#39;prodlim&#39; &#39;timechange&#39; &#39;stringi&#39; &#39;cli&#39; &#39;glue&#39; &#39;isoband&#39; &#39;mgcv&#39;
+  &#39;rlang&#39; &#39;scales&#39; &#39;tibble&#39; &#39;vctrs&#39; &#39;class&#39; &#39;proxy&#39; &#39;data.table&#39;
+  &#39;dplyr&#39; &#39;clock&#39; &#39;ellipsis&#39; &#39;gower&#39; &#39;ipred&#39; &#39;lubridate&#39; &#39;magrittr&#39;
+  &#39;purrr&#39; &#39;tidyr&#39; &#39;tidyselect&#39; &#39;e1071&#39; &#39;ModelMetrics&#39; &#39;nlme&#39; &#39;plyr&#39;
+  &#39;pROC&#39; &#39;reshape2&#39; &#39;caret&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  These will not be installed
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>installing the source packages &#39;future&#39;, &#39;future.apply&#39;, &#39;lava&#39;, &#39;munsell&#39;, &#39;pillar&#39;, &#39;gtable&#39;, &#39;lifecycle&#39;, &#39;hardhat&#39;, &#39;stringr&#39;, &#39;ggplot2&#39;, &#39;recipes&#39;
+
+Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;future&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;munsell&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;lifecycle&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;hardhat&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;future.apply&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;pillar&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;gtable&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;stringr&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;recipes&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;lava&#39; had non-zero exit status&quot;Warning message in install.packages(&quot;caret&quot;):
+&quot;installation of package &#39;ggplot2&#39; had non-zero exit status&quot;Warning message:
+&quot;dependency &#39;Matrix&#39; is not available&quot;also installing the dependencies &#39;survival&#39;, &#39;RcppEigen&#39;
+
+Warning message:
+&quot;unable to access index for repository https://cran.r-project.org/bin/windows/contrib/3.6:
+  cannot open URL &#39;https://cran.r-project.org/bin/windows/contrib/3.6/PACKAGES&#39;&quot;Packages which are only available in source form, and may need
+  compilation of C/C++/Fortran: &#39;survival&#39; &#39;RcppEigen&#39; &#39;glmnet&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  These will not be installed
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">   </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">lme4</span><span class="p">)</span><span class="w">        </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">stargazer</span><span class="p">)</span><span class="w">   </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">caTools</span><span class="p">)</span><span class="w">     </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">       </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span><span class="w">    </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">rsample</span><span class="p">)</span><span class="w">    </span>
+<span class="nf">library</span><span class="p">(</span><span class="n">hdm</span><span class="p">)</span><span class="w">  </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">):</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="s1">&#39;tidyverse&#39;</span>
+
+<span class="ne">Traceback</span>:
+
+
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;./data/bruhn2016.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">first</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><div style = "float: left;"><span>5×16 DataFrame</span></div><div style = "clear: both;"></div></div><div class = "data-frame" style = "overflow-x: scroll;"><table class = "data-frame" style = "margin-bottom: 6px;"><thead><tr class = "header"><th class = "rowNumber" style = "font-weight: bold; text-align: right;">Row</th><th style = "text-align: left;">outcome.test.score</th><th style = "text-align: left;">treatment</th><th style = "text-align: left;">school</th><th style = "text-align: left;">is.female</th><th style = "text-align: left;">mother.attended.secondary.school</th><th style = "text-align: left;">father.attened.secondary.school</th><th style = "text-align: left;">failed.at.least.one.school.year</th><th style = "text-align: left;">family.receives.cash.transfer</th><th style = "text-align: left;">has.computer.with.internet.at.home</th><th style = "text-align: left;">is.unemployed</th><th style = "text-align: left;">has.some.form.of.income</th><th style = "text-align: left;">saves.money.for.future.purchases</th><th style = "text-align: left;">intention.to.save.index</th><th style = "text-align: left;">makes.list.of.expenses.every.month</th><th style = "text-align: left;">negotiates.prices.or.payment.methods</th><th style = "text-align: left;">financial.autonomy.index</th></tr><tr class = "subheader headerLastRow"><th class = "rowNumber" style = "font-weight: bold; text-align: right;"></th><th title = "Float64" style = "text-align: left;">Float64</th><th title = "Int64" style = "text-align: left;">Int64</th><th title = "Int64" style = "text-align: left;">Int64</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th><th title = "String3" style = "text-align: left;">String3</th></tr></thead><tbody><tr><td class = "rowNumber" style = "font-weight: bold; text-align: right;">1</td><td style = "text-align: right;">47.3674</td><td style = "text-align: right;">0</td><td style = "text-align: right;">17018390</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">1</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">29</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">52</td></tr><tr><td class = "rowNumber" style = "font-weight: bold; text-align: right;">2</td><td style = "text-align: right;">58.1768</td><td style = "text-align: right;">1</td><td style = "text-align: right;">33002614</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">NA</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">41</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">27</td></tr><tr><td class = "rowNumber" style = "font-weight: bold; text-align: right;">3</td><td style = "text-align: right;">56.6717</td><td style = "text-align: right;">1</td><td style = "text-align: right;">35002914</td><td style = "text-align: left;">1</td><td style = "text-align: left;">1</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">48</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">56</td></tr><tr><td class = "rowNumber" style = "font-weight: bold; text-align: right;">4</td><td style = "text-align: right;">29.0794</td><td style = "text-align: right;">0</td><td style = "text-align: right;">35908915</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">42</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">27</td></tr><tr><td class = "rowNumber" style = "font-weight: bold; text-align: right;">5</td><td style = "text-align: right;">49.5635</td><td style = "text-align: right;">1</td><td style = "text-align: right;">33047324</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">0</td><td style = "text-align: left;">50</td><td style = "text-align: left;">0</td><td style = "text-align: left;">1</td><td style = "text-align: left;">31</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Drop missing values</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">drop_na</span><span class="p">()</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">):</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="s1">&#39;dplyr&#39;</span>
+
+<span class="ne">Traceback</span>:
+
+
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">missing_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">ismissing</span><span class="p">,</span><span class="w"> </span><span class="nf">eachcol</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the vector of dependent variable names</span>
+<span class="n">dependent_vars</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;outcome.test.score&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;intention.to.save.index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;negotiates.prices.or.payment.methods&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;has.some.form.of.income&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;makes.list.of.expenses.every.month&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;financial.autonomy.index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;saves.money.for.future.purchases&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;is.unemployed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&quot;outcome.test.score&quot;, &quot;treatment&quot;, &quot;school&quot;, &quot;is.female&quot;, &quot;mother.attended.secondary.school&quot;, &quot;father.attened.secondary.school&quot;, &quot;failed.at.least.one.school.year&quot;, &quot;family.receives.cash.transfer&quot;, &quot;has.computer.with.internet.at.home&quot;, &quot;is.unemployed&quot;, &quot;has.some.form.of.income&quot;, &quot;saves.money.for.future.purchases&quot;, &quot;intention.to.save.index&quot;, &quot;makes.list.of.expenses.every.month&quot;, &quot;negotiates.prices.or.payment.methods&quot;, &quot;financial.autonomy.index&quot;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define an array of dependent variable names</span>
+<span class="n">ddependent_vars</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;outcome.test.score&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;intention.to.save.index&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;negotiates.prices.or.payment.methods&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;has.some.form.of.income&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;makes.list.of.expenses.every.month&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;financial.autonomy.index&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;saves.money.for.future.purchases&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="s">&quot;is.unemployed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element Vector{String}:
+ &quot;outcome.test.score&quot;
+ &quot;intention.to.save.index&quot;
+ &quot;negotiates.prices.or.payment.methods&quot;
+ &quot;has.some.form.of.income&quot;
+ &quot;makes.list.of.expenses.every.month&quot;
+ &quot;financial.autonomy.index&quot;
+ &quot;saves.money.for.future.purchases&quot;
+ &quot;is.unemployed&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>For Lasso regressions, we split the data into train and test data, and standarize the covariates matrix</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">df</span><span class="p">[,</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">dependent_vars</span><span class="p">)]</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">df</span><span class="p">[,</span><span class="w"> </span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">dependent_vars</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
+<span class="c1"># Split the data into training and testing sets</span>
+<span class="n">trainIndex</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">createDataPartition</span><span class="p">(</span><span class="n">y</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">X_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X</span><span class="p">[</span><span class="n">trainIndex</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="n">X_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X</span><span class="p">[</span><span class="o">-</span><span class="n">trainIndex</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="n">y_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="n">trainIndex</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+<span class="n">y_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">trainIndex</span><span class="p">,</span><span class="w"> </span><span class="p">]</span>
+
+<span class="c1"># Extract &#39;treatment&#39; and remove it from &#39;X_train&#39; and &#39;X_test&#39;</span>
+<span class="n">T_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X_train</span><span class="o">$</span><span class="n">treatment</span>
+<span class="n">T_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X_test</span><span class="o">$</span><span class="n">treatment</span>
+
+<span class="n">X_train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X_train</span><span class="p">[,</span><span class="w"> </span><span class="o">!</span><span class="nf">names</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="s">&quot;treatment&quot;</span><span class="p">]</span>
+<span class="n">X_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">X_test</span><span class="p">[,</span><span class="w"> </span><span class="o">!</span><span class="nf">names</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="s">&quot;treatment&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standardize the covariates matrix</span>
+
+<span class="n">scale</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">preProcess</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;center&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;scale&quot;</span><span class="p">))</span>
+<span class="n">X_train_scaled</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combine the scaled training and testing data</span>
+<span class="n">X_scaled</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span><span class="w"> </span><span class="n">X_test_scaled</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="nf">arrange</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">.</span><span class="p">))</span>
+
+<span class="c1"># Combine the treatment training and testing data</span>
+<span class="bp">T</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rbind</span><span class="p">(</span><span class="n">T_train</span><span class="p">,</span><span class="w"> </span><span class="n">T_test</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">  </span><span class="nf">arrange</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">.</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="regressions">
+<h4>2.2.2. Regressions<a class="headerlink" href="#regressions" title="Link to this heading">#</a></h4>
+<section id="a-ols">
+<h5>a. OLS<a class="headerlink" href="#a-ols" title="Link to this heading">#</a></h5>
+<p>From 1 - 3 regression: measures treatment impact on <strong>student financial proficiency</strong></p>
+<p>From 4 - 6 regression: measures treatment impact on <strong>student savings behavior and attitudes</strong></p>
+<p>From 7 - 9 regression: measures treatment impact on <strong>student money management behavior and attitudes</strong></p>
+<p>From 10 - 12 regression: measures treatment impact on <strong>student entrepreneurship and work outcomes</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLS regressions with &quot;Student Financial Proficiency&quot; as dependent variable</span>
+<span class="n">ols_score_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">outcome.test.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_score_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">outcome.test.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_score_3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">outcome.test.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">is.female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mother.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">father.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">family.receives.cash.transfer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">has.computer.with.internet.at.home</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># OLS regressions with &quot;Intention to save index&quot; as dependent variable</span>
+<span class="n">ols_saving_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">intention.to.save.index</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_saving_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">intention.to.save.index</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_saving_3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">intention.to.save.index</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">is.female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mother.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">father.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">family.receives.cash.transfer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">has.computer.with.internet.at.home</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># OLS regressions with &quot;Negotiates prices or payment methods&quot; as dependent variable</span>
+<span class="n">ols_negotiates_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">negotiates.prices.or.payment.methods</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_negotiates_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">negotiates.prices.or.payment.methods</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_negotiates_3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">negotiates.prices.or.payment.methods</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">is.female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mother.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">father.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">family.receives.cash.transfer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">has.computer.with.internet.at.home</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># OLS regressions with &quot;Has some form of income&quot; as dependent variable</span>
+<span class="n">ols_manage_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">has.some.form.of.income</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_manage_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">has.some.form.of.income</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="n">ols_manage_3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">has.some.form.of.income</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">treatment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">failed.at.least.one.school.year</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">is.female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mother.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">father.attended.secondary.school</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">family.receives.cash.transfer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">has.computer.with.internet.at.home</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Show parameters in table using stargazer</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">ols_score_1</span><span class="p">,</span><span class="w"> </span><span class="n">ols_score_2</span><span class="p">,</span><span class="w"> </span><span class="n">ols_score_3</span><span class="p">,</span><span class="w"> </span><span class="n">ols_saving_1</span><span class="p">,</span><span class="w"> </span><span class="n">ols_saving_2</span><span class="p">,</span><span class="w"> </span><span class="n">ols_saving_3</span><span class="p">,</span><span class="w"> </span><span class="n">ols_negotiates_1</span><span class="p">,</span><span class="w"> </span><span class="n">ols_negotiates_2</span><span class="p">,</span><span class="w"> </span><span class="n">ols_negotiates_3</span><span class="p">,</span><span class="w"> </span><span class="n">ols_manage_1</span><span class="p">,</span><span class="w"> </span><span class="n">ols_manage_2</span><span class="p">,</span><span class="w"> </span><span class="n">ols_manage_3</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Regression Results&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">column.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Student Financial Proficiency&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Intention to save index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Negotiates prices or payment methods&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Has some form of income&quot;</span><span class="p">),</span>
+<span class="w">          </span><span class="n">covariate.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Failed at least one school year&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Female&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Father attended secondary school&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Family receives cash transfer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Has computer with internet at home&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_html"><table style="text-align:center"><tr><td colspan="13" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><tr><td></td><td colspan="3">Dependent var 1: Student Financial Proficiency</td><td colspan="3">Dependent var 2: Intention to save index</td><td colspan="3">Dependent var 3: Negotiates prices or payment methods</td><td colspan="3">Dependent var 4: Has some form of income</td></tr><tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td><td>(9)</td><td>(10)</td><td>(11)</td><td>(12)</td></tr>
+<tr><td colspan="13" style="border-bottom: 1px solid black"></td></tr>
+
+<tr><td style="text-align:left">Intercept</td><td>57.591<sup>***</sup></td><td>59.377<sup>***</sup></td><td>57.013<sup>***</sup></td><td>49.016<sup>***</sup></td><td>46.725<sup>***</sup></td><td>45.407<sup>***</sup></td><td>0.763<sup>***</sup></td><td>0.856<sup>***</sup></td><td>0.901<sup>***</sup></td><td>0.639<sup>***</sup></td><td>0.534<sup>***</sup></td><td>0.553<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.187)</td><td>(0.556)</td><td>(0.583)</td><td>(0.240)</td><td>(0.728)</td><td>(0.767)</td><td>(0.006)</td><td>(0.017)</td><td>(0.018)</td><td>(0.006)</td><td>(0.019)</td><td>(0.020)</td></tr>
+<tr><td style="text-align:left">Failed at least one school year</td><td></td><td>-7.218<sup>***</sup></td><td>-6.759<sup>***</sup></td><td></td><td>-3.614<sup>***</sup></td><td>-3.354<sup>***</sup></td><td></td><td>0.024<sup>***</sup></td><td>0.016<sup>*</sup></td><td></td><td>0.005<sup></sup></td><td>0.002<sup></sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.288)</td><td>(0.289)</td><td></td><td>(0.377)</td><td>(0.380)</td><td></td><td>(0.009)</td><td>(0.009)</td><td></td><td>(0.010)</td><td>(0.010)</td></tr>
+<tr><td style="text-align:left">Female</td><td></td><td></td><td>2.836<sup>***</sup></td><td></td><td></td><td>1.357<sup>***</sup></td><td></td><td></td><td>-0.066<sup>***</sup></td><td></td><td></td><td>-0.054<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td>(0.257)</td><td></td><td></td><td>(0.339)</td><td></td><td></td><td>(0.008)</td><td></td><td></td><td>(0.009)</td></tr>
+<tr><td style="text-align:left">Q("mother.attended.secondary.school")</td><td></td><td></td><td>1.826<sup>***</sup></td><td></td><td></td><td>1.380<sup>***</sup></td><td></td><td></td><td>-0.016<sup>**</sup></td><td></td><td></td><td>0.036<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td>(0.257)</td><td></td><td></td><td>(0.338)</td><td></td><td></td><td>(0.008)</td><td></td><td></td><td>(0.009)</td></tr>
+<tr><td style="text-align:left">school</td><td></td><td>0.000<sup></sup></td><td>-0.000<sup></sup></td><td></td><td>0.000<sup>***</sup></td><td>0.000<sup>***</sup></td><td></td><td>-0.000<sup>***</sup></td><td>-0.000<sup>***</sup></td><td></td><td>0.000<sup>***</sup></td><td>0.000<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.000)</td><td>(0.000)</td><td></td><td>(0.000)</td><td>(0.000)</td><td></td><td>(0.000)</td><td>(0.000)</td><td></td><td>(0.000)</td><td>(0.000)</td></tr>
+<tr><td style="text-align:left">treatment</td><td>4.216<sup>***</sup></td><td>4.392<sup>***</sup></td><td>4.307<sup>***</sup></td><td>-0.070<sup></sup></td><td>-0.005<sup></sup></td><td>-0.047<sup></sup></td><td>0.001<sup></sup></td><td>0.001<sup></sup></td><td>0.003<sup></sup></td><td>0.017<sup>**</sup></td><td>0.016<sup>*</sup></td><td>0.018<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.261)</td><td>(0.255)</td><td>(0.253)</td><td>(0.335)</td><td>(0.334)</td><td>(0.333)</td><td>(0.008)</td><td>(0.008)</td><td>(0.008)</td><td>(0.009)</td><td>(0.009)</td><td>(0.009)</td></tr>
+
+<td colspan="13" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align: left">Observations</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td><td>12222</td></tr><tr><td style="text-align: left">R<sup>2</sup></td><td>0.021</td><td>0.069</td><td>0.081</td><td>0.000</td><td>0.009</td><td>0.012</td><td>0.000</td><td>0.004</td><td>0.010</td><td>0.000</td><td>0.003</td><td>0.008</td></tr><tr><td style="text-align: left">Adjusted R<sup>2</sup></td><td>0.021</td><td>0.068</td><td>0.080</td><td>-0.000</td><td>0.009</td><td>0.011</td><td>-0.000</td><td>0.004</td><td>0.010</td><td>0.000</td><td>0.003</td><td>0.008</td></tr><tr><td style="text-align: left">Residual Std. Error</td><td>14.432 (df=12220)</td><td>14.076 (df=12218)</td><td>13.986 (df=12216)</td><td>18.506 (df=12220)</td><td>18.421 (df=12218)</td><td>18.400 (df=12216)</td><td>0.425 (df=12220)</td><td>0.424 (df=12218)</td><td>0.423 (df=12216)</td><td>0.478 (df=12220)</td><td>0.477 (df=12218)</td><td>0.476 (df=12216)</td></tr><tr><td style="text-align: left">F Statistic</td><td>260.547<sup>***</sup> (df=1; 12220)</td><td>300.463<sup>***</sup> (df=3; 12218)</td><td>214.786<sup>***</sup> (df=5; 12216)</td><td>0.043<sup></sup> (df=1; 12220)</td><td>38.533<sup>***</sup> (df=3; 12218)</td><td>29.248<sup>***</sup> (df=5; 12216)</td><td>0.018<sup></sup> (df=1; 12220)</td><td>16.352<sup>***</sup> (df=3; 12218)</td><td>24.653<sup>***</sup> (df=5; 12216)</td><td>3.843<sup>**</sup> (df=1; 12220)</td><td>12.839<sup>***</sup> (df=3; 12218)</td><td>19.652<sup>***</sup> (df=5; 12216)</td></tr>
+<tr><td colspan="13" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align: left">Note:</td><td colspan="12" style="text-align: right"><sup>*</sup>p&lt;0.1; <sup>**</sup>p&lt;0.05; <sup>***</sup>p&lt;0.01</td></tr></table></div></div>
+</div>
+</section>
+<section id="b-double-lasso-using-cross-validation">
+<h5>b. Double Lasso using cross validation<a class="headerlink" href="#b-double-lasso-using-cross-validation" title="Link to this heading">#</a></h5>
+<p>Dependent var 1: Student Financial Proficiency</p>
+<p>Step 1: We ran Lasso regression of Y (student financial proficiency) on X, and T on X</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#we need matix structure</span>
+<span class="n">X_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">y_vector</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y_train</span><span class="o">$</span><span class="n">outcome.test.score</span>
+<span class="n">T_vector</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">T_train</span><span class="p">)</span>
+
+<span class="c1"># Lasso regression of Y on X with cross-validation</span>
+<span class="n">lasso_CV_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">X_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">y_vector</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0.0001</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.001</span><span class="p">),</span><span class="w"> </span><span class="n">nfolds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">maxit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5000</span><span class="p">)</span>
+<span class="n">best_lambda_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lasso_CV_yX</span><span class="o">$</span><span class="n">lambda.min</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Best lambda for Y on X: %.4f&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">best_lambda_yX</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimate Y predictions with all X</span>
+<span class="n">y_pred_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">lasso_CV_yX</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_lambda_yX</span><span class="p">,</span><span class="w"> </span><span class="n">newx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Estimate y predictions with all X</span>
+
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">y_pred_yX</span> <span class="o">=</span> <span class="n">lasso_CV_yX</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+
+
+<span class="ne">NameError</span>: name &#39;lasso_CV_yX&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lasso_CV_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">X_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">T_vector</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">0.0001</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.001</span><span class="p">),</span><span class="w"> </span><span class="n">nfolds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">maxit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5000</span><span class="p">)</span>
+<span class="n">best_lambda_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lasso_CV_TX</span><span class="o">$</span><span class="n">lambda.min</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Best lambda for T on X: %.4f&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">best_lambda_TX</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Mejor lambda: 0.0011
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimate T predictions with all X</span>
+<span class="n">y_pred_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">lasso_CV_TX</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">best_lambda_TX</span><span class="p">,</span><span class="w"> </span><span class="n">newx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Step 2: Obtain the resulting residuals</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#y_pred_yX &lt;- as.numeric(y_pred_yX)</span>
+<span class="c1">#y_pred_TX &lt;- as.numeric(y_pred_TX)</span>
+
+<span class="n">res_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="o">$</span><span class="n">outcome.test.score</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_pred_yX</span>
+<span class="n">res_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="bp">T</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_pred_TX</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Step 3: We run the least squares of res_yX on res_TX</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a data frame for the residuals</span>
+<span class="n">residuals_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">res_yX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">res_yX</span><span class="p">,</span><span class="w"> </span><span class="n">res_TX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">res_TX</span><span class="p">)</span>
+
+
+<span class="n">ols_score</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">res_yX</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">res_TX</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">residuals_data</span><span class="p">)</span>
+
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">ols_score</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;OLS Regression of Residuals&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_html"><table style="text-align:center"><tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="1"><em>Dependent variable: res_yX</em></td></tr><tr><td style="text-align:left"></td><tr><td style="text-align:left"></td><td>(1)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+
+<tr><td style="text-align:left">Intercept</td><td>0.033<sup></sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.126)</td></tr>
+<tr><td style="text-align:left">res_TX</td><td>4.324<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.253)</td></tr>
+
+<td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align: left">Observations</td><td>12222</td></tr><tr><td style="text-align: left">R<sup>2</sup></td><td>0.023</td></tr><tr><td style="text-align: left">Adjusted R<sup>2</sup></td><td>0.023</td></tr><tr><td style="text-align: left">Residual Std. Error</td><td>13.945 (df=12220)</td></tr><tr><td style="text-align: left">F Statistic</td><td>292.956<sup>***</sup> (df=1; 12220)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align: left">Note:</td><td colspan="1" style="text-align: right"><sup>*</sup>p&lt;0.1; <sup>**</sup>p&lt;0.05; <sup>***</sup>p&lt;0.01</td></tr></table></div></div>
+</div>
+</section>
+<section id="c-double-lasso-using-theoretical-lambda">
+<h5>c. Double Lasso using theoretical lambda<a class="headerlink" href="#c-double-lasso-using-theoretical-lambda" title="Link to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load necessary libraries</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">hdm</span><span class="p">)</span>
+
+<span class="c1"># Define the RLasso class</span>
+<span class="n">RLasso</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">setRefClass</span><span class="p">(</span><span class="s">&quot;RLasso&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;logical&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">methods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">initialize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">.self</span><span class="o">$</span><span class="n">post</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">post</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">fit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rlasso</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.self</span><span class="o">$</span><span class="n">post</span><span class="p">)</span>
+<span class="w">      </span><span class="n">.self</span><span class="o">$</span><span class="n">rlasso_</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">fit</span>
+<span class="w">      </span><span class="nf">return</span><span class="p">(</span><span class="n">.self</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">predict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">predictions</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">.self</span><span class="o">$</span><span class="n">rlasso_</span><span class="p">,</span><span class="w"> </span><span class="n">newx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">)</span>
+<span class="w">      </span><span class="nf">return</span><span class="p">(</span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">predictions</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">predictions</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">nsel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nf">sum</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">.self</span><span class="o">$</span><span class="n">rlasso_</span><span class="p">)[</span><span class="m">-1</span><span class="p">])</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">lasso_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">RLasso</span><span class="o">$</span><span class="nf">new</span><span class="p">(</span><span class="n">post</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lasso_model</span><span class="p">()</span>
+<span class="n">model</span><span class="o">$</span><span class="nf">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">model</span><span class="o">$</span><span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Step 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assuming X_scaled, y, and T are prepared as in Python</span>
+<span class="c1"># Estimate y predictions with all X</span>
+<span class="n">model_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lasso_model</span><span class="p">()</span>
+<span class="n">model_yX</span><span class="o">$</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">$</span><span class="n">outcome.test.score</span><span class="p">)</span>
+<span class="n">y_pred_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">model_yX</span><span class="o">$</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimate T predictions with all X</span>
+<span class="n">model_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lasso_model</span><span class="p">()</span>
+<span class="n">model_TX</span><span class="o">$</span><span class="nf">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span><span class="w"> </span><span class="bp">T</span><span class="p">)</span>
+<span class="n">y_pred_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">model_TX</span><span class="o">$</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Step 2:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">res_yX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="o">$</span><span class="n">outcome.test.score</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_pred_yX</span>
+<span class="n">res_TX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="bp">T</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_pred_TX</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Step 3:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">stargazer</span><span class="p">)</span>
+
+
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">res_yX</span><span class="p">,</span><span class="w"> </span><span class="n">res_TX</span><span class="p">)</span>
+
+<span class="n">lasso_hdm_score</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">res_yX</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">res_TX</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">lasso_hdm_score</span><span class="p">)</span><span class="w">  </span>
+
+<span class="c1"># Display the regression table using stargazer</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">lasso_hdm_score</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_html"><table style="text-align:center"><tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="1"><em>Dependent variable: res_yX</em></td></tr><tr><td style="text-align:left"></td><tr><td style="text-align:left"></td><td>(1)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+
+<tr><td style="text-align:left">Intercept</td><td>0.000<sup></sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.126)</td></tr>
+<tr><td style="text-align:left">res_TX</td><td>4.316<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.253)</td></tr>
+
+<td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align: left">Observations</td><td>12222</td></tr><tr><td style="text-align: left">R<sup>2</sup></td><td>0.023</td></tr><tr><td style="text-align: left">Adjusted R<sup>2</sup></td><td>0.023</td></tr><tr><td style="text-align: left">Residual Std. Error</td><td>13.953 (df=12220)</td></tr><tr><td style="text-align: left">F Statistic</td><td>291.837<sup>***</sup> (df=1; 12220)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align: left">Note:</td><td colspan="1" style="text-align: right"><sup>*</sup>p&lt;0.1; <sup>**</sup>p&lt;0.05; <sup>***</sup>p&lt;0.01</td></tr></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save the ITT beta and the confidence intervals</span>
+<span class="n">beta_DL_theo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">lasso_hdm_score</span><span class="p">)[</span><span class="s">&#39;res_TX&#39;</span><span class="p">]</span>
+<span class="n">conf_int_DL_theo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">confint</span><span class="p">(</span><span class="n">lasso_hdm_score</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;res_TX&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-double-lasso-using-partialling-out-method">
+<h5>d. Double Lasso using partialling out method<a class="headerlink" href="#d-double-lasso-using-partialling-out-method" title="Link to this heading">#</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rlassoEffect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">hdmpy.rlassoEffect</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="s">&#39;outcome.test.score&#39;</span><span class="p">],</span><span class="w"> </span><span class="bp">T</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="s">&#39;partialling out&#39;</span><span class="p">)</span>
+<span class="n">rlassoEffect</span>
+<span class="n">beta_part_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlassoEffect</span><span class="p">[</span><span class="s">&#39;coefficient&#39;</span><span class="p">]</span>
+<span class="n">critical_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.96</span><span class="w">  </span><span class="c1"># For 95% confidence level</span>
+
+<span class="n">conf_int_part_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">beta_part_out</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">critical_value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rlassoEffect</span><span class="p">[</span><span class="s">&#39;se&#39;</span><span class="p">],</span><span class="w"> </span>
+<span class="w">                     </span><span class="n">beta_part_out</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">critical_value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rlassoEffect</span><span class="p">[</span><span class="s">&#39;se&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+
+
+
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+
+
+
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">rlassoEffect</span> <span class="o">=</span> <span class="n">hdmpy</span><span class="o">.</span><span class="n">rlassoEffect</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="s1">&#39;outcome.test.score&#39;</span><span class="p">],</span> <span class="n">T</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;partialling out&#39;</span><span class="p">)</span>
+
+
+
+
+
+
+
+<span class="ne">NameError</span>: name &#39;hdmpy&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">rlassoEffect</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rlassoEffect</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X_scaled</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">$</span><span class="n">outcome.test.score</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">T</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;partiallingOut&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;alpha&#39;: 4.313441,
+ &#39;se&#39;: array([0.25271166]),
+ &#39;t&#39;: array([17.06862565]),
+ &#39;pval&#39;: array([2.54111627e-65]),
+ &#39;coefficients&#39;: 4.313441,
+ &#39;coefficient&#39;: 4.313441,
+ &#39;coefficients_reg&#39;:                      0
+ (Intercept)  59.769260
+ x0            0.000000
+ x1            1.511205
+ x2            0.529423
+ x3            0.461196
+ x4           -2.878027
+ x5           -0.857569
+ x6            0.000000,
+ &#39;selection_index&#39;: array([[False],
+        [ True],
+        [ True],
+        [ True],
+        [ True],
+        [ True],
+        [False]]),
+ &#39;residuals&#39;: {&#39;epsilon&#39;: array([[-10.04200277],
+         [-31.30841071],
+         [-15.13769394],
+         ...,
+         [-17.22383794],
+         [ -3.93047339],
+         [ -4.88461742]]),
+  &#39;v&#39;: array([[ 0.48682705],
+         [-0.513173  ],
+         [ 0.48682705],
+         ...,
+         [ 0.48682705],
+         [-0.513173  ],
+         [-0.513173  ]], dtype=float32)},
+ &#39;samplesize&#39;: 12222}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="n">rlassoEffect</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">critical_value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1.96</span>
+<span class="n">conf_int_part_out</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">beta_part_out</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">critical_value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">rlassoEffect</span><span class="p">)</span><span class="o">$</span><span class="n">se</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">beta_part_out</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">critical_value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">rlassoEffect</span><span class="p">)</span><span class="o">$</span><span class="n">se</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">conf_int_part_out</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="results">
+<h4>Results<a class="headerlink" href="#results" title="Link to this heading">#</a></h4>
+<p>We found that the intention to treat effect (ITT) is very similar estimating with all 4 models (aproximately 4.3, with 95% of confidence). This could be because the ratio between the parameters and the number of observations p/n is small (8/12222 = 0.00065455735). In other words, we are not dealing with high dimensional data and the models from b. to d. will outperform the OLS when we are in the opposite scenario. In conclusion, we can say that the OLS model estimates the ITT just as good as the other models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+
+<span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="n">Model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;OLS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Double Lasso with CV&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Double Lasso with theoretical lambda&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Double Lasso with partialling out&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="n">Estimate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">beta_OLS</span><span class="p">,</span><span class="w"> </span><span class="n">beta_DL_CV</span><span class="p">,</span><span class="w"> </span><span class="n">beta_DL_theo</span><span class="p">,</span><span class="w"> </span><span class="n">beta_part_out</span><span class="p">),</span>
+<span class="w">  </span><span class="n">Lower_CI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">conf_int_OLS</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_DL_CV</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_DL_theo</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_part_out</span><span class="p">[</span><span class="m">1</span><span class="p">]),</span>
+<span class="w">  </span><span class="n">Upper_CI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">conf_int_OLS</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_DL_CV</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_DL_theo</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">conf_int_part_out</span><span class="p">[</span><span class="m">2</span><span class="p">])</span>
+<span class="p">)</span>
+
+<span class="c1"># Calculate the error sizes as required for geom_errorbar</span>
+<span class="n">data</span><span class="o">$</span><span class="n">ymin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">Estimate</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">Lower_CI</span>
+<span class="n">data</span><span class="o">$</span><span class="n">ymax</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">Upper_CI</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">Estimate</span>
+
+<span class="c1"># Create the plot</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Estimate</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_errorbar</span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">position_dodge</span><span class="p">(</span><span class="m">0.05</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Intention to Treat Effect on Student Financial Proficiency&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Beta and Confidence Interval&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+
+
+<span class="nf">ggsave</span><span class="p">(</span><span class="s">&quot;ITT_Effect_Size_Plot.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a413ea80cace5ba823c8521ac162b7e1957b3b792661cc52b2f459840a315a98.png" src="../../_images/a413ea80cace5ba823c8521ac162b7e1957b3b792661cc52b2f459840a315a98.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./labs\lab_3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="group3_lab3_python.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 3 - Python Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab_4_md.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Lab 4</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Workgroup 3</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-orthogonality-proof">1. Neyman Orthogonality Proof</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-1">Demonstration 1:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-2">Demonstration 2:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-section">2. Code Section</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-learning">2.1. Orthogonal Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulation-design">Simulation Design</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#double-lasso-using-school-data">2.2. Double Lasso - Using School data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regressions">2.2.2. Regressions</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#a-ols">a. OLS</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#b-double-lasso-using-cross-validation">b. Double Lasso using cross validation</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#c-double-lasso-using-theoretical-lambda">c. Double Lasso using theoretical lambda</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#d-double-lasso-using-partialling-out-method">d. Double Lasso using partialling out method</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
