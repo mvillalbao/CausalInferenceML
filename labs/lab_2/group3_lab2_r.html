@@ -1,0 +1,1286 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 2 - R Code &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_2/group3_lab2_r';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Lab 3" href="../lab_3_md.html" />
+    <link rel="prev" title="Lab 2 - Python Code" href="group3_lab2_python.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Lab 1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_2_md.html">2. Lab 2</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lab 2 - R Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Lab 3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_4_md.html">4. Lab 4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_python.html">Workgroup 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_r.html">Workgroup 4</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_5_md.html">5. Lab 5</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_python.html">Workgroup 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_r.html">Workgroup 5</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1 - Matias Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2 - Matías Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3 - Matías Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4 - Matias Villalba</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5 - Matias Villalba</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_2/group3_lab2_r.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_2/group3_lab2_r.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 2 - R Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfectly-collinear-regressors">Perfectly collinear regressors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-application">Practical application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-rct-data-with-precision-adjustment">Analyzing RCT data with precision adjustment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-crash-course-in-good-and-bad-controls-val">A crash course in good and bad controls (val)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#good-control-blocking-back-door-paths">Good control (Blocking back-door paths)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-control-m-bias">Bad Control (M-bias)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-control-possibly-good-for-precision">Neutral Control (possibly good for precision)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-controls-bias-amplification">Bad Controls (Bias amplification)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-2-r-code">
+<h1>Lab 2 - R Code<a class="headerlink" href="#lab-2-r-code" title="Link to this heading">#</a></h1>
+<p>Group 3: Dube, V., Garay, E. Guerrero, J., Villalba, M.</p>
+<section id="multicollinearity">
+<h2>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h2>
+<p>Multicolinearity occurs when two or more predictors in a regresion model are highly correlated to one another, causing a higher variance our the estimated coefficients. To understand the way multicollinearity affects our regresion we can examine the composition of the variance of our estimates.</p>
+<p>Suppose some Data Generating Process follows:</p>
+<p>\begin{equation*}
+Y = X_1\beta_1 +\epsilon
+\end{equation*}</p>
+<p>Considering the partitioned regression model:</p>
+<p>\begin{align*}
+Y &amp;= X\beta + e \
+Y &amp;= X_1\beta_1 + X_2\beta_2 + e
+\end{align*}</p>
+<p>We know that the OLS estimator will solve this equation:</p>
+<p>\begin{align*}
+(X’X)\hat{\beta} &amp;=X’Y \</p>
+<p>\begin{bmatrix}
+X_1’X_1      &amp; X_1’X_2   \
+X_2’X_1      &amp; X_2’X_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\beta_1} \
+\hat{\beta_2}
+\end{bmatrix}
+&amp; =
+\begin{bmatrix}
+X_1’Y \
+X_2’Y
+\end{bmatrix}
+\end{align*}</p>
+<p>This, because of the Frisch-Whaugh-Lovell Theorem, yields:</p>
+<p>\begin{align*}
+\hat{\beta_1} &amp;= (X_1’M_2X_1)^{-1}X_1’M_2Y
+\end{align*}</p>
+<p>Where <span class="math notranslate nohighlight">\(M_2 = I - X_2(X_2'X_2)^{-1}X_2'\)</span>, is the orthogonal projection matrix to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Note that <span class="math notranslate nohighlight">\(M_2\)</span> is symmetric, idempotent, and that any variable premultiplied by it yields the residual from from running <span class="math notranslate nohighlight">\(X_2\)</span> on that variable. For an arbitrary variable <span class="math notranslate nohighlight">\(Z\)</span>:</p>
+<p>\begin{align*}
+M_2Z &amp;= (I - X_2(X_2’X_2)^{-1}X_2’)Z \
+&amp;= Z - X_2(X_2’X_2)^{-1}X_2’Z \
+&amp;= Z - X_2\hat{\omega} \
+&amp;= Z - \hat{Z} \
+&amp;= e_{Z}
+\end{align*}</p>
+<p>Where <span class="math notranslate nohighlight">\(e_{Z}\)</span> and <span class="math notranslate nohighlight">\(\hat{\omega} \equiv (X_2'X_2)^{-1}X_2'Z\)</span> come from the regresion: $<span class="math notranslate nohighlight">\( Z = X_2\hat{\omega} + e_{Z}\)</span>$</p>
+<p>In a sense, the <span class="math notranslate nohighlight">\(M_2\)</span> matrix cleanses or “filters out” our <span class="math notranslate nohighlight">\(Z\)</span> variable, keeping only the part which is orthogonal to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Returning to <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span>:</p>
+<p>\begin{align*}
+\hat{\beta_1} &amp;= (X_1’M_2X_1)^{-1}X_1’M_2Y \
+&amp;= (X_1’M_2X_1)^{-1}X_1’M_2(X_1\beta_1 + \epsilon) \
+&amp;= \beta_1 + (X_1’M_2X_1)^{-1}X_1’M_2\epsilon
+\end{align*}</p>
+<p>For the conditional variance of <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span> this has great implications:</p>
+<p>\begin{align*}
+Var(\hat{\beta_1}|X) &amp;= Var(\beta_1 + (X_1’M_2X_1)^{-1}X_1’M_2\epsilon|X) \
+&amp;= Var((X_1’M_2X_1)^{-1}X_1’M_2\epsilon|X) \
+&amp;= E[((X_1’M_2X_1)^{-1}X_1’M_2\epsilon)((X_1’M_2X_1)^{-1}X_1’M_2\epsilon)’|X] \
+&amp;= E[(X_1’M_2X_1)^{-1}X_1’M_2\epsilon\epsilon’M_2’X_1(X_1’M_2’X_1)^{-1}|X] \
+&amp;= (X_1’M_2X_1)^{-1}X_1’M_2E[\epsilon\epsilon’|X]M_2’X_1(X_1’M_2’X_1)^{-1}
+\end{align*}</p>
+<p>Under the traditional assumption that <span class="math notranslate nohighlight">\(E[\epsilon\epsilon'|X] = \sigma^2I\)</span>:</p>
+<p>\begin{align*}
+Var(\hat{\beta_1}|X) &amp;= \sigma^2(X_1’M_2X_1)^{-1}X_1’M_2M_2’X_1(X_1’M_2’X_1)^{-1} \
+&amp;= \sigma^2(X_1’M_2’X_1)^{-1}
+\end{align*}</p>
+<p>Remembering that the variance of <span class="math notranslate nohighlight">\(X_1\)</span> can be decomposed into two positive components:</p>
+<p>\begin{align*}
+X_1 &amp;= X_2\alpha + v \
+Var(X_1) &amp;= Var(X_2\alpha) + Var(v) \
+Var(X_1) - Var(X_2\alpha) &amp;= Var(v) \
+E[X_1’X_1] - Var(X_2\alpha) &amp;= E[X_1’M_2’X_1]
+\end{align*}</p>
+<p>Thus, necessarily: $<span class="math notranslate nohighlight">\(E[X_1'M_2X_1] \leq E[X_1'X_1]\)</span>$</p>
+<p>Altogether this means: $<span class="math notranslate nohighlight">\(\sigma^2(X_1'X_1)^{-1} \leq \sigma^2(X_1'M_2'X_1)^{-1}\)</span>$</p>
+<p>This shows that controlling for the irrelevant variables <span class="math notranslate nohighlight">\(X_2\)</span> will in fact increase the variance of <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span> by limiting us to the “usable” variance of <span class="math notranslate nohighlight">\(X_1\)</span> which is orthogonal to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Suppose we want to estimate the impact of years of schooling on future salary. Imagine as well that we have a vast array of possible control variables at our disposal. Someone who is not familiar with the concept of multicollinearity might think that to avoid any possibility of ommited variable bias and ensure consistency it is best to control for everything we can. We now know this is not the case and that this approach can inadvertently introduce multicollinearity.</p>
+<p>Consider that we have as a possible control variable the total number of courses taken by each student. Intuitively, years of schooling are likely to correlate strongly with the number of total courses taken (more years in school tipically leads to more courses completed) and so controlling for this variable may result in the problem described above, inflating the variance of the estimated coefficients and potentially distorting our understanding of the true effect of schooling on salary.</p>
+<p>The same rationale applies to many other examples. For instance, imagine estimating the impact of marketing expenditure on sales. Controlling for variable such as number of marketing campaigns will probably cause the same issue.</p>
+<section id="perfectly-collinear-regressors">
+<h3>Perfectly collinear regressors<a class="headerlink" href="#perfectly-collinear-regressors" title="Link to this heading">#</a></h3>
+<p>A special case of the previously mentioned concept of multicollinearity arises when a variable is a linear combination of some other variables from our dataset, so not only are these variables highly correlated, but we say that they are perfectly collinear.</p>
+<p>Considering the partitioned regression model:</p>
+<p>\begin{align*}
+Y &amp;= x_1\beta_1 + X_2\beta_2 + \epsilon \
+x_1 &amp;= X_2 \alpha
+\end{align*}</p>
+<p>where the second equation is deterministic.</p>
+<p>We know that the OLS estimator will solve this equation:</p>
+<p>\begin{align*}
+(X’X)\hat{\beta} &amp;=X’Y \</p>
+<p>\begin{bmatrix}
+X_1’X_1      &amp; X_1’X_2   \
+X_2’X_1      &amp; X_2’X_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\beta_1} \
+\hat{\beta_2}
+\end{bmatrix}
+&amp; =
+\begin{bmatrix}
+X_1’Y \
+X_2’Y
+\end{bmatrix}
+\end{align*}</p>
+<p>Substituting <span class="math notranslate nohighlight">\(X_1 = X_2 \alpha\)</span> on the <span class="math notranslate nohighlight">\((X'X)\)</span> matrix:</p>
+<p>\begin{align*}
+(X’X) &amp;=
+\begin{bmatrix}
+(X_2\alpha)’X_2\alpha      &amp; (X_2\alpha)’X_2   \
+X_2’(X_2\alpha)      &amp; X_2’X_2
+\end{bmatrix} \</p>
+<p>&amp;=
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix}
+\end{align*}</p>
+<p>This yields the determinant:</p>
+<p>\begin{align*}
+\det (X’X) &amp;= \det\left(
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right) \
+\end{align*}</p>
+<p>Transforming the matrix using row operations:
+\begin{align*}
+\det (X’X) &amp;= \det\left(
+\begin{bmatrix}
+I      &amp; -\alpha’   \
+0      &amp; I
+\end{bmatrix}
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right) \
+&amp;= \det\left(
+\begin{bmatrix}
+0      &amp; 0   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right)
+\end{align*}</p>
+<p>Like this, we can see that:
+\begin{align*}
+\det (X’X) &amp;= 0
+\end{align*}</p>
+<p>Because of this, <span class="math notranslate nohighlight">\((X'X)\)</span> is not invertible and there is no solution for the OLS estimation</p>
+</section>
+<section id="practical-application">
+<h3>Practical application<a class="headerlink" href="#practical-application" title="Link to this heading">#</a></h3>
+<p>We can easily show what we have theoretically explained with a practical application. We will create a dataset simulating the regressors that we may want to include in the estimation of a linear model.</p>
+<p>The first 9 variables follow a normal distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+<span class="n">matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="m">90</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="o">=</span><span class="m">9</span><span class="p">)</span>
+<span class="n">matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A matrix: 10 × 9 of type dbl</caption>
+<tbody>
+	<tr><td> 1.262954285</td><td> 0.7635935</td><td>-0.22426789</td><td>-0.2357066</td><td> 1.7579031</td><td> 0.26613736</td><td> 0.35872890</td><td> 0.01915639</td><td>-0.7970895</td></tr>
+	<tr><td>-0.326233361</td><td>-0.7990092</td><td> 0.37739565</td><td>-0.5428883</td><td> 0.5607461</td><td>-0.37670272</td><td>-0.01104548</td><td> 0.25733838</td><td> 1.2540831</td></tr>
+	<tr><td> 1.329799263</td><td>-1.1476570</td><td> 0.13333636</td><td>-0.4333103</td><td>-0.4527840</td><td> 2.44136463</td><td>-0.94064916</td><td>-0.64901008</td><td> 0.7721422</td></tr>
+	<tr><td> 1.272429321</td><td>-0.2894616</td><td> 0.80418951</td><td>-0.6494716</td><td>-0.8320433</td><td>-0.79533912</td><td>-0.11582532</td><td>-0.11916876</td><td>-0.2195156</td></tr>
+	<tr><td> 0.414641434</td><td>-0.2992151</td><td>-0.05710677</td><td> 0.7267507</td><td>-1.1665705</td><td>-0.05487747</td><td>-0.81496871</td><td> 0.66413570</td><td>-0.4248103</td></tr>
+	<tr><td>-1.539950042</td><td>-0.4115108</td><td> 0.50360797</td><td> 1.1519118</td><td>-1.0655906</td><td> 0.25014132</td><td> 0.24226348</td><td> 1.10096910</td><td>-0.4189801</td></tr>
+	<tr><td>-0.928567035</td><td> 0.2522234</td><td> 1.08576936</td><td> 0.9921604</td><td>-1.5637821</td><td> 0.61824329</td><td>-1.42509839</td><td> 0.14377148</td><td> 0.9969869</td></tr>
+	<tr><td>-0.294720447</td><td>-0.8919211</td><td>-0.69095384</td><td>-0.4295131</td><td> 1.1565370</td><td>-0.17262350</td><td> 0.36594112</td><td>-0.11775360</td><td>-0.2757780</td></tr>
+	<tr><td>-0.005767173</td><td> 0.4356833</td><td>-1.28459935</td><td> 1.2383041</td><td> 0.8320471</td><td>-2.22390027</td><td> 0.24841265</td><td>-0.91206837</td><td> 1.2560188</td></tr>
+	<tr><td> 2.404653389</td><td>-1.2375384</td><td> 0.04672617</td><td>-0.2793463</td><td>-0.2273287</td><td>-1.26361438</td><td> 0.06528818</td><td>-1.43758624</td><td> 0.6466744</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<p>However, the 10th variable is a linear combination (the sum) of variables 1, 5 and 9.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">coefficients</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<span class="n">selected_columns</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">)</span>
+<span class="n">matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span><span class="w"> </span><span class="n">matrix</span><span class="p">[,</span><span class="w"> </span><span class="n">selected_columns</span><span class="p">]</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">coefficients</span><span class="p">)</span>
+<span class="n">matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A matrix: 10 × 10 of type dbl</caption>
+<tbody>
+	<tr><td> 1.262954285</td><td> 0.7635935</td><td>-0.22426789</td><td>-0.2357066</td><td> 1.7579031</td><td> 0.26613736</td><td> 0.35872890</td><td> 0.01915639</td><td>-0.7970895</td><td> 2.2237678</td></tr>
+	<tr><td>-0.326233361</td><td>-0.7990092</td><td> 0.37739565</td><td>-0.5428883</td><td> 0.5607461</td><td>-0.37670272</td><td>-0.01104548</td><td> 0.25733838</td><td> 1.2540831</td><td> 1.4885958</td></tr>
+	<tr><td> 1.329799263</td><td>-1.1476570</td><td> 0.13333636</td><td>-0.4333103</td><td>-0.4527840</td><td> 2.44136463</td><td>-0.94064916</td><td>-0.64901008</td><td> 0.7721422</td><td> 1.6491575</td></tr>
+	<tr><td> 1.272429321</td><td>-0.2894616</td><td> 0.80418951</td><td>-0.6494716</td><td>-0.8320433</td><td>-0.79533912</td><td>-0.11582532</td><td>-0.11916876</td><td>-0.2195156</td><td> 0.2208704</td></tr>
+	<tr><td> 0.414641434</td><td>-0.2992151</td><td>-0.05710677</td><td> 0.7267507</td><td>-1.1665705</td><td>-0.05487747</td><td>-0.81496871</td><td> 0.66413570</td><td>-0.4248103</td><td>-1.1767394</td></tr>
+	<tr><td>-1.539950042</td><td>-0.4115108</td><td> 0.50360797</td><td> 1.1519118</td><td>-1.0655906</td><td> 0.25014132</td><td> 0.24226348</td><td> 1.10096910</td><td>-0.4189801</td><td>-3.0245207</td></tr>
+	<tr><td>-0.928567035</td><td> 0.2522234</td><td> 1.08576936</td><td> 0.9921604</td><td>-1.5637821</td><td> 0.61824329</td><td>-1.42509839</td><td> 0.14377148</td><td> 0.9969869</td><td>-1.4953622</td></tr>
+	<tr><td>-0.294720447</td><td>-0.8919211</td><td>-0.69095384</td><td>-0.4295131</td><td> 1.1565370</td><td>-0.17262350</td><td> 0.36594112</td><td>-0.11775360</td><td>-0.2757780</td><td> 0.5860385</td></tr>
+	<tr><td>-0.005767173</td><td> 0.4356833</td><td>-1.28459935</td><td> 1.2383041</td><td> 0.8320471</td><td>-2.22390027</td><td> 0.24841265</td><td>-0.91206837</td><td> 1.2560188</td><td> 2.0822988</td></tr>
+	<tr><td> 2.404653389</td><td>-1.2375384</td><td> 0.04672617</td><td>-0.2793463</td><td>-0.2273287</td><td>-1.26361438</td><td> 0.06528818</td><td>-1.43758624</td><td> 0.6466744</td><td> 2.8239991</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<p>As we saw in theory, this causes our dataset to have a determinant of zero. Thus, X is singular and we get an error message when trying to invert it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">det</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">0</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">solve</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">solve</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span> <span class="n">Lapack</span> <span class="n">routine</span> <span class="n">dgesv</span><span class="p">:</span> <span class="n">system</span> <span class="ow">is</span> <span class="n">exactly</span> <span class="n">singular</span><span class="p">:</span> <span class="n">U</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="n">solve</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">solve</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Nonetheless, this is not the case when doing the same experiment in other programming languages. For instance, Python and Julia yield a determinant extremely close to cero but not equal to cero, so they are able to find a “supposed” inverse to the matrix. This would seem to contradict what we have proven in theory, however, this is a problem rooted in the way those languages handle float values. Thus, that is not a contradiction of theory but rather an illustration of how computational environments deal differently with the inherent limitations of floating-point arithmetic.</p>
+</section>
+</section>
+<section id="analyzing-rct-data-with-precision-adjustment">
+<h2>Analyzing RCT data with precision adjustment<a class="headerlink" href="#analyzing-rct-data-with-precision-adjustment" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="s">&quot;path_to/penn_jae.dat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dec</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">penn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">tg</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">penn</span><span class="o">$</span><span class="n">tg</span><span class="p">[</span><span class="n">penn</span><span class="o">$</span><span class="n">tg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">penn</span><span class="p">)[</span><span class="nf">names</span><span class="p">(</span><span class="n">penn</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;tg&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;T2&quot;</span>
+<span class="n">penn</span><span class="o">$</span><span class="n">dep</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.factor</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">penn</span><span class="o">$</span><span class="n">dep</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="histogram">
+<h2>Histogram<a class="headerlink" href="#histogram" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">treat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">         </span><span class="nf">select</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span>
+<span class="n">notreat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span>
+<span class="w">           </span><span class="nf">select</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">treat</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">inuidur1</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;gray&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">..density..</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">60</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;Distribution of weeks unemployed for treated individuals&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Weeks unemployed&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Probability Density&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>#1 Classical 2-Sample Approach (CL)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span>
+<span class="c1"># Calculate the t-statistic and p-value using Welch Two Sample t-test</span>
+<span class="n">t_test_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">t.test</span><span class="p">(</span><span class="n">treatmat</span><span class="p">,</span><span class="w"> </span><span class="n">notreatmat</span><span class="p">,</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;two.sided&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">var.equal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="n">p_value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t_test_result</span><span class="o">$</span><span class="n">p.value</span>
+<span class="n">reject_H0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">p_value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span>
+
+<span class="c1"># Print results</span>
+<span class="n">alpha</span>
+<span class="n">p_value</span>
+<span class="n">reject_H0</span>
+
+<span class="c1"># Simple linear regression model using log of duration:</span>
+<span class="n">ols_cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">T2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+
+<span class="c1"># To display the summary of the regression model:</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">ols_cl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>#2 Classical Linear Regression Adjustment (CRA)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specifying the model with interaction terms</span>
+<span class="c1"># In R, **2 at the end of a formula includes all main effects and their pairwise interactions</span>
+<span class="n">ols_cra</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">black</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">othrace</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dep</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agelt35</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agegt54</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">durable</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lusd</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">husd</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+
+<span class="c1"># To display the summary of the regression model</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">ols_cra</span><span class="p">)</span>
+
+<span class="c1"># If you use stargazer or another package to create nice tables (similar to regtable in Julia):</span>
+<span class="nf">if</span><span class="p">(</span><span class="s">&quot;stargazer&quot;</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">rownames</span><span class="p">(</span><span class="nf">installed.packages</span><span class="p">())</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stargazer&quot;</span><span class="p">)}</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">stargazer</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">ols_cra</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;CRA model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">single.row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>#3 Interactive Regression Adjustment (IRA)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># R function to demean a matrix</span>
+<span class="n">desv_mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">apply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1"># Specifying the model and generating the model matrix</span>
+<span class="n">reg1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">black</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">othrace</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dep</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agelt35</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agegt54</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">durable</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lusd</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">husd</span><span class="p">)</span><span class="o">^</span><span class="m">2</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="n">reg1</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+
+<span class="c1"># Applying the demean function</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">desv_mean</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Selecting necessary variables and preparing the data</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">penn</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;inuidur1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;T2&quot;</span><span class="p">)]</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">penn</span><span class="o">$</span><span class="n">T2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="w">  </span><span class="c1"># Join X, (T2*X)</span>
+<span class="n">base</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="w">  </span><span class="c1"># Join inuidur1, T2, X, and (T2*X)</span>
+<span class="n">base</span><span class="o">$</span><span class="n">inuidur1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">base</span><span class="o">$</span><span class="n">inuidur1</span><span class="p">)</span><span class="w">  </span><span class="c1"># log(inuidur1)</span>
+
+<span class="c1"># Specifying the regression model using reformulate to dynamically build the formula</span>
+<span class="n">terms</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+<span class="n">formula</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">reformulate</span><span class="p">(</span><span class="n">terms</span><span class="p">[</span><span class="m">-1</span><span class="p">],</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">terms</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+
+<span class="c1"># Fitting the interactive regression model</span>
+<span class="n">ols_ira</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">base</span><span class="p">)</span>
+
+<span class="c1"># Printing summary of the model</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)</span>
+
+<span class="c1"># If you use &#39;stargazer&#39; for generating tables, similar to regtable in Julia</span>
+<span class="nf">if</span><span class="p">(</span><span class="s">&quot;stargazer&quot;</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">rownames</span><span class="p">(</span><span class="nf">installed.packages</span><span class="p">())</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;stargazer&quot;</span><span class="p">)}</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">stargazer</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Interactive model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">single.row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>#4 Interactive Regression Adjustment Using Lasso (IRA using Lasso)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load necessary libraries</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+
+
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">black</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">othrace</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dep</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agelt35</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">agegt54</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">durable</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">lusd</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">husd</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">desv_mean</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">D</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">T2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">])</span><span class="w">  </span><span class="c1"># Extract Treatment variable and rename</span>
+
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="w"> </span><span class="m">-1</span><span class="p">],</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="w"> </span><span class="m">-1</span><span class="p">])</span><span class="w">  </span><span class="c1"># Join Controls (X) + T2*X &quot;interactive&quot;</span>
+
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">penn</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span>
+<span class="n">Y</span><span class="o">$</span><span class="n">inuidur1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">Y</span><span class="o">$</span><span class="n">inuidur1</span><span class="p">)</span><span class="w">  </span><span class="c1"># Apply log transformation to inuidur1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+
+<span class="n">X_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">D_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">D</span><span class="o">$</span><span class="n">T2</span><span class="p">)</span>
+<span class="n">Y_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">Y</span><span class="o">$</span><span class="n">inuidur1</span><span class="p">)</span>
+
+<span class="c1"># Fit the Lasso model for D</span>
+<span class="n">D_fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">glmnet</span><span class="p">(</span><span class="n">X_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">D_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.1</span><span class="p">)</span>
+<span class="n">D_resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">residuals</span><span class="p">(</span><span class="n">D_fit</span><span class="p">)</span>
+
+<span class="c1"># Fit the Lasso model for Y</span>
+<span class="n">Y_fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">glmnet</span><span class="p">(</span><span class="n">X_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">Y_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.1</span><span class="p">)</span>
+<span class="n">Y_resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">residuals</span><span class="p">(</span><span class="n">Y_fit</span><span class="p">)</span>
+
+<span class="c1"># D_resid_matrix &lt;- matrix(D_resid, ncol = 1)</span>
+
+<span class="c1"># Fit a linear model using the residuals</span>
+<span class="n">Lasso_ira</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">D_resid</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">Y_resid</span><span class="p">)</span>
+
+<span class="c1"># View summary of the model</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">Lasso_ira</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-crash-course-in-good-and-bad-controls-val">
+<h2>A crash course in good and bad controls (val)<a class="headerlink" href="#a-crash-course-in-good-and-bad-controls-val" title="Link to this heading">#</a></h2>
+<p>In this section, we will explore different scenarios where we need to decide whether the inclusion of a control variable, denoted by <em>Z</em>, will help (or not) to improve the estimation of the <strong>average treatment effect</strong> (ATE) of treatment <em>X</em> on outcome <em>Y</em>. The effect of observed variables will be represented by a continuous line, while that of unobserved variables will be represented by and discontinuous line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># install.packages(&quot;librarian&quot;, quiet = T)</span>
+<span class="c1"># install.packages(&quot;ggdag&quot;)</span>
+<span class="n">librarian</span><span class="o">::</span><span class="nf">shelf</span><span class="p">(</span>
+<span class="w">    </span><span class="n">dagitty</span><span class="p">,</span><span class="w"> </span><span class="n">tibble</span><span class="p">,</span><span class="w"> </span><span class="n">stargazer</span><span class="p">,</span><span class="w"> </span><span class="n">ggplot2</span><span class="p">,</span><span class="w"> </span><span class="n">ggdag</span><span class="p">,</span>
+<span class="w">    </span><span class="n">quiet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">T</span>
+<span class="p">)</span>
+<span class="nf">theme_set</span><span class="p">(</span><span class="nf">theme_void</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Failed</span> <span class="n">to</span> <span class="n">start</span> <span class="n">the</span> <span class="n">Kernel</span><span class="o">.</span> 
+
+<span class="n">Error</span> <span class="ow">in</span> <span class="n">loadNamespace</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;-</span> <span class="n">i</span><span class="p">[[</span><span class="mi">1</span><span class="n">L</span><span class="p">]],</span> <span class="n">c</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">,</span> <span class="o">.</span><span class="n">libPaths</span><span class="p">()),</span> <span class="n">versionCheck</span> <span class="o">=</span> <span class="n">vI</span><span class="p">[[</span><span class="n">j</span><span class="p">]])</span> <span class="p">:</span> 
+
+  <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="err">‘</span><span class="n">htmltools</span><span class="err">’</span>
+
+<span class="ne">Calls</span>: :: ... loadNamespace -&gt; withRestarts -&gt; withOneRestart -&gt; doWithOneRestart
+
+<span class="n">Execution</span> <span class="n">halted</span><span class="o">.</span> 
+
+<span class="n">View</span> <span class="n">Jupyter</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;command:jupyter.viewOutput&#39;</span><span class="o">&gt;</span><span class="n">log</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">further</span> <span class="n">details</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># cleans workspace</span>
+<span class="nf">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ls</span><span class="p">())</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="good-control-blocking-back-door-paths">
+<h3>Good control (Blocking back-door paths)<a class="headerlink" href="#good-control-blocking-back-door-paths" title="Link to this heading">#</a></h3>
+<p><strong>Model 1</strong></p>
+<p>We will assume that <em>X</em> measures whether or not the student attends the extra tutoring session, that affects the student’s grade (<em>Y</em>). Then, we have another observable variable, as hours of the student sleep (<em>Z</em>), that impacts <em>X</em> and <em>Y</em>. Theory says that when controlling by <em>Z</em>, we block the back-door path from <em>X</em> to <em>Y</em>. Thus, we see that in the second regression, the coefficient of <em>X</em> is closer to the real one (2.923 ≈ 3).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dagitty</span><span class="p">(</span><span class="s">&quot;dag {</span>
+<span class="s">    X &lt;- Z -&gt; Y</span>
+<span class="s">    X -&gt; Y</span>
+<span class="s">    }&quot;</span><span class="p">)</span>
+<span class="nf">coordinates</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">2</span><span class="p">),</span>
+<span class="w">    </span><span class="n">y</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="p">,</span><span class="n">Y</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+
+<span class="nf">ggdag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Failed</span> <span class="n">to</span> <span class="n">start</span> <span class="n">the</span> <span class="n">Kernel</span><span class="o">.</span> 
+
+<span class="n">Error</span> <span class="ow">in</span> <span class="n">loadNamespace</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;-</span> <span class="n">i</span><span class="p">[[</span><span class="mi">1</span><span class="n">L</span><span class="p">]],</span> <span class="n">c</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">loc</span><span class="p">,</span> <span class="o">.</span><span class="n">libPaths</span><span class="p">()),</span> <span class="n">versionCheck</span> <span class="o">=</span> <span class="n">vI</span><span class="p">[[</span><span class="n">j</span><span class="p">]])</span> <span class="p">:</span> 
+
+  <span class="n">there</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">package</span> <span class="n">called</span> <span class="err">‘</span><span class="n">htmltools</span><span class="err">’</span>
+
+<span class="ne">Calls</span>: :: ... loadNamespace -&gt; withRestarts -&gt; withOneRestart -&gt; doWithOneRestart
+
+<span class="n">Execution</span> <span class="n">halted</span><span class="o">.</span> 
+
+<span class="n">View</span> <span class="n">Jupyter</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;command:jupyter.viewOutput&#39;</span><span class="o">&gt;</span><span class="n">log</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">further</span> <span class="n">details</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate data</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">24</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">)</span>
+
+<span class="c1"># Regressions and summary results</span>
+<span class="n">lm_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="n">lm_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">lm_1</span><span class="p">,</span><span class="w"> </span><span class="n">lm_2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">column.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;NoControl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UsingControl&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">tibble</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">):</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">function</span> <span class="s2">&quot;tibble&quot;</span>
+<span class="ne">Traceback</span>:
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Model 2</strong></p>
+<p>We will assume that <em>X</em> stands for the police salaries that affect the crime rate (<em>Y</em>). Then, we have another observable variable, as the policemen’s supply (<em>Z</em>), that impacts <em>X</em> but not <em>Y</em>. And, additionally, we know that there is an unobservable variable (<em>U</em>), as the preference for maintaining civil order, that affects <em>Z</em> and <em>Y</em>. The theory says that when controlling by <em>Z</em>, we block (some) of the unobservable variable’s back-door path from <em>X</em> to <em>Y</em>. Thus, we see that in the second regression, the coefficient of <em>X</em> is equal to the real one (0.5).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dagitty</span><span class="p">(</span><span class="s">&quot;dag {</span>
+<span class="s">    X &lt;- Z &lt;- U -&gt; Y</span>
+<span class="s">    X -&gt; Y</span>
+<span class="s">}&quot;</span><span class="p">)</span>
+<span class="nf">coordinates</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="n">U</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">4</span><span class="p">),</span>
+<span class="w">    </span><span class="n">y</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">2</span><span class="p">))</span>
+
+<span class="nf">ggdag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">24</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">   </span>
+<span class="n">U</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Create a dataframe</span>
+<span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">=</span><span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bad-control-m-bias">
+<h3>Bad Control (M-bias)<a class="headerlink" href="#bad-control-m-bias" title="Link to this heading">#</a></h3>
+<p><strong>Model 7</strong></p>
+<p>Let us suppose that <em>X</em> stands for a job training program aimed at reducing unemployment. Then, there is a first unobserved confounder, which could be the planning effort and good design of the job program (<em>U1</em>) that impacts directly on the participation in job training programs (<em>X</em>) and the proximity of job programs (that would be the bad control <em>Z</em>). Furthermore, we have another unobserved confounder (<em>U2</em>), as the soft skills of the unemployed, that affects the employment status of individuals (<em>Y</em>) and the likelihood of beeing in a job training program that is closer (<em>Z</em>). That is why including <em>Z</em> in the second regression makes <em>X</em> coefficient value further to the real one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dagitty</span><span class="p">(</span><span class="s">&quot;dag {</span>
+<span class="s">    X &lt;- U1 -&gt; Z &lt;- U2 -&gt; Y</span>
+<span class="s">    X -&gt; Y</span>
+<span class="s">    }&quot;</span><span class="p">)</span>
+<span class="nf">coordinates</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">U1</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">U2</span><span class="o">=</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">3</span><span class="p">),</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">U1</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">U2</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+
+<span class="nf">ggdag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">  </span>
+<span class="n">U1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">U2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">U2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Create a dataframe</span>
+<span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">U1</span><span class="o">=</span><span class="n">U1</span><span class="p">,</span><span class="w"> </span><span class="n">U2</span><span class="o">=</span><span class="n">U2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lm_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="n">lm_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">lm_1</span><span class="p">,</span><span class="w"> </span><span class="n">lm_2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">column.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;NoControl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UsingControl&quot;</span><span class="p">)</span>
+<span class="w">          </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="neutral-control-possibly-good-for-precision">
+<h3>Neutral Control (possibly good for precision)<a class="headerlink" href="#neutral-control-possibly-good-for-precision" title="Link to this heading">#</a></h3>
+<p><strong>Model 8</strong></p>
+<p>In this scenario, we will assume that <em>X</em> represents the implementation of a new government policy to provide subsidies and guidance for small companies. There is another variable, <em>Z</em>, that stands for the % inflation rate. And both <em>X</em> and <em>Z</em> affect <em>Y</em>, which represents the GDP growth rate of the country. Then, even if <em>Z</em> does not impact <em>X</em>, its inclusion improves the precision of the ATE estimator (8.523 is closer to 8.6).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dagitty</span><span class="p">(</span><span class="s">&quot;dag {X -&gt; Y &lt;-Z}&quot;</span><span class="p">)</span>
+<span class="nf">coordinates</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">3</span><span class="p">),</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="m">0</span><span class="p">))</span>
+
+<span class="nf">ggdag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">24</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">  </span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">8.6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Create a dataframe</span>
+<span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">lm_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="n">lm_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">lm_1</span><span class="p">,</span><span class="w"> </span><span class="n">lm_2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">column.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;NoControl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UsingControl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bad-controls-bias-amplification">
+<h3>Bad Controls (Bias amplification)<a class="headerlink" href="#bad-controls-bias-amplification" title="Link to this heading">#</a></h3>
+<p><strong>Model 10</strong></p>
+<p>Let us assume that <em>X</em> measures the implementation of a housing program for young adults buying their first house, which impacts the average housing prices (<em>Y</em>). There is another observable variable, <em>Z</em>, that measures the expenditure of the program and affects only <em>X</em>. Also, there is an unobservable variable (<em>U</em>) that represents the preference of young adults to move from their parent’s house and impacts only <em>X</em> and <em>Y</em>. Therefore, the inclusion of <em>Z</em> will “amplify the bias” of <em>U</em> on <em>X</em>, so the ATE estimator will be worse. We can see that in the second regression, the estimator (0.835) is much farther from the real value (0.8).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">dagitty</span><span class="p">(</span><span class="s">&quot;dag {</span>
+<span class="s">    Z -&gt; X &lt;- U -&gt; Y</span>
+<span class="s">    X -&gt; Y</span>
+<span class="s">    }&quot;</span><span class="p">)</span>
+<span class="nf">coordinates</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Z</span><span class="o">=</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">2</span><span class="p">),</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">Z</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">=</span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="m">1</span><span class="p">))</span>
+
+<span class="nf">ggdag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">24</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">  </span>
+<span class="n">Z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">U</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Create a dataframe</span>
+<span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">=</span><span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">tibble</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="o">=</span><span class="n">Z</span><span class="p">)</span>
+
+<span class="c1"># Regressions and summary results</span>
+<span class="n">lm_1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="n">lm_2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+<span class="nf">stargazer</span><span class="p">(</span><span class="n">lm_1</span><span class="p">,</span><span class="w"> </span><span class="n">lm_2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">          </span><span class="n">column.labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;NoControl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UsingControl&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">tibble</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">):</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">function</span> <span class="s2">&quot;tibble&quot;</span>
+
+<span class="ne">Traceback</span>:
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./labs\lab_2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="group3_lab2_python.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 2 - Python Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab_3_md.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Lab 3</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfectly-collinear-regressors">Perfectly collinear regressors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-application">Practical application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-rct-data-with-precision-adjustment">Analyzing RCT data with precision adjustment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-crash-course-in-good-and-bad-controls-val">A crash course in good and bad controls (val)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#good-control-blocking-back-door-paths">Good control (Blocking back-door paths)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-control-m-bias">Bad Control (M-bias)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-control-possibly-good-for-precision">Neutral Control (possibly good for precision)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-controls-bias-amplification">Bad Controls (Bias amplification)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1517 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 4 - R Code &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_4/group3_lab4_r';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lab 4 - Julia Code" href="group3_lab4_julia.html" />
+    <link rel="prev" title="Lab 4 - Python Code" href="group3_lab4_python.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Intro to Partialling-out and Lasso Cross-validation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_2_md.html">2. Multicollinearity, Precision Adjustment, and DAGs for Good and Bad controls</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_r.html">Lab 2 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_2/group3_lab2_julia.html">Lab 2 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_julia.html">Lab 3 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_4_md.html">4. Bootstraping and Causal Forest Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="group3_lab4_python.html">Lab 4 - Python Code</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lab 4 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group3_lab4_julia.html">Lab 4 - Julia Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_5_md.html">5. Double Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_python.html">Lab 5 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_r.html">Lab 5 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_julia.html">Lab 5 - Julia Code</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_4/group3_lab4_r.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_4/group3_lab4_r.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 4 - R Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstraping">Bootstraping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-base">1. Data base</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-function">2. Bootstrap function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">3. Standard error</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#t4-distribution">3.1. t4 distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#female-distribution">3.2. Female distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#black-distribution">3.3. Black distribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest">Causal Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">1. Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest-estimation-and-results">2. Causal Forest estimation and results</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Causal Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ate">2.2. ATE</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#run-best-linear-predictor-analysis">2.3. Run best linear predictor analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#look-at-school-wise-heterogeneity">2.4. Look at school-wise heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-ignoring-clusters-how-do-the-results-change">2.5. Analysis ignoring clusters. How do the results change?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-without-fitting-the-propensity-score">2.6. Analysis without fitting the propensity score</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">2.7. The code plot six plots in the Make some plots section, so explain what you find there.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-school-level-covariates-by-treatment-heterogeneity">2.8. Visualize school-level covariates by treatment heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cate-by-school">2.9. CATE by school</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-4-r-code">
+<h1>Lab 4 - R Code<a class="headerlink" href="#lab-4-r-code" title="Link to this heading">#</a></h1>
+<p>Authors: Valerie Dube, Erzo Garay, Juan Marcos Guerrero y Matias Villalba</p>
+<section id="bootstraping">
+<h2>Bootstraping<a class="headerlink" href="#bootstraping" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;boot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing package into &#39;C:/Users/Matias Villalba/AppData/Local/R/win-library/4.3&#39;
+(as &#39;lib&#39; is unspecified)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>package &#39;boot&#39; successfully unpacked and MD5 sums checked
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The downloaded binary packages are in
+	C:\Users\Matias Villalba\AppData\Local\Temp\RtmpsrXXxy\downloaded_packages
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">boot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="data-base">
+<h3>1. Data base<a class="headerlink" href="#data-base" title="Link to this heading">#</a></h3>
+<p>The data is not created randomly; it is extracted from the “penn_jae.dat” database. This database is imported and filtered so that the variable “tg” becomes “t4,” which is a dummy variable identifying those treated with t4 versus individuals in the control group.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Penn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">read.table</span><span class="p">(</span><span class="s">&quot;../../data/penn_jae.dat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="bp">T</span><span class="w"> </span><span class="p">))</span>
+<span class="n">Penn</span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">subset</span><span class="p">(</span><span class="n">Penn</span><span class="p">,</span><span class="w"> </span><span class="n">tg</span><span class="o">==</span><span class="m">4</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">tg</span><span class="o">==</span><span class="m">0</span><span class="p">)</span>
+<span class="n">Penn</span><span class="o">$</span><span class="n">t4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="p">)</span>
+<span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span>
+<span class="nf">attach</span><span class="p">(</span><span class="n">Penn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in file(file, &quot;rt&quot;):
+&quot;cannot open file &#39;../../data/penn_jae.dat&#39;: No such file or directory&quot;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">):</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">connection</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="k">as</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../data/penn_jae.dat&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">))</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../data/penn_jae.dat&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrap-function">
+<h3>2. Bootstrap function<a class="headerlink" href="#bootstrap-function" title="Link to this heading">#</a></h3>
+<p>A function is created with the specified linear regression “log(inuidur1)~t4+ (female+black+othrace+factor(dep)+q2+q3+q4+q5+q6+agelt35+agegt54+durable+lusd+husd),” which outputs information about the estimated coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">bootpar.fn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span><span class="o">~</span><span class="n">t4</span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="o">+</span><span class="n">black</span><span class="o">+</span><span class="n">othrace</span><span class="o">+</span><span class="nf">factor</span><span class="p">(</span><span class="n">dep</span><span class="p">)</span><span class="o">+</span><span class="n">q2</span><span class="o">+</span><span class="n">q3</span><span class="o">+</span><span class="n">q4</span><span class="o">+</span><span class="n">q5</span><span class="o">+</span><span class="n">q6</span><span class="o">+</span><span class="n">agelt35</span><span class="o">+</span><span class="n">agegt54</span><span class="o">+</span><span class="n">durable</span><span class="o">+</span><span class="n">lusd</span><span class="o">+</span><span class="n">husd</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">reg_lineal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">boot</span><span class="p">(</span><span class="n">Penn</span><span class="p">,</span><span class="w"> </span><span class="n">bootpar.fn</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-error">
+<h3>3. Standard error<a class="headerlink" href="#standard-error" title="Link to this heading">#</a></h3>
+<p>A table is created for the three specified variables: “t4”, “female”, and “black”. Then, the distributions of the estimated parameters for the 1000 iterations are plotted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">original_values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t0</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t0</span><span class="p">[</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t0</span><span class="p">[</span><span class="m">4</span><span class="p">])</span>
+<span class="n">standard_errors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">sd</span><span class="p">(</span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t</span><span class="p">[,</span><span class="m">2</span><span class="p">]),</span><span class="nf">sd</span><span class="p">(</span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t</span><span class="p">[,</span><span class="m">3</span><span class="p">]),</span><span class="w"> </span><span class="nf">sd</span><span class="p">(</span><span class="n">reg_lineal</span><span class="o">$</span><span class="n">t</span><span class="p">[,</span><span class="m">4</span><span class="p">]))</span>
+<span class="n">table_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="s">&quot;Original&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">original_values</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;Standard Error&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">standard_errors</span>
+<span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">table_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>          Original Standard.Error
+t4     -0.07169248     0.03542872
+female  0.12636833     0.03522137
+black  -0.29376798     0.06032026
+</pre></div>
+</div>
+</div>
+</div>
+<section id="t4-distribution">
+<h4>3.1. t4 distribution<a class="headerlink" href="#t4-distribution" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">reg_lineal</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/8d0d0a8645feb1697dae28ff608f8ae402787fda3f20333e6b0afdffbdf48f8d.png"><img alt="../../_images/8d0d0a8645feb1697dae28ff608f8ae402787fda3f20333e6b0afdffbdf48f8d.png" src="../../_images/8d0d0a8645feb1697dae28ff608f8ae402787fda3f20333e6b0afdffbdf48f8d.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+<section id="female-distribution">
+<h4>3.2. Female distribution<a class="headerlink" href="#female-distribution" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">reg_lineal</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="o">=</span><span class="m">3</span><span class="p">)</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/7d775f298e7e9ef184b4e93db53d7f1a96e0162fdb83e04e9702c6ed6560ca71.png"><img alt="../../_images/7d775f298e7e9ef184b4e93db53d7f1a96e0162fdb83e04e9702c6ed6560ca71.png" src="../../_images/7d775f298e7e9ef184b4e93db53d7f1a96e0162fdb83e04e9702c6ed6560ca71.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+<section id="black-distribution">
+<h4>3.3. Black distribution<a class="headerlink" href="#black-distribution" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">reg_lineal</span><span class="p">,</span><span class="w"> </span><span class="n">index</span><span class="o">=</span><span class="m">4</span><span class="p">)</span><span class="w"> </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/d7e575d83fea2cb98a0b31d7c1baf0c899f72b12b58f224c3fbc27d82f90387c.png"><img alt="../../_images/d7e575d83fea2cb98a0b31d7c1baf0c899f72b12b58f224c3fbc27d82f90387c.png" src="../../_images/d7e575d83fea2cb98a0b31d7c1baf0c899f72b12b58f224c3fbc27d82f90387c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="causal-forest">
+<h2>Causal Forest<a class="headerlink" href="#causal-forest" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">ls</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Installing packages</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;grf&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;Hmisc&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;evaluate&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;grf&#39; is in use and will not be installed&quot;
+Warning message:
+&quot;package &#39;Hmisc&#39; is in use and will not be installed&quot;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing package into &#39;C:/Users/Matias Villalba/AppData/Local/R/win-library/4.3&#39;
+(as &#39;lib&#39; is unspecified)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>package &#39;evaluate&#39; successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Matias Villalba\AppData\Local\Temp\RtmpQvWVtx\downloaded_packages
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">grf</span><span class="p">)</span>
+<span class="nf">if</span><span class="p">(</span><span class="nf">packageVersion</span><span class="p">(</span><span class="s">&quot;grf&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s">&#39;0.10.2&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">warning</span><span class="p">(</span><span class="s">&quot;This script requires grf 0.10.2 or higher&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">Hmisc</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="preprocessing">
+<h3>1. Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import synthetic data from data folder</span>
+<span class="n">data.all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;../../data/synthetic_data.csv&quot;</span><span class="p">)</span>
+
+<span class="n">data.all</span><span class="o">$</span><span class="n">schoolid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">data.all</span><span class="o">$</span><span class="n">schoolid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">DF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.all</span><span class="p">[,</span><span class="m">-1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">school.id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">data.all</span><span class="o">$</span><span class="n">schoolid</span><span class="p">)</span>
+
+<span class="n">school.mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">schoolid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.all</span><span class="p">)</span>
+<span class="n">school.size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">colSums</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># It appears that school ID does not affect pscore. So ignore it</span>
+<span class="c1"># in modeling, and just treat it as source of per-cluster error.</span>
+<span class="n">w.lm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">glm</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.all</span><span class="p">[,</span><span class="m">-3</span><span class="p">],</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">binomial</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">w.lm</span><span class="p">)</span>
+
+<span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DF</span><span class="o">$</span><span class="n">Z</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DF</span><span class="o">$</span><span class="n">Y</span>
+<span class="n">X.raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DF</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)]</span>
+
+<span class="n">C1.exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">X.raw</span><span class="o">$</span><span class="n">C1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="n">XC.exp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">X.raw</span><span class="o">$</span><span class="n">XC</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cbind</span><span class="p">(</span><span class="n">X.raw</span><span class="p">[,</span><span class="o">-</span><span class="nf">which</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">X.raw</span><span class="p">)</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;C1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;XC&quot;</span><span class="p">))],</span><span class="w"> </span><span class="n">C1.exp</span><span class="p">,</span><span class="w"> </span><span class="n">XC.exp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+glm(formula = Z ~ ., family = binomial, data = data.all[, -3])
+
+Coefficients: (6 not defined because of singularities)
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.9524636  0.2845173  -3.348 0.000815 ***
+schoolid2    0.0697302  0.2766287   0.252 0.800986    
+schoolid3    0.0382080  0.2911323   0.131 0.895586    
+schoolid4    0.1761334  0.2784711   0.633 0.527059    
+schoolid5   -0.0033389  0.2950180  -0.011 0.990970    
+schoolid6    0.0583548  0.3067481   0.190 0.849124    
+schoolid7   -0.1313759  0.3188190  -0.412 0.680288    
+schoolid8    0.1233661  0.3023736   0.408 0.683279    
+schoolid9   -0.1955428  0.3073344  -0.636 0.524611    
+schoolid10  -0.1892794  0.2968750  -0.638 0.523752    
+schoolid11  -0.2224060  0.5461005  -0.407 0.683816    
+schoolid12  -0.3312420  0.5414374  -0.612 0.540682    
+schoolid13  -0.0408540  0.3989507  -0.102 0.918436    
+schoolid14  -0.8681934  0.6033674  -1.439 0.150175    
+schoolid15  -0.1059135  0.3263162  -0.325 0.745504    
+schoolid16  -0.1063268  0.2885387  -0.369 0.712500    
+schoolid17   0.0854323  0.3119435   0.274 0.784184    
+schoolid18  -0.1924441  0.2997822  -0.642 0.520908    
+schoolid19  -0.0265326  0.3229712  -0.082 0.934526    
+schoolid20  -0.2179554  0.3041336  -0.717 0.473594    
+schoolid21  -0.2147440  0.2982822  -0.720 0.471565    
+schoolid22  -0.5115966  0.4410779  -1.160 0.246098    
+schoolid23   0.0039231  0.3475373   0.011 0.990994    
+schoolid24  -0.0848314  0.3259572  -0.260 0.794668    
+schoolid25   0.0521087  0.2754586   0.189 0.849959    
+schoolid26   0.0241212  0.2876511   0.084 0.933171    
+schoolid27  -0.2300630  0.3104796  -0.741 0.458698    
+schoolid28  -0.3519010  0.2924774  -1.203 0.228909    
+schoolid29  -0.2198764  0.3293288  -0.668 0.504357    
+schoolid30  -0.3146292  0.3257994  -0.966 0.334187    
+schoolid31   0.1398555  0.6137901   0.228 0.819759    
+schoolid32   0.1555524  0.3916156   0.397 0.691215    
+schoolid33  -0.0991693  0.3939370  -0.252 0.801243    
+schoolid34  -0.0073688  0.2980808  -0.025 0.980278    
+schoolid35  -0.3528987  0.3997273  -0.883 0.377318    
+schoolid36  -0.3751465  0.3988972  -0.940 0.346982    
+schoolid37  -0.0343169  0.3219646  -0.107 0.915117    
+schoolid38  -0.1346432  0.3851869  -0.350 0.726674    
+schoolid39  -0.4339936  0.3612869  -1.201 0.229657    
+schoolid40  -0.3993958  0.3834495  -1.042 0.297604    
+schoolid41  -0.1490784  0.3542105  -0.421 0.673846    
+schoolid42  -0.1545715  0.3551857  -0.435 0.663428    
+schoolid43  -0.5679567  0.4277455  -1.328 0.184247    
+schoolid44  -0.1425896  0.3774795  -0.378 0.705623    
+schoolid45  -0.1337888  0.3232493  -0.414 0.678957    
+schoolid46  -0.2573249  0.3129119  -0.822 0.410874    
+schoolid47   0.0027726  0.2770108   0.010 0.992014    
+schoolid48  -0.3406079  0.3470361  -0.981 0.326358    
+schoolid49  -0.3236117  0.3434541  -0.942 0.346077    
+schoolid50  -0.1185119  0.4086074  -0.290 0.771787    
+schoolid51   0.4087898  0.4506822   0.907 0.364382    
+schoolid52  -0.3144014  0.4118342  -0.763 0.445214    
+schoolid53  -0.2733677  0.4511280  -0.606 0.544538    
+schoolid54  -0.0889588  0.3872532  -0.230 0.818311    
+schoolid55  -0.1558106  0.4155020  -0.375 0.707665    
+schoolid56   0.1050353  0.3149235   0.334 0.738737    
+schoolid57  -0.0314901  0.2901719  -0.109 0.913581    
+schoolid58  -0.0383183  0.2730077  -0.140 0.888379    
+schoolid59  -0.0529637  0.2934895  -0.180 0.856790    
+schoolid60  -0.1624792  0.3972885  -0.409 0.682561    
+schoolid61  -0.0289549  0.3201953  -0.090 0.927946    
+schoolid62   0.0993158  0.2669678   0.372 0.709882    
+schoolid63   0.1684702  0.3282167   0.513 0.607749    
+schoolid64  -0.0693060  0.2770896  -0.250 0.802493    
+schoolid65  -0.0004197  0.4072922  -0.001 0.999178    
+schoolid66  -0.2130911  0.2984091  -0.714 0.475171    
+schoolid67   0.0358440  0.2921158   0.123 0.902341    
+schoolid68  -0.0871303  0.3290814  -0.265 0.791188    
+schoolid69  -0.2550387  0.2908992  -0.877 0.380636    
+schoolid70  -0.0268947  0.4032160  -0.067 0.946820    
+schoolid71   0.0037464  0.4268290   0.009 0.992997    
+schoolid72  -0.1304085  0.2881512  -0.453 0.650859    
+schoolid73  -0.2160697  0.2840030  -0.761 0.446776    
+schoolid74  -0.0935320  0.2842612  -0.329 0.742129    
+schoolid75  -0.1056241  0.3024204  -0.349 0.726892    
+schoolid76  -0.1052261  0.2939262  -0.358 0.720342    
+S3           0.1036077  0.0197345   5.250 1.52e-07 ***
+C1          -0.0015919  0.0053900  -0.295 0.767728    
+C2          -0.1038596  0.0424020  -2.449 0.014309 *  
+C3          -0.1319218  0.0461833  -2.856 0.004284 ** 
+XC                  NA         NA      NA       NA    
+X1                  NA         NA      NA       NA    
+X2                  NA         NA      NA       NA    
+X3                  NA         NA      NA       NA    
+X4                  NA         NA      NA       NA    
+X5                  NA         NA      NA       NA    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 13115  on 10390  degrees of freedom
+Residual deviance: 13009  on 10311  degrees of freedom
+AIC: 13169
+
+Number of Fisher Scoring iterations: 4
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have a sample of 10,391 children from 76 schools, and we expand the categorical variables, resulting in 28 covariates, <span class="math notranslate nohighlight">\(X_i \in \mathbb{R}^{28}\)</span></p>
+<p>For each sample <span class="math notranslate nohighlight">\(i\)</span>, the authors consider potential outcomes <span class="math notranslate nohighlight">\(Y_i(0)\)</span> and <span class="math notranslate nohighlight">\(Y_i(1)\)</span>, representing the outcomes if the <span class="math notranslate nohighlight">\(i\)</span>-th sample had been assigned to control <span class="math notranslate nohighlight">\((W_i=0)\)</span> or treatment <span class="math notranslate nohighlight">\((W_i=1)\)</span>, respectively. We assume that we observe <span class="math notranslate nohighlight">\(Y_i = Y_i(W_i)\)</span>. The average treatment effect is defined as <span class="math notranslate nohighlight">\(\tau = \mathbb{E} [Y_i(1) - Y_i(0)]\)</span>, and the conditional average treatment effect function is <span class="math notranslate nohighlight">\(\tau(x) = \mathbb{E} [Y_i(1) - Y_i(0) \mid X_i = x]\)</span>.</p>
+</section>
+<section id="causal-forest-estimation-and-results">
+<h3>2. Causal Forest estimation and results<a class="headerlink" href="#causal-forest-estimation-and-results" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h4>2.1. Causal Forest<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>When using random forests, the authors aim to perform a non-parametric random effects modeling approach, where each school is presumed to influence the student’s outcome. However, the authors do not impose any assumptions about the distribution of these effects, specifically avoiding the assumption that school effects are Gaussian or additive.</p>
+<p>The causal forest (CF) method attempts to find neighbourhoods in the covariate space, also known as recursive partitioning. While a random forest is built from decision trees, a causal forest is built from causal trees, where the causal trees learn a low-dimensional representation of treatment effect heterogeneity. To built a CF, we use the post-treatment outcome vector (<span class="math notranslate nohighlight">\(Y\)</span>), the treatment vector (<span class="math notranslate nohighlight">\(T\)</span>), and the 28 parameters matrix (<span class="math notranslate nohighlight">\(X\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Y.forest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">regression_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="p">,</span><span class="w"> </span><span class="n">equalize.cluster.weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">Y.forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+<span class="n">W.forest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">regression_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="p">,</span><span class="w"> </span><span class="n">equalize.cluster.weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">W.forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="n">cf.raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W.hat</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">equalize.cluster.weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">varimp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">variable_importance</span><span class="p">(</span><span class="n">cf.raw</span><span class="p">)</span>
+<span class="n">selected.idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">which</span><span class="p">(</span><span class="n">varimp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">varimp</span><span class="p">))</span>
+
+<span class="n">cf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="n">selected.idx</span><span class="p">],</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W.hat</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">equalize.cluster.weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">tune.parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="n">tau.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">cf</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We found that the greater CATE is in the group of students that attendts to a school with a mean fixed mindset level lower than 0.21 (that means, with larger values of growth mindset), and with a percentage of students who are from families whose incomes fall below the federal poverty line greater than -0.75.</p>
+</section>
+<section id="ate">
+<h4>2.2. ATE<a class="headerlink" href="#ate" title="Link to this heading">#</a></h4>
+<p>The package dml has a built-in function for average treatment effect estimation. First, we estimate the CATE (<span class="math notranslate nohighlight">\(\hat{\tau}\)</span>), where we can see it is around 0.2 and 0.4. Then, we find that the ATE value is around 0.25.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for the ATE:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">ATE</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">      </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'95% CI for the ATE: 0.247 +/- 0.039'</div></div>
+</div>
+</section>
+<section id="run-best-linear-predictor-analysis">
+<h4>2.3. Run best linear predictor analysis<a class="headerlink" href="#run-best-linear-predictor-analysis" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">test_calibration</span><span class="p">(</span><span class="n">cf</span><span class="p">)</span>
+
+<span class="c1"># Compare regions with high and low estimated CATEs</span>
+<span class="n">high_effect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau.hat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">median</span><span class="p">(</span><span class="n">tau.hat</span><span class="p">)</span>
+<span class="n">ate.high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_effect</span><span class="p">)</span>
+<span class="n">ate.low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">high_effect</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for difference in ATE:&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nf">round</span><span class="p">(</span><span class="n">ate.high</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ate.low</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">ate.high</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ate.low</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">^</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value Pr(&gt;t)    
+mean.forest.prediction         1.006886   0.083618 12.0415 &lt;2e-16 ***
+differential.forest.prediction 0.292474   0.655626  0.4461 0.3278    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+<div class="output text_html">'95% CI for difference in ATE: 0.054 +/- 0.07'</div></div>
+</div>
+<p>mean.forest.prediction: This coefficient is highly significant (p-value &lt; 0.001), indicating that the mean forest prediction aligns very closely with the observed data.</p>
+<p>differential.forest.prediction: This coefficient is not statistically significant (p-value &gt; 0.05), suggesting that the differential forest prediction does not add significant predictive power beyond the mean forest prediction.</p>
+<p>Given that the confidence interval includes zero (-0.016 to 0.124), the difference in ATE between high and low CATE regions is not statistically significant at the 95% confidence level. This means we do not have strong evidence to conclude that the high and low CATE regions have different treatment effects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># formal test for X1 and X2</span>
+<span class="c1">#</span>
+
+<span class="n">dr.score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau.hat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="w"> </span><span class="o">*</span>
+<span class="w">  </span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">Y.hat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">)</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">W</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">Y.hat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">)</span>
+<span class="n">school.score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">dr.score</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+
+<span class="n">school.X1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">X</span><span class="o">$</span><span class="n">X1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+<span class="n">high.X1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.X1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">median</span><span class="p">(</span><span class="n">school.X1</span><span class="p">)</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">school.score</span><span class="p">[</span><span class="n">high.X1</span><span class="p">],</span><span class="w"> </span><span class="n">school.score</span><span class="p">[</span><span class="o">!</span><span class="n">high.X1</span><span class="p">])</span>
+
+<span class="n">school.X2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">X</span><span class="o">$</span><span class="n">X2</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+<span class="n">high.X2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.X2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nf">median</span><span class="p">(</span><span class="n">school.X2</span><span class="p">)</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">school.score</span><span class="p">[</span><span class="n">high.X2</span><span class="p">],</span><span class="w"> </span><span class="n">school.score</span><span class="p">[</span><span class="o">!</span><span class="n">high.X2</span><span class="p">])</span>
+
+<span class="n">school.X2.levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cut</span><span class="p">(</span><span class="n">school.X2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="nf">quantile</span><span class="p">(</span><span class="n">school.X2</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="kc">Inf</span><span class="p">))</span>
+<span class="nf">summary</span><span class="p">(</span><span class="nf">aov</span><span class="p">(</span><span class="n">school.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">school.X2.levels</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  school.score[high.X1] and school.score[!high.X1]
+t = -3.0755, df = 71.824, p-value = 0.002972
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.19359639 -0.04132175
+sample estimates:
+mean of x mean of y 
+0.1884369 0.3058960 
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  school.score[high.X2] and school.score[!high.X2]
+t = 0.99875, df = 72.391, p-value = 0.3212
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.04006824  0.12054510
+sample estimates:
+mean of x mean of y 
+0.2672857 0.2270472 
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                 Df Sum Sq Mean Sq F value Pr(&gt;F)
+school.X2.levels  2 0.0826 0.04128   1.351  0.265
+Residuals        73 2.2304 0.03055               
+</pre></div>
+</div>
+</div>
+</div>
+<p>The difference in means between high and low <span class="math notranslate nohighlight">\(X1\)</span> schools is statistically significant (p-value = 0.002972)</p>
+<p>The difference in means between high and low <span class="math notranslate nohighlight">\(X2\)</span> schools is not statistically significant (p-value = 0.3212)</p>
+<p>The ANOVA test for <span class="math notranslate nohighlight">\(X2\)</span> levels is not statistically significant (p-value = 0.265), indicating no significant differences in debiased scores across the three levels of <span class="math notranslate nohighlight">\(X2\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># formal test for S3</span>
+<span class="c1">#</span>
+
+<span class="n">school.score.XS3.high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="p">(</span><span class="n">dr.score</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">S3</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">6</span><span class="p">))</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">S3</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span>
+<span class="n">school.score.XS3.low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="p">(</span><span class="n">dr.score</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">S3</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">6</span><span class="p">))</span><span class="w"> </span><span class="o">/</span>
+<span class="w">  </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">S3</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">6</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="n">school.score.XS3.low</span><span class="p">,</span><span class="w"> </span><span class="n">school.score.XS3.high</span><span class="p">)</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">school.score.XS3.high</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">school.score.XS3.low</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	One Sample t-test
+
+data:  school.score.XS3.high - school.score.XS3.low
+t = 2.2326, df = 75, p-value = 0.02856
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.009188917 0.161400046
+sample estimates:
+ mean of x 
+0.08529448 
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/cc4bda4cbb5c6e8134e2a794fde443c71b1e88f1cbd469bd9e43f3ec69cf79e3.png"><img alt="../../_images/cc4bda4cbb5c6e8134e2a794fde443c71b1e88f1cbd469bd9e43f3ec69cf79e3.png" src="../../_images/cc4bda4cbb5c6e8134e2a794fde443c71b1e88f1cbd469bd9e43f3ec69cf79e3.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The difference in means between high and low <span class="math notranslate nohighlight">\(S3\)</span> schools is statistically significant (p-value = 0.02856)</p>
+<p>The provided scatter plot visualizes the relationship between the school scores for low and high <span class="math notranslate nohighlight">\(S3\)</span> values. Points in the plot represent schools, with their respective debiased scores for <span class="math notranslate nohighlight">\(S3\)</span> below 6 on the x-axis and for
+<span class="math notranslate nohighlight">\(S3\)</span> 6 or above on the y-axis.</p>
+<p>Schools with higher <span class="math notranslate nohighlight">\(S3\)</span> values tend to have higher debiased scores, as indicated by the positive correlation in the scatter plot.</p>
+<p>The formal tests for <span class="math notranslate nohighlight">\(X1\)</span> and <span class="math notranslate nohighlight">\(X2\)</span> reveal that <span class="math notranslate nohighlight">\(X1\)</span> has a statistically significant effect on the school scores, whereas <span class="math notranslate nohighlight">\(X2\)</span> does not. The ANOVA test for <span class="math notranslate nohighlight">\(X2\)</span> levels also shows no significant differences across levels.
+The formal test for <span class="math notranslate nohighlight">\(S3\)</span> indicates a statistically significant effect on the school scores, supported by the scatter plot visualizing the positive relationship.</p>
+</section>
+<section id="look-at-school-wise-heterogeneity">
+<h4>2.4. Look at school-wise heterogeneity<a class="headerlink" href="#look-at-school-wise-heterogeneity" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">school.score</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;School Treatment Effect Estimate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># Re-check ATE... sanity check only</span>
+<span class="c1">#</span>
+
+<span class="n">ate.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">school.score</span><span class="p">)</span>
+<span class="n">se.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">school.score</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">school.score</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="n">ate.hat</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">1.96</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">se.hat</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;0.247 +/- 0.039&quot;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/59bc0969d27e46d45728fc69d4039a9567b65182848016c3b2f48c63da3431d6.png"><img alt="../../_images/59bc0969d27e46d45728fc69d4039a9567b65182848016c3b2f48c63da3431d6.png" src="../../_images/59bc0969d27e46d45728fc69d4039a9567b65182848016c3b2f48c63da3431d6.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Look at variation in propensity scores</span>
+<span class="c1">#</span>
+
+<span class="n">DF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span>
+<span class="n">DF</span><span class="o">$</span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">W.hat</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">S3</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Propensity Score&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Student Expectation of Success&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="nf">smooth.spline</span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">S3</span><span class="p">,</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="p">),</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/2100f9c48931db9c3e6d5d38eb4b2bae217b2401547d02b98c64fe5317e3d8a2.png"><img alt="../../_images/2100f9c48931db9c3e6d5d38eb4b2bae217b2401547d02b98c64fe5317e3d8a2.png" src="../../_images/2100f9c48931db9c3e6d5d38eb4b2bae217b2401547d02b98c64fe5317e3d8a2.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The boxplot shows the distribution of propensity scores for each level of student expectation of success (S3).</p>
+<p>The smooth spline line shows an upward trend, indicating that propensity scores tend to increase with higher student expectations of success.
+This suggests that students with higher expectations of success are more likely to receive the treatment.</p>
+</section>
+<section id="analysis-ignoring-clusters-how-do-the-results-change">
+<h4>2.5. Analysis ignoring clusters. How do the results change?<a class="headerlink" href="#analysis-ignoring-clusters-how-do-the-results-change" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">cf.noclust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="n">selected.idx</span><span class="p">],</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W.hat</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">tune.parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="n">ATE.noclust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf.noclust</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for the ATE:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">ATE.noclust</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">      </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE.noclust</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+
+<span class="nf">test_calibration</span><span class="p">(</span><span class="n">cf.noclust</span><span class="p">)</span>
+
+<span class="n">tau.hat.noclust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">cf.noclust</span><span class="p">)</span><span class="o">$</span><span class="n">predict</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">school.id</span><span class="p">,</span><span class="w"> </span><span class="n">tau.hat.noclust</span><span class="p">)</span>
+
+<span class="n">nfold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span>
+<span class="n">school.levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">unique</span><span class="p">(</span><span class="n">school.id</span><span class="p">)</span>
+<span class="n">cluster.folds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sample.int</span><span class="p">(</span><span class="n">nfold</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">school.levels</span><span class="p">),</span><span class="w"> </span><span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="n">tau.hat.crossfold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">foldid</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">nfold</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="n">foldid</span><span class="p">)</span>
+<span class="w">  </span><span class="n">infold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">school.levels</span><span class="p">[</span><span class="n">cluster.folds</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">foldid</span><span class="p">]</span>
+<span class="w">  </span><span class="n">cf.fold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="o">!</span><span class="n">infold</span><span class="p">,</span><span class="w"> </span><span class="n">selected.idx</span><span class="p">],</span><span class="w"> </span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">infold</span><span class="p">],</span><span class="w"> </span><span class="n">W</span><span class="p">[</span><span class="o">!</span><span class="n">infold</span><span class="p">],</span>
+<span class="w">                          </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">[</span><span class="o">!</span><span class="n">infold</span><span class="p">],</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W.hat</span><span class="p">[</span><span class="o">!</span><span class="n">infold</span><span class="p">],</span>
+<span class="w">                          </span><span class="n">tune.parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">pred.fold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">cf.fold</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">[</span><span class="n">infold</span><span class="p">,</span><span class="w"> </span><span class="n">selected.idx</span><span class="p">])</span><span class="o">$</span><span class="n">predictions</span>
+<span class="w">  </span><span class="n">tau.hat.crossfold</span><span class="p">[</span><span class="n">infold</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pred.fold</span>
+<span class="p">}</span>
+
+<span class="n">cf.noclust.cpy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cf.noclust</span>
+<span class="n">cf.noclust.cpy</span><span class="o">$</span><span class="n">predictions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau.hat.crossfold</span>
+<span class="n">cf.noclust.cpy</span><span class="o">$</span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span>
+<span class="nf">test_calibration</span><span class="p">(</span><span class="n">cf.noclust.cpy</span><span class="p">)</span>
+
+<span class="n">Rloss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(((</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau.hat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">W.hat</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">Rloss.noclust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(((</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau.hat.noclust</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">W.hat</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">Rloss.crossfold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(((</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tau.hat.crossfold</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">W</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">W.hat</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+
+<span class="nf">c</span><span class="p">(</span><span class="n">Rloss.noclust</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Rloss</span><span class="p">,</span><span class="w"> </span><span class="n">Rloss.crossfold</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Rloss</span><span class="p">)</span>
+
+<span class="nf">summary</span><span class="p">(</span><span class="nf">aov</span><span class="p">(</span><span class="n">dr.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="n">school.id</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'95% CI for the ATE: 0.253 +/- 0.022'</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value  Pr(&gt;t)    
+mean.forest.prediction         1.007542   0.044966 22.4068 &lt; 2e-16 ***
+differential.forest.prediction 0.509010   0.123142  4.1335 1.8e-05 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value  Pr(&gt;t)    
+mean.forest.prediction         1.007637   0.065782  15.318 &lt; 2e-16 ***
+differential.forest.prediction 0.356911   0.229080   1.558 0.05963 .  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+<div class="output text_html"><style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class=list-inline><li>0.000113715565374151</li><li>0.000346614550637281</li></ol>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                     Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+factor(school.id)    75    200   2.673   1.989 8.85e-07 ***
+Residuals         10315  13861   1.344                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/f29d96501b8e40f7b3318ca63c7c7c33d5fc58f021c9bbf83e6deb23e6b3bd4e.png"><img alt="../../_images/f29d96501b8e40f7b3318ca63c7c7c33d5fc58f021c9bbf83e6deb23e6b3bd4e.png" src="../../_images/f29d96501b8e40f7b3318ca63c7c7c33d5fc58f021c9bbf83e6deb23e6b3bd4e.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+<section id="analysis-without-fitting-the-propensity-score">
+<h4>2.6. Analysis without fitting the propensity score<a class="headerlink" href="#analysis-without-fitting-the-propensity-score" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Analaysis without fitting the propensity score</span>
+<span class="c1">#</span>
+
+<span class="n">cf.noprop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="n">selected.idx</span><span class="p">],</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">W</span><span class="p">),</span>
+<span class="w">                          </span><span class="n">tune.parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;all&quot;</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">equalize.cluster.weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">clusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.id</span><span class="p">)</span>
+<span class="n">tau.hat.noprop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">cf.noprop</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="n">ATE.noprop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf.noprop</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for the ATE:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">ATE.noprop</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">      </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE.noprop</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">tau.hat.noprop</span><span class="p">,</span>
+<span class="w">     </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">tau.hat.noprop</span><span class="p">),</span>
+<span class="w">     </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">tau.hat.noprop</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;orthogonalized causal forest estimates&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;non-orthogonalized causal forest&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+<span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pardef</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'95% CI for the ATE: 0.254 +/- 0.039'</div><a class="reference internal image-reference" href="../../_images/47f94cf649e004515a5b596b22781e921d4af84a3765dc65bc2b7594da00d827.png"><img alt="../../_images/47f94cf649e004515a5b596b22781e921d4af84a3765dc65bc2b7594da00d827.png" src="../../_images/47f94cf649e004515a5b596b22781e921d4af84a3765dc65bc2b7594da00d827.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Train forest on school-wise DR scores</span>
+<span class="c1">#</span>
+
+<span class="n">school.X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="o">:</span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="o">:</span><span class="m">28</span><span class="p">)]))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+<span class="n">school.X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">school.X</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">school.X</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;X1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X5&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s">&quot;XC.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;XC.2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;XC.3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;XC.4&quot;</span><span class="p">)</span>
+
+<span class="n">dr.score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tau.hat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">Y.hat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">)</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">W</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">Y.hat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cf</span><span class="o">$</span><span class="n">W.hat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">)</span>
+<span class="n">school.score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">dr.score</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+
+<span class="n">school.forest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">regression_forest</span><span class="p">(</span><span class="n">school.X</span><span class="p">,</span><span class="w"> </span><span class="n">school.score</span><span class="p">)</span>
+<span class="n">school.pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">school.forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+<span class="nf">test_calibration</span><span class="p">(</span><span class="n">school.forest</span><span class="p">)</span>
+
+
+<span class="c1"># Alternative OLS analysis</span>
+<span class="n">school.DF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">school.X</span><span class="p">,</span><span class="w"> </span><span class="n">school.score</span><span class="o">=</span><span class="n">school.score</span><span class="p">)</span>
+<span class="nf">coeftest</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">school.score</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">school.DF</span><span class="p">),</span><span class="w"> </span><span class="n">vcov</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vcovHC</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value Pr(&gt;t)    
+mean.forest.prediction         1.005143   0.082815 12.1373 &lt;2e-16 ***
+differential.forest.prediction 0.722757   0.657557  1.0992 0.1376    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>t test of coefficients:
+
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  0.2433855  0.0771666  3.1540 0.002424 **
+X1          -0.0495439  0.0291700 -1.6985 0.094132 . 
+X2           0.0127040  0.0337703  0.3762 0.707984   
+X3           0.0093747  0.0264377  0.3546 0.724023   
+X4           0.0222932  0.0256041  0.8707 0.387080   
+X5          -0.0342604  0.0268506 -1.2760 0.206440   
+XC.1        -0.0030273  0.0930189 -0.0325 0.974136   
+XC.2         0.0839073  0.1051560  0.7979 0.427772   
+XC.3        -0.1351282  0.0878695 -1.5378 0.128871   
+XC.4         0.0398784  0.0820527  0.4860 0.628570   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">
+<h4>2.7. The code plot six plots in the Make some plots section, so explain what you find there.<a class="headerlink" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">tau.hat.noprop</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">tau.hat.noclust</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-0.0</span><span class="p">,</span><span class="w"> </span><span class="m">0.55</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.55</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">25</span><span class="p">))</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">tau.hat</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">X1</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;X1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="nf">smooth.spline</span><span class="p">(</span><span class="m">4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="s">&quot;X1&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">tau.hat</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">X</span><span class="o">$</span><span class="n">X2</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;X2&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="nf">smooth.spline</span><span class="p">(</span><span class="m">4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="s">&quot;X2&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">tau.hat</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+
+<span class="n">school.avg.tauhat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">tau.hat</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">school.size</span>
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">school.avg.tauhat</span><span class="p">,</span><span class="w"> </span><span class="n">school.pred</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.5</span><span class="p">,</span>
+<span class="w">     </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">school.avg.tauhat</span><span class="p">,</span><span class="w"> </span><span class="n">school.pred</span><span class="p">),</span>
+<span class="w">     </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">school.avg.tauhat</span><span class="p">,</span><span class="w"> </span><span class="n">school.pred</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;average CATE estimate in school&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;school-wise forest predictions&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span>
+<span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pardef</span>
+
+<span class="c1">#</span>
+<span class="c1"># Experiment with no orthogonalization</span>
+<span class="c1">#</span>
+
+<span class="w"> </span><span class="n">n.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span>
+<span class="n">p.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>
+<span class="n">X.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n.synth</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p.synth</span><span class="p">),</span><span class="w"> </span><span class="n">n.synth</span><span class="p">,</span><span class="w"> </span><span class="n">p.synth</span><span class="p">)</span>
+<span class="n">W.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rbinom</span><span class="p">(</span><span class="n">n.synth</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">X.synth</span><span class="p">[,</span><span class="m">1</span><span class="p">])))</span>
+<span class="n">Y.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">rowMeans</span><span class="p">(</span><span class="n">X.synth</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n.synth</span><span class="p">)</span>
+
+<span class="n">Y.forest.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">regression_forest</span><span class="p">(</span><span class="n">X.synth</span><span class="p">,</span><span class="w"> </span><span class="n">Y.synth</span><span class="p">)</span>
+<span class="n">Y.hat.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">Y.forest.synth</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+<span class="n">W.forest.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">regression_forest</span><span class="p">(</span><span class="n">X.synth</span><span class="p">,</span><span class="w"> </span><span class="n">W.synth</span><span class="p">)</span>
+<span class="n">W.hat.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">W.forest.synth</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="n">cf.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X.synth</span><span class="p">,</span><span class="w"> </span><span class="n">Y.synth</span><span class="p">,</span><span class="w"> </span><span class="n">W.synth</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat.synth</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W.hat.synth</span><span class="p">)</span>
+<span class="n">ATE.synth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf.synth</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for the ATE:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">ATE.synth</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">      </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE.synth</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+
+<span class="n">cf.synth.noprop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">causal_forest</span><span class="p">(</span><span class="n">X.synth</span><span class="p">,</span><span class="w"> </span><span class="n">Y.synth</span><span class="p">,</span><span class="w"> </span><span class="n">W.synth</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">Y.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y.hat.synth</span><span class="p">,</span><span class="w"> </span><span class="n">W.hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">W.synth</span><span class="p">))</span>
+<span class="n">ATE.synth.noprop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">cf.synth.noprop</span><span class="p">)</span>
+<span class="nf">paste</span><span class="p">(</span><span class="s">&quot;95% CI for the ATE:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">ATE.synth.noprop</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">),</span>
+<span class="w">      </span><span class="s">&quot;+/-&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ATE.synth.noprop</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="m">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/b3c19b31e40df519124f1ed327def9d7b3eee22882bb68c284d6684d96d1463b.png"><img alt="../../_images/b3c19b31e40df519124f1ed327def9d7b3eee22882bb68c284d6684d96d1463b.png" src="../../_images/b3c19b31e40df519124f1ed327def9d7b3eee22882bb68c284d6684d96d1463b.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="../../_images/4868775626098d26f72510d6a06097e8293f9f6cf641bc3d2dbdc447f29619dc.png"><img alt="../../_images/4868775626098d26f72510d6a06097e8293f9f6cf641bc3d2dbdc447f29619dc.png" src="../../_images/4868775626098d26f72510d6a06097e8293f9f6cf641bc3d2dbdc447f29619dc.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="../../_images/f20b7dda981832080c65f37a3c71d84b92c7962ac2f41330cfecb6bd632b3d9b.png"><img alt="../../_images/f20b7dda981832080c65f37a3c71d84b92c7962ac2f41330cfecb6bd632b3d9b.png" src="../../_images/f20b7dda981832080c65f37a3c71d84b92c7962ac2f41330cfecb6bd632b3d9b.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="../../_images/26da09a0149366d744f6ce71af8758ed785c195715405b1411c2c5dc54f59f02.png"><img alt="../../_images/26da09a0149366d744f6ce71af8758ed785c195715405b1411c2c5dc54f59f02.png" src="../../_images/26da09a0149366d744f6ce71af8758ed785c195715405b1411c2c5dc54f59f02.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="../../_images/d2e7a3cb78435e3586a59bd771206a6a907659a1e107f8c3010e38e454177515.png"><img alt="../../_images/d2e7a3cb78435e3586a59bd771206a6a907659a1e107f8c3010e38e454177515.png" src="../../_images/d2e7a3cb78435e3586a59bd771206a6a907659a1e107f8c3010e38e454177515.png" style="width: 420px; height: 420px;" /></a>
+<div class="output text_html">'95% CI for the ATE: -0.055 +/- 0.145'</div><div class="output text_html">'95% CI for the ATE: 0.055 +/- 0.143'</div><a class="reference internal image-reference" href="../../_images/4e232f28f469311cab5678da7232578429f17830ab49cffe38868a61405b00a4.png"><img alt="../../_images/4e232f28f469311cab5678da7232578429f17830ab49cffe38868a61405b00a4.png" src="../../_images/4e232f28f469311cab5678da7232578429f17830ab49cffe38868a61405b00a4.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+</section>
+<section id="visualize-school-level-covariates-by-treatment-heterogeneity">
+<h4>2.8. Visualize school-level covariates by treatment heterogeneity<a class="headerlink" href="#visualize-school-level-covariates-by-treatment-heterogeneity" title="Link to this heading">#</a></h4>
+<p>This section aims to visualize how different school-level covariates (features) vary across different levels of estimated treatment heterogeneity. Specifically, it divides the schools into terciles (three groups) based on their predicted treatment effects and examines the standardized mean values of covariates within each tercile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># Visualize school-level covariates by treatment heterogeneity</span>
+<span class="c1">#</span>
+
+<span class="n">school.X.std</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="n">school.X</span><span class="p">)</span>
+<span class="n">school.tercile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">cut</span><span class="p">(</span><span class="n">school.pred</span><span class="p">,</span>
+<span class="w">                     </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="w"> </span><span class="nf">quantile</span><span class="p">(</span><span class="n">school.pred</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="o">/</span><span class="m">3</span><span class="p">)),</span><span class="w"> </span><span class="kc">Inf</span><span class="p">))</span>
+<span class="n">school.tercile.mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">model.matrix</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">school.tercile</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0</span><span class="p">)</span>
+<span class="n">school.means</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">diag</span><span class="p">(</span><span class="m">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">colSums</span><span class="p">(</span><span class="n">school.tercile.mat</span><span class="p">))</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">t</span><span class="p">(</span><span class="n">school.tercile.mat</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">school.X.std</span><span class="p">)</span>
+
+<span class="n">MM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">school.means</span><span class="p">))</span>
+<span class="n">HC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">heat.colors</span><span class="p">(</span><span class="m">21</span><span class="p">)</span>
+<span class="n">school.col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">school.means</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="nf">function</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span><span class="w"> </span><span class="n">HC</span><span class="p">[</span><span class="m">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="m">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">0.5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">aa</span><span class="p">))])</span>
+
+<span class="n">DF.plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">tercile</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">factor</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;low&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;mid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;high&quot;</span><span class="p">)),</span><span class="w"> </span><span class="m">9</span><span class="p">),</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">school.means</span><span class="p">),</span>
+<span class="w">                     </span><span class="n">feature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">factor</span><span class="p">(</span><span class="nf">rbind</span><span class="p">(</span><span class="nf">colnames</span><span class="p">(</span><span class="n">school.X</span><span class="p">),</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">school.X</span><span class="p">),</span><span class="w"> </span><span class="nf">colnames</span><span class="p">(</span><span class="n">school.X</span><span class="p">))))</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DF.plot</span><span class="p">,</span><span class="w"> </span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">feature</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tercile</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">geom_tile</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">scale_fill_gradient</span><span class="p">(</span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;white&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;steelblue&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">12</span><span class="p">),</span><span class="w"> </span><span class="n">axis.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span>
+<span class="w">          </span><span class="n">legend.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">),</span><span class="w"> </span><span class="n">legend.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">12</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="nf">theme</span><span class="p">(</span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">element_blank</span><span class="p">())</span>
+
+<span class="nf">mean</span><span class="p">(</span><span class="n">school.X</span><span class="o">$</span><span class="n">XC.3</span><span class="p">)</span>
+<span class="nf">mean</span><span class="p">(</span><span class="n">school.X</span><span class="o">$</span><span class="n">XC.3</span><span class="p">[</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">school.tercile</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">0.210526315789474</div><div class="output text_html">0.538461538461538</div><a class="reference internal image-reference" href="../../_images/356b8e2ce9f0baf80bd59a31d6e72201d052a040af13eb8726f43b97e4dcc21e.png"><img alt="../../_images/356b8e2ce9f0baf80bd59a31d6e72201d052a040af13eb8726f43b97e4dcc21e.png" src="../../_images/356b8e2ce9f0baf80bd59a31d6e72201d052a040af13eb8726f43b97e4dcc21e.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The heatmap reveals the relationship between school-level covariates and predicted treatment effects. Certain covariates (e.g., X1, X4, and XC.3) exhibit distinct patterns across the terciles, indicating their potential influence on treatment heterogeneity.</p>
+<p>The analysis helps identify which covariates are more prevalent in schools with higher or lower treatment effects, providing insights into the factors driving the effectiveness of interventions across different schools.</p>
+</section>
+<section id="cate-by-school">
+<h4>2.9. CATE by school<a class="headerlink" href="#cate-by-school" title="Link to this heading">#</a></h4>
+<p>This section examines the Conditional Average Treatment Effects (CATE) for each school and visualizes how these estimates compare to the average CATE predictions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">order</span><span class="p">(</span><span class="nf">order</span><span class="p">(</span><span class="n">school.pred</span><span class="p">))</span>
+<span class="n">school.sort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ord</span><span class="p">[</span><span class="n">school.id</span><span class="p">]</span>
+
+
+<span class="n">pardef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.main</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span><span class="w"> </span><span class="n">cex.sub</span><span class="o">=</span><span class="m">1.5</span><span class="p">)</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">tau.hat.noclust</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">school.sort</span><span class="p">,</span><span class="w"> </span><span class="n">xaxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;school&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;estimated CATE&quot;</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">76</span><span class="p">,</span><span class="w"> </span><span class="nf">sort</span><span class="p">(</span><span class="n">school.pred</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topleft&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;school mean CATE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;CATE w/o clustering&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.5</span><span class="p">)</span>
+<span class="n">par</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pardef</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../_images/5b16ba1b5616980ce59b1c818e72cc81c547b1f0f95010857cdc55221e9828ab.png"><img alt="../../_images/5b16ba1b5616980ce59b1c818e72cc81c547b1f0f95010857cdc55221e9828ab.png" src="../../_images/5b16ba1b5616980ce59b1c818e72cc81c547b1f0f95010857cdc55221e9828ab.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>There is substantial heterogeneity in the treatment effects across different schools, as indicated by the range of CATE values within each boxplot. This suggests that the impact of the treatment varies significantly between schools</p>
+<p>The clustering approach seems to provide more stable estimates of the treatment effect for each school, as evidenced by the smaller spread in the mean CATE points compared to the CATE w/o clustering</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./labs\lab_4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="group3_lab4_python.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 4 - Python Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="group3_lab4_julia.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 4 - Julia Code</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstraping">Bootstraping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-base">1. Data base</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-function">2. Bootstrap function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">3. Standard error</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#t4-distribution">3.1. t4 distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#female-distribution">3.2. Female distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#black-distribution">3.3. Black distribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest">Causal Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">1. Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forest-estimation-and-results">2. Causal Forest estimation and results</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Causal Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ate">2.2. ATE</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#run-best-linear-predictor-analysis">2.3. Run best linear predictor analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#look-at-school-wise-heterogeneity">2.4. Look at school-wise heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-ignoring-clusters-how-do-the-results-change">2.5. Analysis ignoring clusters. How do the results change?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-without-fitting-the-propensity-score">2.6. Analysis without fitting the propensity score</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-plot-six-plots-in-the-make-some-plots-section-so-explain-what-you-find-there">2.7. The code plot six plots in the Make some plots section, so explain what you find there.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-school-level-covariates-by-treatment-heterogeneity">2.8. Visualize school-level covariates by treatment heterogeneity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cate-by-school">2.9. CATE by school</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

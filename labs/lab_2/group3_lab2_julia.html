@@ -1,0 +1,1763 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 2 - Julia Code &#8212; Causal Inference and ML Course</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab_2/group3_lab2_julia';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso" href="../lab_3_md.html" />
+    <link rel="prev" title="Lab 2 - R Code" href="group3_lab2_r.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/p4_output_39_0.png" class="logo__image only-light" alt="Causal Inference and ML Course - Home"/>
+    <script>document.write(`<img src="../../_static/p4_output_39_0.png" class="logo__image only-dark" alt="Causal Inference and ML Course - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Causal Inference & Machine Learning Course
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_1_md.html">1. Intro to Partialling-out and Lasso Cross-validation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_python.html">Lab 1 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_r.html">Lab 1 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_1/group3_lab1_julia.html">Lab 1 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../lab_2_md.html">2. Multicollinearity, Precision Adjustment, and DAGs for Good and Bad controls</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="group3_lab2_python.html">Lab 2 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="group3_lab2_r.html">Lab 2 - R Code</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lab 2 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_julia.html">Lab 3 - Julia Code</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_4_md.html">4. Bootstraping and Causal Forest Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_python.html">Lab 4 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_r.html">Lab 4 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_4/group3_lab4_julia.html">Lab 4 - Julia Code</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lab_5_md.html">5. Double Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_python.html">Lab 5 - Python Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_r.html">Lab 5 - R Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_5/group3_lab5_julia.html">Lab 5 - Julia Code</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reports</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r1.html">Report 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r2.html">Report 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r3.html">Report 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r4.html">Report 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/000199908_r5.html">Report 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flabs/lab_2/group3_lab2_julia.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/labs/lab_2/group3_lab2_julia.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 2 - Julia Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 2 - Julia Code</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfectly-collinear-regressors">Perfectly collinear regressors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-application">Practical application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-rct-data-with-precision-adjustment">Analyzing RCT data with Precision Adjustment</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-coefficients">Plot coefficients</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-crash-course-in-good-and-bad-controls">A crash course in good and bad controls</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#good-control-blocking-back-door-paths">Good control (Blocking back-door paths)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-control-m-bias">Bad Control (M-bias)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-control-possibly-good-for-precision">Neutral Control (possibly good for precision)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-controls-bias-amplification">Bad Controls (Bias amplification)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-2-julia-code">
+<h1>Lab 2 - Julia Code<a class="headerlink" href="#lab-2-julia-code" title="Link to this heading">#</a></h1>
+<p>Group 3: Dube, V., Garay, E. Guerrero, J., Villalba, M.</p>
+<section id="multicollinearity">
+<h2>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Link to this heading">#</a></h2>
+<p>Multicolinearity occurs when two or more predictors in a regresion model are highly correlated to one another, causing a higher variance our the estimated coefficients. To understand the way multicollinearity affects our regresion we can examine the composition of the variance of our estimates.</p>
+<p>Suppose some Data Generating Process follows:</p>
+<p>\begin{equation*}
+Y = X_1\beta_1 +\epsilon
+\end{equation*}</p>
+<p>Considering the partitioned regression model:</p>
+<p>\begin{align*}
+Y &amp;= X\beta + e \
+Y &amp;= X_1\beta_1 + X_2\beta_2 + e
+\end{align*}</p>
+<p>We know that the OLS estimator will solve this equation:</p>
+<p>\begin{align*}
+(X’X)\hat{\beta} &amp;=X’Y \</p>
+<p>\begin{bmatrix}
+X_1’X_1      &amp; X_1’X_2   \
+X_2’X_1      &amp; X_2’X_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\beta_1} \
+\hat{\beta_2}
+\end{bmatrix}
+&amp; =
+\begin{bmatrix}
+X_1’Y \
+X_2’Y
+\end{bmatrix}
+\end{align*}</p>
+<p>This, because of the Frisch-Whaugh-Lovell Theorem, yields:</p>
+<p>\begin{align*}
+\hat{\beta_1} &amp;= (X_1’M_2X_1)^{-1}X_1’M_2Y
+\end{align*}</p>
+<p>Where <span class="math notranslate nohighlight">\(M_2 = I - X_2(X_2'X_2)^{-1}X_2'\)</span>, is the orthogonal projection matrix to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Note that <span class="math notranslate nohighlight">\(M_2\)</span> is symmetric, idempotent, and that any variable premultiplied by it yields the residual from from running <span class="math notranslate nohighlight">\(X_2\)</span> on that variable. For an arbitrary variable <span class="math notranslate nohighlight">\(Z\)</span>:</p>
+<p>\begin{align*}
+M_2Z &amp;= (I - X_2(X_2’X_2)^{-1}X_2’)Z \
+&amp;= Z - X_2(X_2’X_2)^{-1}X_2’Z \
+&amp;= Z - X_2\hat{\omega} \
+&amp;= Z - \hat{Z} \
+&amp;= e_{Z}
+\end{align*}</p>
+<p>Where <span class="math notranslate nohighlight">\(e_{Z}\)</span> and <span class="math notranslate nohighlight">\(\hat{\omega} \equiv (X_2'X_2)^{-1}X_2'Z\)</span> come from the regresion: $<span class="math notranslate nohighlight">\( Z = X_2\hat{\omega} + e_{Z}\)</span>$</p>
+<p>In a sense, the <span class="math notranslate nohighlight">\(M_2\)</span> matrix cleanses or “filters out” our <span class="math notranslate nohighlight">\(Z\)</span> variable, keeping only the part which is orthogonal to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Returning to <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span>:</p>
+<p>\begin{align*}
+\hat{\beta_1} &amp;= (X_1’M_2X_1)^{-1}X_1’M_2Y \
+&amp;= (X_1’M_2X_1)^{-1}X_1’M_2(X_1\beta_1 + \epsilon) \
+&amp;= \beta_1 + (X_1’M_2X_1)^{-1}X_1’M_2\epsilon
+\end{align*}</p>
+<p>For the conditional variance of <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span> this has great implications:</p>
+<p>\begin{align*}
+Var(\hat{\beta_1}|X) &amp;= Var(\beta_1 + (X_1’M_2X_1)^{-1}X_1’M_2\epsilon|X) \
+&amp;= Var((X_1’M_2X_1)^{-1}X_1’M_2\epsilon|X) \
+&amp;= E[((X_1’M_2X_1)^{-1}X_1’M_2\epsilon)((X_1’M_2X_1)^{-1}X_1’M_2\epsilon)’|X] \
+&amp;= E[(X_1’M_2X_1)^{-1}X_1’M_2\epsilon\epsilon’M_2’X_1(X_1’M_2’X_1)^{-1}|X] \
+&amp;= (X_1’M_2X_1)^{-1}X_1’M_2E[\epsilon\epsilon’|X]M_2’X_1(X_1’M_2’X_1)^{-1}
+\end{align*}</p>
+<p>Under the traditional assumption that <span class="math notranslate nohighlight">\(E[\epsilon\epsilon'|X] = \sigma^2I\)</span>:</p>
+<p>\begin{align*}
+Var(\hat{\beta_1}|X) &amp;= \sigma^2(X_1’M_2X_1)^{-1}X_1’M_2M_2’X_1(X_1’M_2’X_1)^{-1} \
+&amp;= \sigma^2(X_1’M_2’X_1)^{-1}
+\end{align*}</p>
+<p>Remembering that the variance of <span class="math notranslate nohighlight">\(X_1\)</span> can be decomposed into two positive components:</p>
+<p>\begin{align*}
+X_1 &amp;= X_2\alpha + v \
+Var(X_1) &amp;= Var(X_2\alpha) + Var(v) \
+Var(X_1) - Var(X_2\alpha) &amp;= Var(v) \
+E[X_1’X_1] - Var(X_2\alpha) &amp;= E[X_1’M_2’X_1]
+\end{align*}</p>
+<p>Thus, necessarily: $<span class="math notranslate nohighlight">\(E[X_1'M_2X_1] \leq E[X_1'X_1]\)</span>$</p>
+<p>Altogether this means: $<span class="math notranslate nohighlight">\(\sigma^2(X_1'X_1)^{-1} \leq \sigma^2(X_1'M_2'X_1)^{-1}\)</span>$</p>
+<p>This shows that controlling for the irrelevant variables <span class="math notranslate nohighlight">\(X_2\)</span> will in fact increase the variance of <span class="math notranslate nohighlight">\(\hat{\beta_1}\)</span> by limiting us to the “usable” variance of <span class="math notranslate nohighlight">\(X_1\)</span> which is orthogonal to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+<p>Suppose we want to estimate the impact of years of schooling on future salary. Imagine as well that we have a vast array of possible control variables at our disposal. Someone who is not familiar with the concept of multicollinearity might think that to avoid any possibility of ommited variable bias and ensure consistency it is best to control for everything we can. We now know this is not the case and that this approach can inadvertently introduce multicollinearity.</p>
+<p>Consider that we have as a possible control variable the total number of courses taken by each student. Intuitively, years of schooling are likely to correlate strongly with the number of total courses taken (more years in school tipically leads to more courses completed) and so controlling for this variable may result in the problem described above, inflating the variance of the estimated coefficients and potentially distorting our understanding of the true effect of schooling on salary.</p>
+<p>The same rationale applies to many other examples. For instance, imagine estimating the impact of marketing expenditure on sales. Controlling for variable such as number of marketing campaigns will probably cause the same issue.</p>
+<section id="perfectly-collinear-regressors">
+<h3>Perfectly collinear regressors<a class="headerlink" href="#perfectly-collinear-regressors" title="Link to this heading">#</a></h3>
+<p>A special case of the previously mentioned concept of multicollinearity arises when a variable is a linear combination of some other variables from our dataset, so not only are these variables highly correlated, but we say that they are perfectly collinear.</p>
+<p>Considering the partitioned regression model:</p>
+<p>\begin{align*}
+Y &amp;= x_1\beta_1 + X_2\beta_2 + \epsilon \
+x_1 &amp;= X_2 \alpha
+\end{align*}</p>
+<p>where the second equation is deterministic.</p>
+<p>We know that the OLS estimator will solve this equation:</p>
+<p>\begin{align*}
+(X’X)\hat{\beta} &amp;=X’Y \</p>
+<p>\begin{bmatrix}
+X_1’X_1      &amp; X_1’X_2   \
+X_2’X_1      &amp; X_2’X_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\beta_1} \
+\hat{\beta_2}
+\end{bmatrix}
+&amp; =
+\begin{bmatrix}
+X_1’Y \
+X_2’Y
+\end{bmatrix}
+\end{align*}</p>
+<p>Substituting <span class="math notranslate nohighlight">\(X_1 = X_2 \alpha\)</span> on the <span class="math notranslate nohighlight">\((X'X)\)</span> matrix:</p>
+<p>\begin{align*}
+(X’X) &amp;=
+\begin{bmatrix}
+(X_2\alpha)’X_2\alpha      &amp; (X_2\alpha)’X_2   \
+X_2’(X_2\alpha)      &amp; X_2’X_2
+\end{bmatrix} \</p>
+<p>&amp;=
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix}
+\end{align*}</p>
+<p>This yields the determinant:</p>
+<p>\begin{align*}
+\det (X’X) &amp;= \det\left(
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right) \
+\end{align*}</p>
+<p>Transforming the matrix using row operations:
+\begin{align*}
+\det (X’X) &amp;= \det\left(
+\begin{bmatrix}
+I      &amp; -\alpha’   \
+0      &amp; I
+\end{bmatrix}
+\begin{bmatrix}
+\alpha’X_2’X_2\alpha      &amp; \alpha’X_2’X_2   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right) \
+&amp;= \det\left(
+\begin{bmatrix}
+0      &amp; 0   \
+X_2’X_2\alpha      &amp; X_2’X_2
+\end{bmatrix} \right)
+\end{align*}</p>
+<p>Like this, we can see that:
+\begin{align*}
+\det (X’X) &amp;= 0
+\end{align*}</p>
+<p>Because of this, <span class="math notranslate nohighlight">\((X'X)\)</span> is not invertible and there is no solution for the OLS estimation</p>
+</section>
+<section id="practical-application">
+<h3>Practical application<a class="headerlink" href="#practical-application" title="Link to this heading">#</a></h3>
+<p>We can easily show what we have theoretically explained with a practical application. We will create a dataset simulating the regressors that we may want to include in the estimation of a linear model.</p>
+<p>The first 9 variables follow a normal distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Random</span>
+
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10×9 Matrix{Float64}:
+ -0.231909   -0.269885  -1.07458   …  -0.57796     0.27262    0.849341
+  0.94039     0.578004  -1.38197      -1.78676     1.23521   -0.210716
+  0.596762    1.16034    0.951853     -1.36705     1.11072   -0.143171
+  1.99782     0.287888  -0.292291      0.660498    1.85158   -0.121578
+ -0.0515618  -0.441193   0.328946      0.0371086  -0.131821   0.47354
+  1.17224     0.134576  -0.495999  …   0.877644   -0.406776  -0.0923911
+ -1.69681     0.165543   0.22277       1.79296    -0.379297  -0.550621
+ -2.11615    -1.0721    -1.66125      -1.35785    -0.499403  -0.474732
+  0.558366   -1.26016    1.92524      -1.48326    -0.635276   0.237598
+ -0.86473     0.196408  -1.04847       0.475453    2.28402    0.100588
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, the 10th variable is a linear combination (the sum) of variables 1, 5 and 9.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">coefficients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+<span class="n">selected_columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">]</span>
+<span class="n">matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span><span class="w"> </span><span class="n">matrix</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="w"> </span><span class="n">selected_columns</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">coefficients</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10×10 Matrix{Float64}:
+ -0.231909   -0.269885  -1.07458   …   0.27262    0.849341    0.100641
+  0.94039     0.578004  -1.38197       1.23521   -0.210716   -0.828557
+  0.596762    1.16034    0.951853      1.11072   -0.143171   -0.510355
+  1.99782     0.287888  -0.292291      1.85158   -0.121578    3.1357
+ -0.0515618  -0.441193   0.328946     -0.131821   0.47354    -0.951298
+  1.17224     0.134576  -0.495999  …  -0.406776  -0.0923911   0.815082
+ -1.69681     0.165543   0.22277      -0.379297  -0.550621   -1.00174
+ -2.11615    -1.0721    -1.66125      -0.499403  -0.474732   -2.84605
+  0.558366   -1.26016    1.92524      -0.635276   0.237598    2.11939
+ -0.86473     0.196408  -1.04847       2.28402    0.100588   -0.864591
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we saw in theory, this should cause our dataset to have a determinant of zero. Thus, making X singular and yielding an error message when trying to invert it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">det</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.548968811760904e-14
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">inv_matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inv</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10×10 Matrix{Float64}:
+  4.21177e15   3.21803e15   2.84373e15  …   5.35458e15   2.48399e15
+  0.35937      0.106139     0.159937       -0.497513    -0.629165
+ -1.9799      -1.79593     -0.971094       -2.79778     -1.85628
+  0.382724    -0.282216     0.588743        0.183997     0.0466157
+  4.21177e15   3.21803e15   2.84373e15      5.35458e15   2.48399e15
+ -3.02412     -2.49823     -2.12259     …  -4.6385      -2.89822
+ -1.40691     -1.3032      -0.896793       -2.0195      -0.996493
+ -1.28789     -0.920547    -0.753483       -1.62345     -0.682825
+  4.21177e15   3.21803e15   2.84373e15      5.35458e15   2.48399e15
+ -4.21177e15  -3.21803e15  -2.84373e15     -5.35458e15  -2.48399e15
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that this is not the case. Is this a contradiction to our theoretical proof? Julia, as well as Python, yield a determinant extremely close to cero but not equal to cero, so they are able to find a “supposed” inverse to the matrix. This would seem to contradict what we have proven in theory, however, this is a problem rooted in the way those languages handle float values. Thus, that is not a contradiction of theory but rather an illustration of how computational environments deal differently with the inherent limitations of floating-point arithmetic.</p>
+</section>
+</section>
+<section id="analyzing-rct-data-with-precision-adjustment">
+<h2>Analyzing RCT data with Precision Adjustment<a class="headerlink" href="#analyzing-rct-data-with-precision-adjustment" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">DataFrames</span>
+<span class="k">using</span><span class="w"> </span><span class="n">FilePaths</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Queryverse</span>
+<span class="k">using</span><span class="w"> </span><span class="n">GLM</span>
+<span class="k">using</span><span class="w"> </span><span class="n">StatsModels</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Combinatorics</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Iterators</span>
+<span class="k">using</span><span class="w"> </span><span class="n">CategoricalArrays</span>
+<span class="k">using</span><span class="w"> </span><span class="n">HypothesisTests</span>
+<span class="k">using</span><span class="w"> </span><span class="n">StatsBase</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Lasso</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TypedTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MacroTools</span>
+<span class="k">using</span><span class="w"> </span><span class="n">NamedArrays</span>
+<span class="k">using</span><span class="w"> </span><span class="n">DataTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Latexify</span>
+<span class="k">using</span><span class="w"> </span><span class="n">PrettyTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TypedTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TexTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">DataTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">FilePaths</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Combinatorics</span>
+<span class="k">using</span><span class="w"> </span><span class="n">CategoricalArrays</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TypedTables</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MacroTools</span>
+<span class="k">using</span><span class="w"> </span><span class="n">HDMjl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">ArgumentError</span>: Package FilePaths not found in current path.
+<span class="o">-</span> <span class="n">Run</span> <span class="err">`</span><span class="kn">import</span> <span class="nn">Pkg</span><span class="p">;</span> <span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;FilePaths&quot;</span><span class="p">)</span><span class="err">`</span> <span class="n">to</span> <span class="n">install</span> <span class="n">the</span> <span class="n">FilePaths</span> <span class="n">package</span><span class="o">.</span>
+
+<span class="ne">Stacktrace</span>:
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">macro</span> <span class="n">expansion</span>
+   <span class="o">@</span> <span class="o">.</span>\<span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1772</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">macro</span> <span class="n">expansion</span>
+   <span class="o">@</span> <span class="o">.</span>\<span class="n">lock</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">267</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">__require</span><span class="p">(</span><span class="n">into</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">mod</span><span class="p">::</span><span class="n">Symbol</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">.</span>\<span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1753</span>
+ <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="c1">#invoke_in_world#3</span>
+   <span class="o">@</span> <span class="o">.</span>\<span class="n">essentials</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">926</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">invoke_in_world</span>
+   <span class="o">@</span> <span class="o">.</span>\<span class="n">essentials</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">923</span> <span class="p">[</span><span class="n">inlined</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="n">require</span><span class="p">(</span><span class="n">into</span><span class="p">::</span><span class="n">Module</span><span class="p">,</span> <span class="n">mod</span><span class="p">::</span><span class="n">Symbol</span><span class="p">)</span>
+   <span class="o">@</span> <span class="n">Base</span> <span class="o">.</span>\<span class="n">loading</span><span class="o">.</span><span class="n">jl</span><span class="p">:</span><span class="mi">1746</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span><span class="p">,</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readdlm</span><span class="p">(</span><span class="s">&quot;../../../data/penn_jae.dat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="kt">Float64</span><span class="p">)</span>
+<span class="n">mat</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">head</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">penn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="ss">:tg</span><span class="p">]</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Treatment group n°2</span>
+<span class="n">replace!</span><span class="p">(</span><span class="n">penn</span><span class="o">.</span><span class="n">tg</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">rename!</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tg&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;T2&quot;</span><span class="p">)</span>
+
+<span class="c"># from float to string</span>
+<span class="n">penn</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="ss">:dep</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">string</span><span class="o">.</span><span class="p">(</span><span class="n">penn</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="ss">:dep</span><span class="p">])</span><span class="w"> </span>
+
+<span class="c"># dep varaible in categorical format </span>
+<span class="n">penn</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="ss">:dep</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">categorical</span><span class="p">(</span><span class="n">penn</span><span class="p">[</span><span class="o">!</span><span class="p">,</span><span class="ss">:dep</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="histogram">
+<h1>Histogram<a class="headerlink" href="#histogram" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">treat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="ss">:T2</span><span class="p">]</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+<span class="n">treat</span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">treat</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="ss">:inuidur1</span><span class="p">])</span>
+<span class="n">treatmat</span><span class="o">=</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">treat</span><span class="p">)</span>
+
+<span class="n">notreat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">row</span><span class="p">[</span><span class="ss">:T2</span><span class="p">]</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+<span class="n">notreat</span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">notreat</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="ss">:inuidur1</span><span class="p">])</span>
+<span class="n">notreatmat</span><span class="o">=</span><span class="kt">Matrix</span><span class="p">(</span><span class="n">notreat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Treated individuals</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">(</span><span class="n">treatmat</span><span class="p">,</span><span class="w"> </span><span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="o">=</span><span class="ss">:pdf</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="ss">:gray</span><span class="p">)</span>
+<span class="n">xlims!</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="s">&quot;Distribution of weeks unemployed for treated individuals&quot;</span><span class="p">)</span>
+<span class="n">xlabel!</span><span class="p">(</span><span class="s">&quot;Weeks unemployed&quot;</span><span class="p">)</span>
+<span class="n">ylabel!</span><span class="p">(</span><span class="s">&quot;P(x)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Control individuals</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="p">(</span><span class="n">notreatmat</span><span class="p">,</span><span class="w"> </span><span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="o">=</span><span class="ss">:pdf</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="ss">:gray</span><span class="p">)</span>
+<span class="n">xlims!</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">title!</span><span class="p">(</span><span class="s">&quot;Distribution of weeks unemployed for control individuals&quot;</span><span class="p">)</span>
+<span class="n">xlabel!</span><span class="p">(</span><span class="s">&quot;Weeks unemployed&quot;</span><span class="p">)</span>
+<span class="n">ylabel!</span><span class="p">(</span><span class="s">&quot;P(x)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>1 Classical 2-Sample Approach (CL)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="c"># Calculate the t-statistic and p-value</span>
+<span class="n">p_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pvalue</span><span class="p">(</span><span class="n">UnequalVarianceTTest</span><span class="p">(</span><span class="n">vec</span><span class="p">(</span><span class="n">treatmat</span><span class="p">),</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">notreatmat</span><span class="p">)))</span>
+
+<span class="n">reject_H0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span>
+<span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">p_value</span><span class="p">,</span><span class="w"> </span><span class="n">reject_H0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ols_cl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">T2</span><span class="p">),</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+
+<span class="n">table1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regtable</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;No adjustment model&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ols_cl</span><span class="p">)</span><span class="w">  </span>
+<span class="c">#coefic=coef(ols_cl)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>2 Classical Linear Regression Adjustment (CRA)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">reg2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@formula</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">inuidur1</span><span class="p">)</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">T2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="o">+</span><span class="n">black</span><span class="o">+</span><span class="n">othrace</span><span class="o">+</span><span class="n">dep</span><span class="o">+</span><span class="n">q2</span><span class="o">+</span><span class="n">q3</span><span class="o">+</span><span class="n">q4</span><span class="o">+</span><span class="n">q5</span><span class="o">+</span><span class="n">q6</span><span class="o">+</span><span class="n">agelt35</span><span class="o">+</span><span class="n">agegt54</span><span class="o">+</span><span class="n">durable</span><span class="o">+</span><span class="n">lusd</span><span class="o">+</span><span class="n">husd</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">reg2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apply_schema</span><span class="p">(</span><span class="n">reg2</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">(</span><span class="n">reg2</span><span class="p">,</span><span class="w"> </span><span class="n">penn</span><span class="p">))</span>
+
+<span class="n">ols_cra</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">reg2</span><span class="p">,</span><span class="w"> </span><span class="n">penn</span><span class="p">)</span>
+<span class="n">table2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regtable</span><span class="p">(</span><span class="s">&quot;CRA model&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ols_cra</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>3 Interactive Regression Adjustment (IRA)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># demean function</span>
+<span class="k">function</span><span class="w"> </span><span class="n">desv_mean</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">dims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">size</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">          </span><span class="n">M</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">M</span>
+<span class="k">end</span><span class="w">    </span>
+<span class="n">reg1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nd">@formula</span><span class="p">(</span><span class="n">T2</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">(</span><span class="n">female</span><span class="o">+</span><span class="n">black</span><span class="o">+</span><span class="n">othrace</span><span class="o">+</span><span class="n">dep</span><span class="o">+</span><span class="n">q2</span><span class="o">+</span><span class="n">q3</span><span class="o">+</span><span class="n">q4</span><span class="o">+</span><span class="n">q5</span><span class="o">+</span><span class="n">q6</span><span class="o">+</span><span class="n">agelt35</span><span class="o">+</span><span class="n">agegt54</span><span class="o">+</span><span class="n">durable</span><span class="o">+</span><span class="n">lusd</span><span class="o">+</span><span class="n">husd</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">reg1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">apply_schema</span><span class="p">(</span><span class="n">reg1</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">(</span><span class="n">reg1</span><span class="p">,</span><span class="w"> </span><span class="n">penn</span><span class="p">))</span>
+<span class="c"># Matrix Model &amp; demean</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StatsModels</span><span class="o">.</span><span class="n">modelmatrix</span><span class="p">(</span><span class="n">reg1</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span><span class="n">penn</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">desv_mean</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="c"># matrix format </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="ss">:inuidur1</span><span class="p">,</span><span class="ss">:T2</span><span class="p">])</span><span class="w"> </span><span class="c"># select inuidur1 y T2</span>
+
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hcat</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="kt">Matrix</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="ss">:T2</span><span class="p">]))</span><span class="o">.*</span><span class="n">X</span><span class="p">))</span><span class="w">  </span><span class="c"># Joint X, (T2*X)</span>
+
+<span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hcat</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="c"># Joint inuidur1, T2, X y (T2*X)</span>
+
+<span class="n">base</span><span class="o">.</span><span class="n">inuidur1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">inuidur1</span><span class="p">)</span><span class="w">  </span><span class="c"># log(inuidur1)</span>
+
+<span class="n">terms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">term</span><span class="o">.</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">base</span><span class="p">))</span><span class="w"> </span><span class="c"># term.() let us to get all variables as objects</span>
+
+<span class="c">#interactive regression model</span>
+
+<span class="n">ols_ira</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">terms</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]),</span><span class="w"> </span><span class="n">base</span><span class="p">)</span>
+
+
+<span class="n">table3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">regtable</span><span class="p">(</span><span class="s">&quot;Interactive model&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ols_ira</span><span class="p">)</span>
+
+<span class="c">#terms[1] : select first variable. In this case, oucome of interest </span>
+<span class="c">#sum(terms[2:end]) : independent variables as regresors in the linear regression   </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>4 Interactive Regression Adjustment Using Lasso (IRA using Lasso)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StatsModels</span><span class="o">.</span><span class="n">modelmatrix</span><span class="p">(</span><span class="n">reg2</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span><span class="n">penn</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">desv_mean</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span><span class="w">  </span><span class="c"># Treatment varaible</span>
+
+
+
+<span class="n">rename!</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="ss">:x1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="ss">:T2</span><span class="p">))</span><span class="w"> </span><span class="c">#rename x1 -&gt; T2</span>
+
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hcat</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">],</span><span class="w"> </span><span class="n">X</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.*</span><span class="n">X</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]))</span><span class="w">  </span><span class="c"># Join Controls (X) + T2*X &quot;interactive&quot;</span>
+
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">penn</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="ss">:inuidur1</span><span class="p">])</span><span class="w"> </span><span class="c">#select just inuidur1</span>
+
+<span class="n">Y</span><span class="o">.</span><span class="n">inuidur1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">log</span><span class="o">.</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">inuidur1</span><span class="p">)</span><span class="w">  </span><span class="c"># log(inuidur1)</span>
+
+
+
+
+
+<span class="c">#terms = term.(names(base)) # all terms  </span>
+<span class="c">#model = terms[1] ~ sum(terms[2:end])</span>
+<span class="c">#lazso = fit(LassoModel,terms[1] ~ sum(terms[2:end]), base; standardize=false, α = 0.1)</span>
+<span class="c">#coef(lasso)[2]</span>
+<span class="c">#table3 = regtable(&quot;Lasso adjustment model&quot; =&gt; lasso)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">D_reg_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">rlasso_arg</span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="mf">1.1</span><span class="p">,</span><span class="w"> </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">Inf</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">)</span>
+<span class="n">D_resid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlasso</span><span class="p">(</span><span class="n">D_reg_0</span><span class="p">)</span>
+<span class="n">D_resid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlasso</span><span class="p">(</span><span class="n">D_reg_0</span><span class="p">)[</span><span class="s">&quot;residuals&quot;</span><span class="p">]</span>
+<span class="n">Y_reg_0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">rlasso_arg</span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                    </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="mf">1.1</span><span class="p">,</span><span class="w"> </span><span class="nb">nothing</span><span class="p">,</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">^</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="o">-</span><span class="nb">Inf</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">Inf</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span><span class="p">)</span>
+<span class="n">Y_resid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlasso</span><span class="p">(</span><span class="n">Y_reg_0</span><span class="p">)[</span><span class="s">&quot;residuals&quot;</span><span class="p">]</span>
+<span class="n">D_resid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">D_resid</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">D_resid</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Lasso_ira</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">D_resid</span><span class="p">,</span><span class="w"> </span><span class="n">Y_resid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="plot-coefficients">
+<h1>Plot coefficients<a class="headerlink" href="#plot-coefficients" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c">#T2*female      1</span>
+<span class="c">#T2*black       2</span>
+<span class="c">#T2*agelt35     4</span>
+<span class="c">#T2*factor(dep)1  11</span>
+<span class="c"># 23 var:</span>
+<span class="c"># Intercept, T2, 120INTERACTIONS ...,T2*female,T2*black, ... T2*INTERACTION</span>
+<span class="c"># 1        ,  2,         ...     122,  123    ,   124  ,    ...          240</span>
+<span class="c">#coef(ols_ira)[1]     </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>95% confidence</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Extraer los coeficientes para sex y los errores estándar de las últimas dos regresiones</span>
+<span class="n">coefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;T2*fem&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">122</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*black&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">123</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*agelt35&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">125</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*f(dep)1&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">132</span><span class="p">])</span><span class="w">  </span>
+
+<span class="n">ses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;T2*fem&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">122</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*black&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">123</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*agelt35&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">125</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*f(dep)1&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">132</span><span class="p">])</span><span class="w"> </span>
+
+<span class="c"># Gráfico de dispersión con barras de error</span>
+<span class="n">scatter_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scatter</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span><span class="w"> </span><span class="n">yerr</span><span class="o">=</span><span class="mf">1.96</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="n">values</span><span class="p">(</span><span class="n">ses</span><span class="p">)),</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;Coefficient&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;Value&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Coefficients using IRA(95%)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">markershape</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">markercolor</span><span class="o">=</span><span class="ss">:blue</span><span class="p">,</span><span class="w"> </span><span class="n">markerstrokecolor</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span>
+<span class="w">    </span><span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">markeralpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="c"># Línea horizontal en y=0</span>
+<span class="n">hline!</span><span class="p">(</span><span class="n">scatter_plot</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s">&quot;gray&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linestyle</span><span class="o">=</span><span class="ss">:dash</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>90% confidence</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Extraer los coeficientes para sex y los errores estándar de las últimas dos regresiones</span>
+<span class="n">coefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;T2*fem&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">122</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*black&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">123</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*agelt35&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">125</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*f(dep)1&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">coef</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">132</span><span class="p">])</span><span class="w">  </span>
+
+<span class="n">ses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;T2*fem&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">122</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*black&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">123</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*agelt35&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">125</span><span class="p">],</span>
+<span class="w">             </span><span class="s">&quot;T2*f(dep)1&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">stderror</span><span class="p">(</span><span class="n">ols_ira</span><span class="p">)[</span><span class="mi">132</span><span class="p">])</span><span class="w"> </span>
+
+<span class="c"># Gráfico de dispersión con barras de error</span>
+<span class="n">scatter_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scatter</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span><span class="w"> </span><span class="n">yerr</span><span class="o">=</span><span class="mf">1.645</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="n">values</span><span class="p">(</span><span class="n">ses</span><span class="p">)),</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nb">false</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;Coefficient&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;Value&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Coefficients using IRA(90%)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">markershape</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span><span class="w"> </span><span class="n">markercolor</span><span class="o">=</span><span class="ss">:blue</span><span class="p">,</span><span class="w"> </span><span class="n">markerstrokecolor</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span>
+<span class="w">    </span><span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">markeralpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="c"># Línea horizontal en y=0</span>
+<span class="n">hline!</span><span class="p">(</span><span class="n">scatter_plot</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s">&quot;gray&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">linestyle</span><span class="o">=</span><span class="ss">:dash</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>No Significant Interaction Effects:</p>
+<p>Our analysis found no statistically significant interaction effects between the incentive program and other factors at the 90% or 95% confidence level. This suggests there’s no evidence of heterogeneity (variation in effects) within subgroups defined by these factors.</p>
+<p>Marginally Positive Effect for Dependents = 1:</p>
+<p>However, there’s a trend worth mentioning. Individuals with one dependent (e.g., one child) showed a marginally positive (but not statistically significant) effect. This could tentatively suggest they might be slightly more likely to remain unemployed when receiving the incentive.</p>
+<p>Similar Trend for Under 35:</p>
+<p>A similar trend was observed for individuals under 35.</p>
+<p>Negative Estimates for Women and Black People:</p>
+<p>Interestingly, women and Black people displayed negative point estimates. This means they might be more inclined to seek employment sooner upon receiving the incentive program’s benefits.</p>
+<p>Key Points:</p>
+<p>No statistically significant interaction effects were found between the incentive program and other factors.
+Individuals with one dependent and those under 35 showed a slight (not significant) tendency to remain unemployed longer with the incentive.
+Women and Black people seemed more likely to seek employment sooner when offered the incentive.</p>
+<section id="a-crash-course-in-good-and-bad-controls">
+<h2>A crash course in good and bad controls<a class="headerlink" href="#a-crash-course-in-good-and-bad-controls" title="Link to this heading">#</a></h2>
+<p>In this section, we will explore different scenarios where we need to decide whether the inclusion of a control variable, denoted by <em>Z</em>, will help (or not) to improve the estimation of the <strong>average treatment effect</strong> (ATE) of treatment <em>X</em> on outcome <em>Y</em>. The effect of observed variables will be represented by a continuous line, while that of unobserved variables will be represented by and discontinuous line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># import Pkg; Pkg.add(&quot;GraphPlot&quot;)</span>
+<span class="c"># import Pkg; Pkg.add(&quot;Compose&quot;)</span>
+<span class="c"># import Pkg; Pkg.add(&quot;Cairo&quot;)</span>
+<span class="c"># import Pkg; Pkg.add(&quot;Fontconfig&quot;)</span>
+<span class="c"># import Pkg; Pkg.add(&quot;Colors&quot;)</span>
+<span class="c"># import Pkg; Pkg.add(&quot;Graphs&quot;)</span>
+<span class="c"># Pkg.add(&quot;CausalInference&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">   Resolving</span> package versions...
+<span class=" -Color -Color-Bold -Color-Bold-Green">  No Changes</span> to `~/.julia/environments/v1.10/Project.toml`
+<span class=" -Color -Color-Bold -Color-Bold-Green">  No Changes</span> to `~/.julia/environments/v1.10/Manifest.toml`
+<span class=" -Color -Color-Bold -Color-Bold-Green">Precompiling</span> project...
+<span class=" -Color -Color-Yellow">  ? </span>MLJ
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Libraries</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Graphs</span><span class="p">,</span><span class="w"> </span><span class="n">GraphPlot</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Compose</span><span class="p">,</span><span class="w"> </span><span class="n">Cairo</span><span class="p">,</span><span class="w"> </span><span class="n">Fontconfig</span>
+<span class="k">using</span><span class="w"> </span><span class="n">Colors</span>
+<span class="k">using</span><span class="w"> </span><span class="n">DataFrames</span><span class="p">,</span><span class="w"> </span><span class="n">GLM</span>
+
+<span class="k">import</span><span class="w"> </span><span class="n">Random</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="good-control-blocking-back-door-paths">
+<h3>Good control (Blocking back-door paths)<a class="headerlink" href="#good-control-blocking-back-door-paths" title="Link to this heading">#</a></h3>
+<p><strong>Model 1</strong></p>
+<p>We will assume that <em>X</em> measures whether or not the student attends the extra tutoring session, that affects the student’s grade (<em>Y</em>). Then, we have another observable variable, as hours of the student sleep (<em>Z</em>), that impacts <em>X</em> and <em>Y</em>. Theory says that when controlling by <em>Z</em>, we block the back-door path from <em>X</em> to <em>Y</em>. Thus, we see that in the second regression, the coefficient of <em>X</em> is closer to the real one (3.03339 ≈ 3).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the graph with 3 nodes</span>
+<span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleDiGraph</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">  </span><span class="c"># X -&gt; Y</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span><span class="c"># Z -&gt; X</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">  </span><span class="c"># Z -&gt; Y</span>
+
+<span class="c"># Node labels for X, Y, Z</span>
+<span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">]</span>
+
+<span class="c"># Define node colors based on labels</span>
+<span class="n">nodefillc_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Y&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Z&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">)</span>
+
+<span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">nodefillc_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">]</span>
+
+<span class="c"># Create the graph plot</span>
+<span class="n">g_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gplot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodefillc</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokelw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODESIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODELABELSIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">               </span><span class="n">edgestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c"># Save and display the plot</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PNG</span><span class="p">(</span><span class="s">&quot;causal_discovery_1.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="n">g_plot</span><span class="p">)</span>
+<span class="n">g_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/340e506341ebcfbdd4f934203e0c1ba251f08209aeedf6323a61dd01b8800299.svg" src="../../_images/340e506341ebcfbdd4f934203e0c1ba251f08209aeedf6323a61dd01b8800299.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Set seed</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c"># Generate data</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+
+<span class="c"># Create dataframe</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Z</th><th>X</th><th>Y</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>1,000 rows × 3 columns</p><tr><th>1</th><td>0.121698</td><td>-0.646629</td><td>-2.17627</td></tr><tr><th>2</th><td>-0.0329104</td><td>2.15083</td><td>5.12964</td></tr><tr><th>3</th><td>-1.86593</td><td>-8.56013</td><td>-28.4291</td></tr><tr><th>4</th><td>-0.402004</td><td>-3.37725</td><td>-10.4183</td></tr><tr><th>5</th><td>0.298821</td><td>2.03012</td><td>5.97373</td></tr><tr><th>6</th><td>1.88838</td><td>8.48632</td><td>29.592</td></tr><tr><th>7</th><td>-0.998066</td><td>-4.56851</td><td>-14.6436</td></tr><tr><th>8</th><td>-1.11586</td><td>-4.5261</td><td>-15.5884</td></tr><tr><th>9</th><td>-0.558549</td><td>-2.6828</td><td>-10.8751</td></tr><tr><th>10</th><td>0.376278</td><td>2.72978</td><td>8.67289</td></tr><tr><th>11</th><td>1.73838</td><td>7.59541</td><td>25.222</td></tr><tr><th>12</th><td>-0.222023</td><td>-1.21483</td><td>-3.54479</td></tr><tr><th>13</th><td>1.05565</td><td>5.00518</td><td>15.7835</td></tr><tr><th>14</th><td>-0.293296</td><td>-2.40651</td><td>-8.40434</td></tr><tr><th>15</th><td>-0.653213</td><td>-4.72798</td><td>-14.8385</td></tr><tr><th>16</th><td>-0.426636</td><td>-1.59728</td><td>-5.77415</td></tr><tr><th>17</th><td>-0.875714</td><td>-6.23685</td><td>-20.3148</td></tr><tr><th>18</th><td>-0.625727</td><td>-2.71617</td><td>-7.12168</td></tr><tr><th>19</th><td>-1.90824</td><td>-10.5502</td><td>-35.426</td></tr><tr><th>20</th><td>-0.753929</td><td>-1.1718</td><td>-5.8239</td></tr><tr><th>21</th><td>-1.46926</td><td>-5.98103</td><td>-21.324</td></tr><tr><th>22</th><td>1.36688</td><td>4.56468</td><td>15.0488</td></tr><tr><th>23</th><td>2.25611</td><td>11.473</td><td>37.9483</td></tr><tr><th>24</th><td>0.617481</td><td>2.54765</td><td>8.29642</td></tr><tr><th>25</th><td>0.39143</td><td>0.59849</td><td>1.8718</td></tr><tr><th>26</th><td>-2.14499</td><td>-11.1892</td><td>-37.0807</td></tr><tr><th>27</th><td>0.833313</td><td>4.25772</td><td>15.3056</td></tr><tr><th>28</th><td>-0.947989</td><td>-4.69399</td><td>-17.6018</td></tr><tr><th>29</th><td>-0.0380226</td><td>0.180093</td><td>-1.74691</td></tr><tr><th>30</th><td>0.581013</td><td>3.39011</td><td>12.4434</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Wrong regression, not controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X
+
+Coefficients:
+──────────────────────────────────────────────────────────────────────────
+                Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+──────────────────────────────────────────────────────────────────────────
+(Intercept)  0.021246  0.032701      0.65    0.5160  -0.0429246  0.0854166
+X            3.29515   0.00623332  528.63    &lt;1e-99   3.28291    3.30738
+──────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Correct regression</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X + Z
+
+Coefficients:
+──────────────────────────────────────────────────────────────────────────
+                 Coef.  Std. Error      t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+──────────────────────────────────────────────────────────────────────────
+(Intercept)  0.0102651   0.0315753   0.33    0.7452  -0.0516965  0.0722268
+X            3.03339     0.0307871  98.53    &lt;1e-99   2.97297    3.0938
+Z            1.35458     0.156251    8.67    &lt;1e-16   1.04796    1.6612
+──────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Model 2</strong></p>
+<p>We will assume that <em>X</em> stands for the police salaries that affect the crime rate (<em>Y</em>). Then, we have another observable variable, as the policemen’s supply (<em>Z</em>), that impacts <em>X</em> but not <em>Y</em>. And, additionally, we know that there is an unobservable variable (<em>U</em>), as the preference for maintaining civil order, that affects <em>Z</em> and <em>Y</em>. The theory says that when controlling by <em>Z</em>, we block (some) of the unobservable variable’s back-door path from <em>X</em> to <em>Y</em>. Thus, we see that in the second regression, the coefficient of <em>X</em> is equal to the real one (0.5).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the graph with 4 nodes: U, Z, X, Y</span>
+<span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleDiGraph</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c"># U -&gt; Y</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">  </span><span class="c"># U -&gt; Z</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># Z -&gt; X</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c"># X -&gt; Y</span>
+
+<span class="c"># Node labels for U, Z, X, Y</span>
+<span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;U&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">]</span>
+
+<span class="c"># Define node colors based on labels</span>
+<span class="n">nodefillc_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;U&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Z&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;X&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Y&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">)</span>
+
+<span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">nodefillc_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">]</span>
+
+<span class="c"># Create the graph plot</span>
+<span class="n">g_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gplot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodefillc</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokelw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODESIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODELABELSIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">               </span><span class="n">edgestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c"># Save and display the plot</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PNG</span><span class="p">(</span><span class="s">&quot;causal_graph.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="n">g_plot</span><span class="p">)</span>
+<span class="n">g_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c019f822434198148753b4d648a9b8f1f2485b475976e030974b9e46ffd2f579.svg" src="../../_images/c019f822434198148753b4d648a9b8f1f2485b475976e030974b9e46ffd2f579.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Set seed</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c"># Generate data</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+
+<span class="c"># Create dataframe</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Z</th><th>X</th><th>Y</th><th>U</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>1,000 rows × 4 columns</p><tr><th>1</th><td>-0.403233</td><td>-1.2254</td><td>-2.2511</td><td>0.121698</td></tr><tr><th>2</th><td>2.08501</td><td>2.89654</td><td>1.13287</td><td>-0.0329104</td></tr><tr><th>3</th><td>-12.292</td><td>-24.5338</td><td>-12.1042</td><td>-1.86593</td></tr><tr><th>4</th><td>-4.18126</td><td>-8.04607</td><td>-4.90671</td><td>-0.402004</td></tr><tr><th>5</th><td>2.62777</td><td>4.69066</td><td>2.44994</td><td>0.298821</td></tr><tr><th>6</th><td>12.2631</td><td>25.8266</td><td>13.0174</td><td>1.88838</td></tr><tr><th>7</th><td>-6.56464</td><td>-12.5702</td><td>-6.84891</td><td>-0.998066</td></tr><tr><th>8</th><td>-6.75783</td><td>-13.8519</td><td>-7.02647</td><td>-1.11586</td></tr><tr><th>9</th><td>-3.7999</td><td>-9.58863</td><td>-4.76023</td><td>-0.558549</td></tr><tr><th>10</th><td>3.48233</td><td>6.8838</td><td>4.36792</td><td>0.376278</td></tr><tr><th>11</th><td>11.0722</td><td>21.9725</td><td>10.9841</td><td>1.73838</td></tr><tr><th>12</th><td>-1.65888</td><td>-2.88502</td><td>-1.31234</td><td>-0.222023</td></tr><tr><th>13</th><td>7.11649</td><td>13.4175</td><td>7.98643</td><td>1.05565</td></tr><tr><th>14</th><td>-2.9931</td><td>-6.73107</td><td>-3.86902</td><td>-0.293296</td></tr><tr><th>15</th><td>-6.03441</td><td>-11.7435</td><td>-5.76025</td><td>-0.653213</td></tr><tr><th>16</th><td>-2.45055</td><td>-5.24346</td><td>-2.72531</td><td>-0.426636</td></tr><tr><th>17</th><td>-7.98828</td><td>-16.2672</td><td>-8.1003</td><td>-0.875714</td></tr><tr><th>18</th><td>-3.96763</td><td>-5.96982</td><td>-2.35263</td><td>-0.625727</td></tr><tr><th>19</th><td>-14.3667</td><td>-29.6464</td><td>-15.1005</td><td>-1.90824</td></tr><tr><th>20</th><td>-2.67965</td><td>-6.53693</td><td>-4.24367</td><td>-0.753929</td></tr><tr><th>21</th><td>-8.91955</td><td>-19.0161</td><td>-8.64774</td><td>-1.46926</td></tr><tr><th>22</th><td>7.29844</td><td>13.9013</td><td>6.88151</td><td>1.36688</td></tr><tr><th>23</th><td>15.9852</td><td>32.1156</td><td>16.2189</td><td>2.25611</td></tr><tr><th>24</th><td>3.78261</td><td>7.29248</td><td>2.91277</td><td>0.617481</td></tr><tr><th>25</th><td>1.38135</td><td>2.25189</td><td>1.29255</td><td>0.39143</td></tr><tr><th>26</th><td>-15.4791</td><td>-31.254</td><td>-16.412</td><td>-2.14499</td></tr><tr><th>27</th><td>5.92434</td><td>13.1312</td><td>8.51129</td><td>0.833313</td></tr><tr><th>28</th><td>-6.58996</td><td>-15.2778</td><td>-6.27984</td><td>-0.947989</td></tr><tr><th>29</th><td>0.104048</td><td>-2.02206</td><td>-0.578553</td><td>-0.0380226</td></tr><tr><th>30</th><td>4.55213</td><td>10.5058</td><td>3.95193</td><td>0.581013</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Wrong regression, not controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X
+
+Coefficients:
+────────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+────────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0337287  0.0307735    -1.10    0.2733  -0.0941169  0.0266596
+X             0.514806   0.00210354  244.73    &lt;1e-99   0.510678   0.518934
+────────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X + Z
+
+Coefficients:
+──────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error      t  Pr(&gt;|t|)  Lower 95%  Upper 95%
+──────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0327959   0.0306374  -1.07    0.2847  -0.092917  0.0273253
+X             0.417904    0.0307391  13.60    &lt;1e-38   0.357583  0.478225
+Z             0.195056    0.0617315   3.16    0.0016   0.073917  0.316194
+──────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bad-control-m-bias">
+<h3>Bad Control (M-bias)<a class="headerlink" href="#bad-control-m-bias" title="Link to this heading">#</a></h3>
+<p><strong>Model 7</strong></p>
+<p>Let us suppose that <em>X</em> stands for a job training program aimed at reducing unemployment. Then, there is a first unobserved confounder, which could be the planning effort and good design of the job program (<em>U1</em>) that impacts directly on the participation in job training programs (<em>X</em>) and the proximity of job programs (that would be the bad control <em>Z</em>). Furthermore, we have another unobserved confounder (<em>U2</em>), as the soft skills of the unemployed, that affects the employment status of individuals (<em>Y</em>) and the likelihood of beeing in a job training program that is closer (<em>Z</em>). That is why including <em>Z</em> in the second regression makes <em>X</em> coefficient value further to the real one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the graph with 5 nodes: U1, U2, Z, X, Y</span>
+<span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleDiGraph</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># U1 -&gt; Z</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c"># U1 -&gt; X</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># U2 -&gt; Z</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">  </span><span class="c"># U2 -&gt; Y</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">  </span><span class="c"># X -&gt; Y</span>
+
+<span class="c"># Node labels for U1, U2, Z, X, Y</span>
+<span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;U1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;U2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">]</span>
+
+<span class="c"># Define node colors based on labels</span>
+<span class="n">nodefillc_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;U1&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;U2&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Z&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;X&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Y&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">)</span>
+
+<span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">nodefillc_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">]</span>
+
+<span class="c"># Create the graph plot</span>
+<span class="n">g_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gplot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodefillc</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokelw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODESIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODELABELSIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">               </span><span class="n">edgestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c"># Save and display the plot</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PNG</span><span class="p">(</span><span class="s">&quot;causal_graph.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="n">g_plot</span><span class="p">)</span>
+<span class="n">g_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d5b8c6c5c1e32dcdc398a302cbc862e1a2e8e0196d2e2f891dfb8c93d3d376f1.svg" src="../../_images/d5b8c6c5c1e32dcdc398a302cbc862e1a2e8e0196d2e2f891dfb8c93d3d376f1.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Set seed</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c"># Generate data</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="n">U1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">U2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.9</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">U2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+
+<span class="c"># Create dataframe</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">U1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U1</span><span class="p">,</span><span class="w"> </span><span class="n">U2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Z</th><th>X</th><th>Y</th><th>U1</th><th>U2</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>1,000 rows × 5 columns</p><tr><th>1</th><td>-1.51203</td><td>-1.17595</td><td>-5.82291</td><td>0.121698</td><td>-1.25512</td></tr><tr><th>2</th><td>0.800487</td><td>-0.440459</td><td>1.23247</td><td>-0.0329104</td><td>2.31538</td></tr><tr><th>3</th><td>0.182939</td><td>-6.92784</td><td>-20.038</td><td>-1.86593</td><td>0.769514</td></tr><tr><th>4</th><td>-1.03465</td><td>-2.41129</td><td>-8.13353</td><td>-0.402004</td><td>-1.36723</td></tr><tr><th>5</th><td>0.00718558</td><td>1.24013</td><td>4.10467</td><td>0.298821</td><td>0.53602</td></tr><tr><th>6</th><td>1.00698</td><td>7.27991</td><td>19.8046</td><td>1.88838</td><td>-0.955557</td></tr><tr><th>7</th><td>0.639282</td><td>-4.35645</td><td>-12.425</td><td>-0.998066</td><td>0.421824</td></tr><tr><th>8</th><td>0.276855</td><td>-4.34078</td><td>-11.7458</td><td>-1.11586</td><td>1.0532</td></tr><tr><th>9</th><td>-2.05745</td><td>-2.0884</td><td>-6.33028</td><td>-0.558549</td><td>0.109943</td></tr><tr><th>10</th><td>0.79557</td><td>2.35588</td><td>7.04324</td><td>0.376278</td><td>0.848389</td></tr><tr><th>11</th><td>-0.637144</td><td>6.60372</td><td>17.6775</td><td>1.73838</td><td>-1.09647</td></tr><tr><th>12</th><td>0.27188</td><td>-0.713512</td><td>-1.33155</td><td>-0.222023</td><td>-0.104714</td></tr><tr><th>13</th><td>-0.744564</td><td>5.28917</td><td>15.6213</td><td>1.05565</td><td>-0.273081</td></tr><tr><th>14</th><td>-1.67887</td><td>-1.61801</td><td>-5.69842</td><td>-0.293296</td><td>-0.940029</td></tr><tr><th>15</th><td>-1.18641</td><td>-2.37069</td><td>-6.84398</td><td>-0.653213</td><td>-1.46192</td></tr><tr><th>16</th><td>0.0119644</td><td>-1.7248</td><td>-5.99998</td><td>-0.426636</td><td>0.535899</td></tr><tr><th>17</th><td>-2.22583</td><td>-3.29441</td><td>-11.8443</td><td>-0.875714</td><td>-1.85828</td></tr><tr><th>18</th><td>2.14893</td><td>-1.74549</td><td>-2.56299</td><td>-0.625727</td><td>0.412462</td></tr><tr><th>19</th><td>-2.39359</td><td>-7.52863</td><td>-25.1647</td><td>-1.90824</td><td>-1.00899</td></tr><tr><th>20</th><td>0.934262</td><td>-3.84013</td><td>-7.58954</td><td>-0.753929</td><td>2.59785</td></tr><tr><th>21</th><td>-0.389081</td><td>-4.72286</td><td>-12.8162</td><td>-1.46926</td><td>1.36527</td></tr><tr><th>22</th><td>-2.32821</td><td>5.12497</td><td>12.7869</td><td>1.36688</td><td>-2.26971</td></tr><tr><th>23</th><td>0.995178</td><td>8.73438</td><td>25.0159</td><td>2.25611</td><td>0.192415</td></tr><tr><th>24</th><td>-0.573286</td><td>1.61296</td><td>5.24715</td><td>0.617481</td><td>-0.539758</td></tr><tr><th>25</th><td>-1.61618</td><td>1.65404</td><td>2.68183</td><td>0.39143</td><td>-1.35866</td></tr><tr><th>26</th><td>-1.35704</td><td>-8.93594</td><td>-28.2335</td><td>-2.14499</td><td>-0.464224</td></tr><tr><th>27</th><td>1.61451</td><td>5.11229</td><td>15.2319</td><td>0.833313</td><td>0.0911555</td></tr><tr><th>28</th><td>-2.34086</td><td>-2.24332</td><td>-6.4752</td><td>-0.947989</td><td>0.0459587</td></tr><tr><th>29</th><td>-1.90838</td><td>0.287992</td><td>2.68483</td><td>-0.0380226</td><td>0.370206</td></tr><tr><th>30</th><td>2.01237</td><td>0.906884</td><td>2.54461</td><td>0.581013</td><td>0.485038</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Wrong regression, not controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error       t  Pr(&gt;|t|)  Lower 95%  Upper 95%
+───────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0121698   0.0470352   -0.26    0.7959  -0.104469  0.0801295
+X             2.98862     0.0110309  270.93    &lt;1e-99   2.96698   3.01027
+───────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X + Z
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────
+                 Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+───────────────────────────────────────────────────────────────────────────
+(Intercept)  0.0022004  0.0409946     0.05    0.9572  -0.0782452   0.082646
+X            2.95344    0.00981324  300.96    &lt;1e-99   2.93418     2.9727
+Z            0.526533   0.0295594    17.81    &lt;1e-61   0.468528    0.584539
+───────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="neutral-control-possibly-good-for-precision">
+<h3>Neutral Control (possibly good for precision)<a class="headerlink" href="#neutral-control-possibly-good-for-precision" title="Link to this heading">#</a></h3>
+<p><strong>Model 8</strong></p>
+<p>In this scenario, we will assume that <em>X</em> represents the implementation of a new government policy to provide subsidies and guidance for small companies. There is another variable, <em>Z</em>, that stands for the % inflation rate. And both <em>X</em> and <em>Z</em> affect <em>Y</em>, which represents the GDP growth rate of the country. Then, even if <em>Z</em> does not impact <em>X</em>, its inclusion improves the precision of the ATE estimator (8.63339 is closer to 8.6).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the graph with 3 nodes: Z, X, Y</span>
+<span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleDiGraph</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># Z -&gt; Y</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># X -&gt; Y</span>
+
+<span class="c"># Node labels for Z, X, Y</span>
+<span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">]</span>
+
+<span class="c"># Define node colors based on labels</span>
+<span class="n">nodefillc_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;Z&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;X&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Y&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">)</span>
+
+<span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">nodefillc_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">]</span>
+
+<span class="c"># Create the graph plot</span>
+<span class="n">g_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gplot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodefillc</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokelw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODESIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODELABELSIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">               </span><span class="n">edgestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c"># Save and display the plot</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PNG</span><span class="p">(</span><span class="s">&quot;causal_graph.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="n">g_plot</span><span class="p">)</span>
+<span class="n">g_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fef8b26cf9fdb1bc24fb94e591767b7611205e3680451c11ff15e82c98577d9f.svg" src="../../_images/fef8b26cf9fdb1bc24fb94e591767b7611205e3680451c11ff15e82c98577d9f.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Set seed</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c"># Generate data</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">8.6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+
+<span class="c"># Create dataframe</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>Z</th><th>X</th><th>Y</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>1,000 rows × 3 columns</p><tr><th>1</th><td>0.121698</td><td>-1.25512</td><td>-10.6044</td></tr><tr><th>2</th><td>-0.0329104</td><td>2.31538</td><td>18.4743</td></tr><tr><th>3</th><td>-1.86593</td><td>0.769514</td><td>-2.66167</td></tr><tr><th>4</th><td>-0.402004</td><td>-1.36723</td><td>-13.4518</td></tr><tr><th>5</th><td>0.298821</td><td>0.53602</td><td>5.539</td></tr><tr><th>6</th><td>1.88838</td><td>-0.955557</td><td>2.52455</td></tr><tr><th>7</th><td>-0.998066</td><td>0.421824</td><td>-0.803581</td></tr><tr><th>8</th><td>-1.11586</td><td>1.0532</td><td>3.14196</td></tr><tr><th>9</th><td>-0.558549</td><td>0.109943</td><td>-3.83607</td></tr><tr><th>10</th><td>0.376278</td><td>0.848389</td><td>9.09667</td></tr><tr><th>11</th><td>1.73838</td><td>-1.09647</td><td>-0.909568</td></tr><tr><th>12</th><td>-0.222023</td><td>-0.104714</td><td>-1.57793</td></tr><tr><th>13</th><td>1.05565</td><td>-0.273081</td><td>2.11428</td></tr><tr><th>14</th><td>-0.293296</td><td>-0.940029</td><td>-10.2956</td></tr><tr><th>15</th><td>-0.653213</td><td>-1.46192</td><td>-15.5133</td></tr><tr><th>16</th><td>-0.426636</td><td>0.535899</td><td>2.13319</td></tr><tr><th>17</th><td>-0.875714</td><td>-1.85828</td><td>-20.6504</td></tr><tr><th>18</th><td>-0.625727</td><td>0.412462</td><td>2.38397</td></tr><tr><th>19</th><td>-1.90824</td><td>-1.00899</td><td>-19.1316</td></tr><tr><th>20</th><td>-0.753929</td><td>2.59785</td><td>17.3942</td></tr><tr><th>21</th><td>-1.46926</td><td>1.36527</td><td>3.21796</td></tr><tr><th>22</th><td>1.36688</td><td>-2.26971</td><td>-13.3806</td></tr><tr><th>23</th><td>2.25611</td><td>0.192415</td><td>13.0805</td></tr><tr><th>24</th><td>0.617481</td><td>-0.539758</td><td>-1.82726</td></tr><tr><th>25</th><td>0.39143</td><td>-1.35866</td><td>-10.2382</td></tr><tr><th>26</th><td>-2.14499</td><td>-0.464224</td><td>-15.013</td></tr><tr><th>27</th><td>0.833313</td><td>0.0911555</td><td>6.23298</td></tr><tr><th>28</th><td>-0.947989</td><td>0.0459587</td><td>-6.44253</td></tr><tr><th>29</th><td>-0.0380226</td><td>0.370206</td><td>0.763502</td></tr><tr><th>30</th><td>0.581013</td><td>0.485038</td><td>8.47793</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Wrong regression, not controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X
+
+Coefficients:
+──────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error      t  Pr(&gt;|t|)  Lower 95%  Upper 95%
+──────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0115351    0.167397  -0.07    0.9451  -0.340025   0.316955
+X             8.5183       0.163177  52.20    &lt;1e-99   8.19809    8.83851
+──────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X + Z
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────
+                 Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+───────────────────────────────────────────────────────────────────────────
+(Intercept)  0.0102651   0.0315753    0.33    0.7452  -0.0516965  0.0722268
+X            8.63339     0.0307871  280.42    &lt;1e-99   8.57297    8.6938
+Z            5.02152     0.0305298  164.48    &lt;1e-99   4.96161    5.08143
+───────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bad-controls-bias-amplification">
+<h3>Bad Controls (Bias amplification)<a class="headerlink" href="#bad-controls-bias-amplification" title="Link to this heading">#</a></h3>
+<p><strong>Model 10</strong></p>
+<p>Let us assume that <em>X</em> measures the implementation of a housing program for young adults buying their first house, which impacts the average housing prices (<em>Y</em>). There is another observable variable, <em>Z</em>, that measures the expenditure of the program and affects only <em>X</em>. Also, there is an unobservable variable (<em>U</em>) that represents the preference of young adults to move from their parent’s house and impacts only <em>X</em> and <em>Y</em>. Therefore, the inclusion of <em>Z</em> will “amplify the bias” of (•) on <em>X</em>, so the ATE estimator will be worse. We can see that in the second regression, the estimator (0.833083) is much farther from the real value (0.8).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Define the graph with 4 nodes: U, Z, X, Y</span>
+<span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SimpleDiGraph</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># U -&gt; X</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c"># U -&gt; Y</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c"># Z -&gt; X</span>
+<span class="n">add_edge!</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c"># X -&gt; Y</span>
+
+<span class="c"># Node labels for U, Z, X, Y</span>
+<span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;U&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">]</span>
+
+<span class="c"># Define node colors based on labels</span>
+<span class="n">nodefillc_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;U&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;lightgrey&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Z&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;X&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s">&quot;Y&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sa">colorant</span><span class="s">&quot;turquoise&quot;</span><span class="p">)</span>
+
+<span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">nodefillc_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">]</span>
+
+<span class="c"># Create the graph plot</span>
+<span class="n">g_plot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gplot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodefillc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodefillc</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodestrokelw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">               </span><span class="n">nodelabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodelabel</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODESIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+<span class="w">               </span><span class="n">NODELABELSIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">               </span><span class="n">edgestrokec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+
+<span class="c"># Save and display the plot</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PNG</span><span class="p">(</span><span class="s">&quot;causal_graph.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="n">cm</span><span class="p">),</span><span class="w"> </span><span class="n">g_plot</span><span class="p">)</span>
+<span class="n">g_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9b658c5c4fc943e8ac23750c0aa7d01885b61ad8dad8f2b37bf81acd1259c523.svg" src="../../_images/9b658c5c4fc943e8ac23750c0aa7d01885b61ad8dad8f2b37bf81acd1259c523.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Set seed</span>
+<span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c"># Generate data</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+
+<span class="c"># Create dataframe</span>
+<span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="data-frame"><thead><tr><th></th><th>U</th><th>Z</th><th>X</th><th>Y</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>1,000 rows × 4 columns</p><tr><th>1</th><td>0.121698</td><td>-1.25512</td><td>-3.4541</td><td>-4.40168</td></tr><tr><th>2</th><td>-0.0329104</td><td>2.31538</td><td>5.4752</td><td>4.06476</td></tr><tr><th>3</th><td>-1.86593</td><td>0.769514</td><td>-8.83687</td><td>-6.90681</td></tr><tr><th>4</th><td>-0.402004</td><td>-1.36723</td><td>-6.19727</td><td>-5.84149</td></tr><tr><th>5</th><td>0.298821</td><td>0.53602</td><td>2.83611</td><td>2.3735</td></tr><tr><th>6</th><td>1.88838</td><td>-0.955557</td><td>9.76405</td><td>7.91532</td></tr><tr><th>7</th><td>-0.998066</td><td>0.421824</td><td>-4.16386</td><td>-3.89489</td></tr><tr><th>8</th><td>-1.11586</td><td>1.0532</td><td>-3.87183</td><td>-3.19797</td></tr><tr><th>9</th><td>-0.558549</td><td>0.109943</td><td>-5.0103</td><td>-3.97415</td></tr><tr><th>10</th><td>0.376278</td><td>0.848389</td><td>4.72197</td><td>4.7036</td></tr><tr><th>11</th><td>1.73838</td><td>-1.09647</td><td>6.96902</td><td>5.57311</td></tr><tr><th>12</th><td>-0.222023</td><td>-0.104714</td><td>-1.21355</td><td>-0.840665</td></tr><tr><th>13</th><td>1.05565</td><td>-0.273081</td><td>4.69919</td><td>5.03703</td></tr><tr><th>14</th><td>-0.293296</td><td>-0.940029</td><td>-5.32473</td><td>-4.76326</td></tr><tr><th>15</th><td>-0.653213</td><td>-1.46192</td><td>-7.97976</td><td>-6.27229</td></tr><tr><th>16</th><td>-0.426636</td><td>0.535899</td><td>-1.29447</td><td>-1.13916</td></tr><tr><th>17</th><td>-0.875714</td><td>-1.85828</td><td>-11.1198</td><td>-8.86252</td></tr><tr><th>18</th><td>-0.625727</td><td>0.412462</td><td>-0.551544</td><td>0.191041</td></tr><tr><th>19</th><td>-1.90824</td><td>-1.00899</td><td>-15.3895</td><td>-12.5889</td></tr><tr><th>20</th><td>-0.753929</td><td>2.59785</td><td>2.09235</td><td>0.698675</td></tr><tr><th>21</th><td>-1.46926</td><td>1.36527</td><td>-5.8968</td><td>-3.85711</td></tr><tr><th>22</th><td>1.36688</td><td>-2.26971</td><td>0.69661</td><td>0.488127</td></tr><tr><th>23</th><td>2.25611</td><td>0.192415</td><td>14.2591</td><td>11.5684</td></tr><tr><th>24</th><td>0.617481</td><td>-0.539758</td><td>1.81287</td><td>0.716825</td></tr><tr><th>25</th><td>0.39143</td><td>-1.35866</td><td>-2.23822</td><td>-1.62397</td></tr><tr><th>26</th><td>-2.14499</td><td>-0.464224</td><td>-14.5583</td><td>-12.4317</td></tr><tr><th>27</th><td>0.833313</td><td>0.0911555</td><td>6.55582</td><td>7.19036</td></tr><tr><th>28</th><td>-0.947989</td><td>0.0459587</td><td>-7.64789</td><td>-4.75927</td></tr><tr><th>29</th><td>-0.0380226</td><td>0.370206</td><td>-1.34767</td><td>-0.645662</td></tr><tr><th>30</th><td>0.581013</td><td>0.485038</td><td>6.34273</td><td>3.77322</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Wrong regression, not controlling by the confounder Z</span>
+<span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X
+
+Coefficients:
+────────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%  Upper 95%
+────────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0317809  0.0309595    -1.03    0.3049  -0.0925341  0.0289723
+X             0.827152   0.00444388  186.13    &lt;1e-99   0.818432   0.835872
+────────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">lm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Z</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+Y ~ 1 + X + Z
+
+Coefficients:
+─────────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error       t  Pr(&gt;|t|)   Lower 95%   Upper 95%
+─────────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0349805  0.0308707    -1.13    0.2574  -0.0955594   0.0255984
+X             0.833083   0.00489468  170.20    &lt;1e-99   0.823478    0.842688
+Z            -0.0946024  0.0332626    -2.84    0.0045  -0.159875   -0.0293297
+─────────────────────────────────────────────────────────────────────────────
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.10"
+        },
+        kernelOptions: {
+            name: "julia-1.10",
+            path: "./labs\lab_2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.10'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="group3_lab2_r.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 2 - R Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../lab_3_md.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Neyman Orthogonality, Orthogonal Learning, and Double Lasso</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lab 2 - Julia Code</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multicollinearity">Multicollinearity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perfectly-collinear-regressors">Perfectly collinear regressors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-application">Practical application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-rct-data-with-precision-adjustment">Analyzing RCT data with Precision Adjustment</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-coefficients">Plot coefficients</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-crash-course-in-good-and-bad-controls">A crash course in good and bad controls</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#good-control-blocking-back-door-paths">Good control (Blocking back-door paths)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-control-m-bias">Bad Control (M-bias)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-control-possibly-good-for-precision">Neutral Control (possibly good for precision)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bad-controls-bias-amplification">Bad Controls (Bias amplification)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matias Villalba
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

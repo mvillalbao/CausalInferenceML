@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+rdata_read = load("../../../data/wage2015_subsample_inference.RData")
+data = rdata_read["data"]
+names(data)
+println("Number of Rows : ", size(data)[1],"\n","Number of Columns : ", size(data)[2],) #rows and columns
+------------------
+
+
+ArgumentError: No file exists at given path: ../../../data/wage2015_subsample_inference.RData
+
+Stacktrace:
+ [1] checkpath_load
+   @ C:\Users\Matias Villalba\.julia\packages\FileIO\xOKyx\src\loadsave.jl:167 [inlined]
+ [2] load(::String; options::@Kwargs{})
+   @ FileIO C:\Users\Matias Villalba\.julia\packages\FileIO\xOKyx\src\loadsave.jl:110
+ [3] load(::String)
+   @ FileIO C:\Users\Matias Villalba\.julia\packages\FileIO\xOKyx\src\loadsave.jl:109
+ [4] top-level scope
+   @ In[2]:1
+
