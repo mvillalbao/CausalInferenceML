@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -201,7 +201,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../lab_3_md.html">3. Neyman Orthogonality, Orthogonal Learning, and Double Lasso</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_python.html">Lab 3 - Python Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Workgroup 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_r.html">Lab 3 - R Code</a></li>
 
 
 <li class="toctree-l2"><a class="reference internal" href="../lab_3/group3_lab3_julia.html">Lab 3 - Julia Code</a></li>
@@ -478,13 +478,6 @@ document.write(`
 (as &#39;lib&#39; is unspecified)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>package &#39;boot&#39; successfully unpacked and MD5 sums checked
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The downloaded binary packages are in
-	C:\Users\Matias Villalba\AppData\Local\Temp\RtmpsrXXxy\downloaded_packages
-</pre></div>
-</div>
 </div>
 </div>
 <div class="cell docutils container">
@@ -504,20 +497,6 @@ document.write(`
 <span class="n">Penn</span><span class="o">$</span><span class="n">t4</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="p">)</span>
 <span class="n">Penn</span><span class="o">$</span><span class="n">tg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span>
 <span class="nf">attach</span><span class="p">(</span><span class="n">Penn</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in file(file, &quot;rt&quot;):
-&quot;cannot open file &#39;../../data/penn_jae.dat&#39;: No such file or directory&quot;
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">):</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">connection</span>
-<span class="ne">Traceback</span>:
-
-<span class="mi">1</span><span class="o">.</span> <span class="k">as</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../data/penn_jae.dat&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">))</span>
-<span class="mi">2</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../data/penn_jae.dat&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">)</span>
-<span class="mi">3</span><span class="o">.</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
