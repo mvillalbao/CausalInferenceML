@@ -1,4 +1,17 @@
 Traceback (most recent call last):
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 782, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 198, in ensure_async
+    result = await obj
+             ^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_client\channels.py", line 315, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
   File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1314, in execute
@@ -12,31 +25,26 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
   File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# Import data and see first observations
-df = CSV.read("../../data/processed_esti.csv", DataFrame)
-first(df, 5)
-------------------
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+using DataFrames
+using StatsModels
+using GLM
 
+model_1 = @formula(y ~ w)
+est_1 = lm(model_1, df)
 
-ArgumentError: "../../data/processed_esti.csv" is not a valid file or doesn't exist
+print(est_1)
 
-Stacktrace:
- [1] CSV.Context(source::CSV.Arg, header::CSV.Arg, normalizenames::CSV.Arg, datarow::CSV.Arg, skipto::CSV.Arg, footerskip::CSV.Arg, transpose::CSV.Arg, comment::CSV.Arg, ignoreemptyrows::CSV.Arg, ignoreemptylines::CSV.Arg, select::CSV.Arg, drop::CSV.Arg, limit::CSV.Arg, buffer_in_memory::CSV.Arg, threaded::CSV.Arg, ntasks::CSV.Arg, tasks::CSV.Arg, rows_to_check::CSV.Arg, lines_to_check::CSV.Arg, missingstrings::CSV.Arg, missingstring::CSV.Arg, delim::CSV.Arg, ignorerepeated::CSV.Arg, quoted::CSV.Arg, quotechar::CSV.Arg, openquotechar::CSV.Arg, closequotechar::CSV.Arg, escapechar::CSV.Arg, dateformat::CSV.Arg, dateformats::CSV.Arg, decimal::CSV.Arg, groupmark::CSV.Arg, truestrings::CSV.Arg, falsestrings::CSV.Arg, stripwhitespace::CSV.Arg, type::CSV.Arg, types::CSV.Arg, typemap::CSV.Arg, pool::CSV.Arg, downcast::CSV.Arg, lazystrings::CSV.Arg, stringtype::CSV.Arg, strict::CSV.Arg, silencewarnings::CSV.Arg, maxwarnings::CSV.Arg, debug::CSV.Arg, parsingdebug::CSV.Arg, validate::CSV.Arg, streaming::CSV.Arg)
-   @ CSV C:\Users\Matias Villalba\.julia\packages\CSV\cwX2w\src\context.jl:314
- [2] #File#32
-   @ C:\Users\Matias Villalba\.julia\packages\CSV\cwX2w\src\file.jl:222 [inlined]
- [3] CSV.File(source::String)
-   @ CSV C:\Users\Matias Villalba\.julia\packages\CSV\cwX2w\src\file.jl:162
- [4] read(source::String, sink::Type; copycols::Bool, kwargs::@Kwargs{})
-   @ CSV C:\Users\Matias Villalba\.julia\packages\CSV\cwX2w\src\CSV.jl:117
- [5] read(source::String, sink::Type)
-   @ CSV C:\Users\Matias Villalba\.julia\packages\CSV\cwX2w\src\CSV.jl:113
- [6] top-level scope
-   @ In[2]:2
+-------------------
 

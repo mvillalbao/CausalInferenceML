@@ -498,72 +498,135 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Import data and see first observations</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/processed_esti.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py:873,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">869</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
-<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
-<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="c1"># Encoding</span>
-<span class="ne">--&gt; </span><span class="mi">873</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">874</span>             <span class="n">handle</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">875</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">876</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">880</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="c1"># Binary mode</span>
-<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../../data/processed_esti.csv&#39;
-</pre></div>
-</div>
-</div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y</th>
+      <th>w</th>
+      <th>gender_female</th>
+      <th>gender_male</th>
+      <th>gender_transgender</th>
+      <th>ethnicgrp_asian</th>
+      <th>ethnicgrp_black</th>
+      <th>ethnicgrp_mixed_multiple</th>
+      <th>ethnicgrp_other</th>
+      <th>ethnicgrp_white</th>
+      <th>partners1</th>
+      <th>postlaunch</th>
+      <th>msm</th>
+      <th>age</th>
+      <th>imd_decile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>27</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>19</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>26</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>20</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>24</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -688,7 +751,7 @@ imd_decile                  37.0   3.48  1.49      36.0   3.46  1.47
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2d76c1bc2977fb9d3f98fcdf45efda54a416b06e68680d22990bd7ac03e3a796.png" src="../../_images/2d76c1bc2977fb9d3f98fcdf45efda54a416b06e68680d22990bd7ac03e3a796.png" />
+<img alt="../../_images/3277bbd9be5cbea7d8a6baa496ab971511654d71a3066c43918604b2d17e6ac8.png" src="../../_images/3277bbd9be5cbea7d8a6baa496ab971511654d71a3066c43918604b2d17e6ac8.png" />
 </div>
 </div>
 <p>As we saw in section 1.1., there is a similar percentage of males and females participants in each treatment group in the sample.</p>
@@ -713,7 +776,7 @@ imd_decile                  37.0   3.48  1.49      36.0   3.46  1.47
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2d7f9838d2f41a80690be9a6c4fb3e6fb4a445f25ff36c0a359c44e89905a3db.png" src="../../_images/2d7f9838d2f41a80690be9a6c4fb3e6fb4a445f25ff36c0a359c44e89905a3db.png" />
+<img alt="../../_images/ebd0012693260dca030cb9f8131b9a7c27813b206030d96288ffed5b43c2b39b.png" src="../../_images/ebd0012693260dca030cb9f8131b9a7c27813b206030d96288ffed5b43c2b39b.png" />
 </div>
 </div>
 <p>In a similar manner, we note an equal percentage of participants with 2 or more sexual partners as well as those with 1 sexual partner in the last 12 months from the beginning of the study, per treatment or control group.</p>
@@ -730,7 +793,7 @@ imd_decile                  37.0   3.48  1.49      36.0   3.46  1.47
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4b42e18b92dc2d259e1051f7cdcca94b2c7e46319b454fb654b4f5b1bf150652.png" src="../../_images/4b42e18b92dc2d259e1051f7cdcca94b2c7e46319b454fb654b4f5b1bf150652.png" />
+<img alt="../../_images/b688ee229920a21be30c973133074013a68f46631ecc5590eff91a75f628b2f6.png" src="../../_images/b688ee229920a21be30c973133074013a68f46631ecc5590eff91a75f628b2f6.png" />
 </div>
 </div>
 <p>We can see a higher percentage of participants aged between 23 and 27 in the treatment group. Also, there is a higher perceptange of participants aged between 21 and 22 and 27 and 29 in the control group.</p>
@@ -747,7 +810,7 @@ imd_decile                  37.0   3.48  1.49      36.0   3.46  1.47
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/210e96752210b714a5c151b817ac14d5842c900f51615ef746c9440a396c93ca.png" src="../../_images/210e96752210b714a5c151b817ac14d5842c900f51615ef746c9440a396c93ca.png" />
+<img alt="../../_images/64da9d82bb47ad20e36d05cbe934c8a92b02ab6f0a0e3f4cfcfbbba1226fafd8.png" src="../../_images/64da9d82bb47ad20e36d05cbe934c8a92b02ab6f0a0e3f4cfcfbbba1226fafd8.png" />
 </div>
 </div>
 <p>In the case of the IMD decile, an index that measures poverty in the UK, we can see the same proportion of participants in each group.</p>
@@ -772,8 +835,8 @@ imd_decile                  37.0   3.48  1.49      36.0   3.46  1.47
 Dep. Variable:                      y   R-squared:                       0.077
 Model:                            OLS   Adj. R-squared:                  0.076
 Method:                 Least Squares   F-statistic:                     144.5
-Date:                Sun, 16 Jun 2024   Prob (F-statistic):           4.96e-32
-Time:                        21:22:54   Log-Likelihood:                -1112.9
+Date:                Sat, 20 Jul 2024   Prob (F-statistic):           4.96e-32
+Time:                        15:14:34   Log-Likelihood:                -1112.9
 No. Observations:                1739   AIC:                             2230.
 Df Residuals:                    1737   BIC:                             2241.
 Df Model:                           1                                         
@@ -815,8 +878,8 @@ Notes:
 Dep. Variable:                      y   R-squared:                       0.107
 Model:                            OLS   Adj. R-squared:                  0.102
 Method:                 Least Squares   F-statistic:                     22.94
-Date:                Sun, 16 Jun 2024   Prob (F-statistic):           3.06e-37
-Time:                        21:22:54   Log-Likelihood:                -1084.3
+Date:                Sat, 20 Jul 2024   Prob (F-statistic):           3.06e-37
+Time:                        15:14:34   Log-Likelihood:                -1084.3
 No. Observations:                1739   AIC:                             2189.
 Df Residuals:                    1729   BIC:                             2243.
 Df Model:                           9                                         
@@ -900,8 +963,8 @@ Notes:
 Dep. Variable:                      y   R-squared:                       0.106
 Model:                            OLS   Adj. R-squared:                  0.103
 Method:                 Least Squares   F-statistic:                     34.38
-Date:                Sun, 16 Jun 2024   Prob (F-statistic):           2.06e-39
-Time:                        21:30:47   Log-Likelihood:                -1084.5
+Date:                Sat, 20 Jul 2024   Prob (F-statistic):           2.06e-39
+Time:                        15:14:35   Log-Likelihood:                -1084.5
 No. Observations:                1739   AIC:                             2183.
 Df Residuals:                    1732   BIC:                             2221.
 Df Model:                           6                                         
@@ -973,11 +1036,11 @@ Notes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/km/jc_93cpj0cv1jgmdmzcmqj6m0000gn/T/ipykernel_4903/1402500519.py:23: UserWarning: marker is redundantly defined by the &#39;marker&#39; keyword argument and the fmt string &quot;o&quot; (-&gt; marker=&#39;o&#39;). The keyword argument will take precedence.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_24128\2861833790.py:23: UserWarning: marker is redundantly defined by the &#39;marker&#39; keyword argument and the fmt string &quot;o&quot; (-&gt; marker=&#39;o&#39;). The keyword argument will take precedence.
   ax.errorbar(model_labels, coefficients, yerr=errors, fmt=&#39;o&#39;, capsize=5, capthick=2, marker=&#39;s&#39;, markersize=7, linestyle=&#39;None&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/a223bba517ec94cd5734e9b41cf6453f518138f2acdfb82dba04cfb1c5b8d88c.png" src="../../_images/a223bba517ec94cd5734e9b41cf6453f518138f2acdfb82dba04cfb1c5b8d88c.png" />
+<img alt="../../_images/461c8be82b8ccdaabf22fca00253d6ad761da2bd832fe80fc6b56be23380ce38.png" src="../../_images/461c8be82b8ccdaabf22fca00253d6ad761da2bd832fe80fc6b56be23380ce38.png" />
 </div>
 </div>
 <p>In general, the three ATEs are very similar, but we consider that the models that include the cofounders (OLS with controls and DL) are better estimated.</p>
@@ -1086,14 +1149,154 @@ Notes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>       estimate    stderr     lower     upper    rmse y    rmse D
-Lasso  0.259067  0.021722  0.216492  0.301642  0.471041  0.500225
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_23460\2498640246.py:30: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
-  point = ols_mod.params[1]
-C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_23460\2498640246.py:31: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
-  stderr = ols_mod.bse[1]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">_RemoteTraceback</span><span class="g g-Whitespace">                          </span>Traceback (most recent call last)
+<span class="ne">_Remote</span>Traceback: 
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Traceback (most recent call last):</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\externals\loky\process_executor.py&quot;, line 463, in _process_worker</span>
+<span class="sd">    r = call_item()</span>
+<span class="sd">        ^^^^^^^^^^^</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\externals\loky\process_executor.py&quot;, line 291, in __call__</span>
+<span class="sd">    return self.fn(*self.args, **self.kwargs)</span>
+<span class="sd">           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py&quot;, line 598, in __call__</span>
+<span class="sd">    return [func(*args, **kwargs)</span>
+<span class="sd">            ^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\parallel.py&quot;, line 129, in __call__</span>
+<span class="sd">    return self.function(*args, **kwargs)</span>
+<span class="sd">           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\model_selection\_validation.py&quot;, line 1378, in _fit_and_predict</span>
+<span class="sd">    estimator.fit(X_train, y_train, **fit_params)</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\base.py&quot;, line 1474, in wrapper</span>
+<span class="sd">    return fit_method(estimator, *args, **kwargs)</span>
+<span class="sd">           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\pipeline.py&quot;, line 475, in fit</span>
+<span class="sd">    self._final_estimator.fit(Xt, y, **last_step_params[&quot;fit&quot;])</span>
+<span class="sd">  File &quot;C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_24128\3396256270.py&quot;, line 7, in fit</span>
+<span class="ne">NameError</span>: name &#39;hdmpy&#39; is not defined
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">modely</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RLasso</span><span class="p">(</span><span class="n">post</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">modeld</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RLasso</span><span class="p">(</span><span class="n">post</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">result_RLasso</span> <span class="o">=</span> <span class="n">dml</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">modely</span><span class="p">,</span> <span class="n">modeld</span><span class="p">,</span> <span class="n">nfolds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cluster</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">table_RLasso</span> <span class="o">=</span> <span class="n">summary</span><span class="p">(</span><span class="o">*</span><span class="n">result_RLasso</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Lasso&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="nb">print</span><span class="p">(</span><span class="n">table_RLasso</span><span class="p">)</span>
+
+<span class="nn">Cell In[15], line 3,</span> in <span class="ni">dml</span><span class="nt">(X, D, y, modely, modeld, nfolds, classifier, time, clu, cluster)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">dml</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">modely</span><span class="p">,</span> <span class="n">modeld</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">nfolds</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">time</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">clu</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">cluster</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">nfolds</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span> <span class="c1"># shuffled k-folds</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">yhat</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">modely</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># out-of-fold predictions for y</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="c1"># out-of-fold predictions for D</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="c1"># use predict or predict_proba dependent on classifier or regressor for D</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">if</span> <span class="n">classifier</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\_param_validation.py:213,</span> in <span class="ni">validate_params.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">207</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">208</span>     <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">209</span>         <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">210</span>             <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
+<span class="g g-Whitespace">    </span><span class="mi">211</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">212</span>     <span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">213</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span> <span class="k">except</span> <span class="n">InvalidParameterError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">215</span>     <span class="c1"># When the function is just a wrapper around an estimator, we allow</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span>     <span class="c1"># the function to delegate validation to the estimator, but we replace</span>
+<span class="g g-Whitespace">    </span><span class="mi">217</span>     <span class="c1"># the name of the estimator by the name of the function in the error</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span>     <span class="c1"># message to avoid confusion.</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="n">msg</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span>         <span class="sa">r</span><span class="s2">&quot;parameter of \w+ must be&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span>         <span class="sa">f</span><span class="s2">&quot;parameter of </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2"> must be&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span>         <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span>     <span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\model_selection\_validation.py:1293,</span> in <span class="ni">cross_val_predict</span><span class="nt">(estimator, X, y, groups, cv, n_jobs, verbose, fit_params, params, pre_dispatch, method)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1290</span> <span class="c1"># We clone the estimator to make sure that all the folds are</span>
+<span class="g g-Whitespace">   </span><span class="mi">1291</span> <span class="c1"># independent, and that it is pickle-able.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1292</span> <span class="n">parallel</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">pre_dispatch</span><span class="o">=</span><span class="n">pre_dispatch</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1293</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1294</span>     <span class="n">delayed</span><span class="p">(</span><span class="n">_fit_and_predict</span><span class="p">)(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1295</span>         <span class="n">clone</span><span class="p">(</span><span class="n">estimator</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1296</span>         <span class="n">X</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1297</span>         <span class="n">y</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1298</span>         <span class="n">train</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1299</span>         <span class="n">test</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1300</span>         <span class="n">routed_params</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1301</span>         <span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1302</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1303</span>     <span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">splits</span>
+<span class="g g-Whitespace">   </span><span class="mi">1304</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1306</span> <span class="n">inv_test_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_indices</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1307</span> <span class="n">inv_test_indices</span><span class="p">[</span><span class="n">test_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_indices</span><span class="p">))</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\parallel.py:67,</span> in <span class="ni">Parallel.__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span> <span class="n">iterable_with_config</span> <span class="o">=</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span>     <span class="p">(</span><span class="n">_with_config</span><span class="p">(</span><span class="n">delayed_func</span><span class="p">,</span> <span class="n">config</span><span class="p">),</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span>     <span class="k">for</span> <span class="n">delayed_func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">iterable</span>
+<span class="g g-Whitespace">     </span><span class="mi">66</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">67</span> <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">iterable_with_config</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:2007,</span> in <span class="ni">Parallel.__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2001</span> <span class="c1"># The first item from the output is blank, but it makes the interpreter</span>
+<span class="g g-Whitespace">   </span><span class="mi">2002</span> <span class="c1"># progress until it enters the Try/Except block of the generator and</span>
+<span class="g g-Whitespace">   </span><span class="mi">2003</span> <span class="c1"># reach the first `yield` statement. This starts the aynchronous</span>
+<span class="g g-Whitespace">   </span><span class="mi">2004</span> <span class="c1"># dispatch of the tasks to the workers.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2005</span> <span class="nb">next</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2007</span> <span class="k">return</span> <span class="n">output</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_generator</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1650,</span> in <span class="ni">Parallel._get_outputs</span><span class="nt">(self, iterator, pre_dispatch)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1647</span>     <span class="k">yield</span>
+<span class="g g-Whitespace">   </span><span class="mi">1649</span>     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">retrieval_context</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1650</span>         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1652</span> <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1653</span>     <span class="c1"># The generator has been garbage collected before being fully</span>
+<span class="g g-Whitespace">   </span><span class="mi">1654</span>     <span class="c1"># consumed. This aborts the remaining tasks if possible and warn</span>
+<span class="g g-Whitespace">   </span><span class="mi">1655</span>     <span class="c1"># the user if necessary.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1656</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1754,</span> in <span class="ni">Parallel._retrieve</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1747</span> <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wait_retrieval</span><span class="p">():</span>
+<span class="g g-Whitespace">   </span><span class="mi">1748</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1749</span>     <span class="c1"># If the callback thread of a worker has signaled that its task</span>
+<span class="g g-Whitespace">   </span><span class="mi">1750</span>     <span class="c1"># triggered an exception, or if the retrieval loop has raised an</span>
+<span class="g g-Whitespace">   </span><span class="mi">1751</span>     <span class="c1"># exception (e.g. `GeneratorExit`), exit the loop and surface the</span>
+<span class="g g-Whitespace">   </span><span class="mi">1752</span>     <span class="c1"># worker traceback.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1753</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aborting</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1754</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_error_fast</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1755</span>         <span class="k">break</span>
+<span class="g g-Whitespace">   </span><span class="mi">1757</span>     <span class="c1"># If the next job is not ready for retrieval yet, we just wait for</span>
+<span class="g g-Whitespace">   </span><span class="mi">1758</span>     <span class="c1"># async callbacks to progress.</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1789,</span> in <span class="ni">Parallel._raise_error_fast</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1785</span> <span class="c1"># If this error job exists, immediatly raise the error by</span>
+<span class="g g-Whitespace">   </span><span class="mi">1786</span> <span class="c1"># calling get_result. This job might not exists if abort has been</span>
+<span class="g g-Whitespace">   </span><span class="mi">1787</span> <span class="c1"># called directly or if the generator is gc&#39;ed.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1788</span> <span class="k">if</span> <span class="n">error_job</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1789</span>     <span class="n">error_job</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:745,</span> in <span class="ni">BatchCompletionCallBack.get_result</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">739</span> <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">_backend</span>
+<span class="g g-Whitespace">    </span><span class="mi">741</span> <span class="k">if</span> <span class="n">backend</span><span class="o">.</span><span class="n">supports_retrieve_callback</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">742</span>     <span class="c1"># We assume that the result has already been retrieved by the</span>
+<span class="g g-Whitespace">    </span><span class="mi">743</span>     <span class="c1"># callback thread, and is stored internally. It&#39;s just waiting to</span>
+<span class="g g-Whitespace">    </span><span class="mi">744</span>     <span class="c1"># be returned.</span>
+<span class="ne">--&gt; </span><span class="mi">745</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_return_or_raise</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">747</span> <span class="c1"># For other backends, the main thread needs to run the retrieval step.</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span> <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:763,</span> in <span class="ni">BatchCompletionCallBack._return_or_raise</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">761</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">762</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">TASK_ERROR</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">763</span>         <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+<span class="g g-Whitespace">    </span><span class="mi">764</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+<span class="g g-Whitespace">    </span><span class="mi">765</span> <span class="k">finally</span><span class="p">:</span>
+
+<span class="ne">NameError</span>: name &#39;hdmpy&#39; is not defined
 </pre></div>
 </div>
 </div>
