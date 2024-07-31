@@ -615,21 +615,7 @@ E[(Y-g(X))^2] &amp;= E[e^2]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">PyreadrError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">rdata_read</span> <span class="o">=</span> <span class="n">rr</span><span class="o">.</span><span class="n">read_r</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;../../data/wage2015_subsample_inference.Rdata&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Extracting the data frame from rdata_read</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">data</span> <span class="o">=</span> <span class="n">rdata_read</span><span class="p">[</span> <span class="s1">&#39;data&#39;</span> <span class="p">]</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pyreadr\pyreadr.py:65,</span> in <span class="ni">read_r</span><span class="nt">(path, use_objects, timezone)</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span> <span class="n">filename_bytes</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">filename_bytes</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename_bytes</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">65</span>     <span class="k">raise</span> <span class="n">PyreadrError</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{0}</span><span class="s2"> does not exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_bytes</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">66</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename_bytes</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">68</span> <span class="n">result</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
-
-<span class="ne">PyreadrError</span>: File b&#39;../../data/wage2015_subsample_inference.Rdata&#39; does not exist!
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5150, 20)
 </pre></div>
 </div>
 </div>
@@ -871,7 +857,7 @@ memory usage: 736.3+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_2932\1836483406.py:4: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_27012\1000600611.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -1021,185 +1007,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="n">table_html</span> <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;All&lt;/th&gt;
-      &lt;th&gt;Men&lt;/th&gt;
-      &lt;th&gt;Women&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Log Wage&lt;/th&gt;
-      &lt;td&gt;3.062748&lt;/td&gt;
-      &lt;td&gt;3.099449&lt;/td&gt;
-      &lt;td&gt;3.024417&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Sex&lt;/th&gt;
-      &lt;td&gt;0.489136&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-      &lt;td&gt;1.000000&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Some High School&lt;/th&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;High School Graduate&lt;/th&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Some College&lt;/th&gt;
-      &lt;td&gt;0.379438&lt;/td&gt;
-      &lt;td&gt;0.405602&lt;/td&gt;
-      &lt;td&gt;0.352113&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Gollage Graduate&lt;/th&gt;
-      &lt;td&gt;0.433492&lt;/td&gt;
-      &lt;td&gt;0.436203&lt;/td&gt;
-      &lt;td&gt;0.430661&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Advanced Degree&lt;/th&gt;
-      &lt;td&gt;0.187069&lt;/td&gt;
-      &lt;td&gt;0.158195&lt;/td&gt;
-      &lt;td&gt;0.217226&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Northeast&lt;/th&gt;
-      &lt;td&gt;0.229200&lt;/td&gt;
-      &lt;td&gt;0.219917&lt;/td&gt;
-      &lt;td&gt;0.238895&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Midwest&lt;/th&gt;
-      &lt;td&gt;0.249868&lt;/td&gt;
-      &lt;td&gt;0.245851&lt;/td&gt;
-      &lt;td&gt;0.254063&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;South&lt;/th&gt;
-      &lt;td&gt;0.298357&lt;/td&gt;
-      &lt;td&gt;0.303423&lt;/td&gt;
-      &lt;td&gt;0.293066&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;West&lt;/th&gt;
-      &lt;td&gt;0.222576&lt;/td&gt;
-      &lt;td&gt;0.230809&lt;/td&gt;
-      &lt;td&gt;0.213976&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Experience&lt;/th&gt;
-      &lt;td&gt;12.510201&lt;/td&gt;
-      &lt;td&gt;12.202282&lt;/td&gt;
-      &lt;td&gt;12.831798&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-</pre></div>
-</div>
-</div>
-</div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>All</th>
-      <th>Men</th>
-      <th>Women</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Log Wage</th>
-      <td>3.062748</td>
-      <td>3.099449</td>
-      <td>3.024417</td>
-    </tr>
-    <tr>
-      <th>Sex</th>
-      <td>0.489136</td>
-      <td>0.000000</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>Some High School</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>High School Graduate</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>Some College</th>
-      <td>0.379438</td>
-      <td>0.405602</td>
-      <td>0.352113</td>
-    </tr>
-    <tr>
-      <th>Gollage Graduate</th>
-      <td>0.433492</td>
-      <td>0.436203</td>
-      <td>0.430661</td>
-    </tr>
-    <tr>
-      <th>Advanced Degree</th>
-      <td>0.187069</td>
-      <td>0.158195</td>
-      <td>0.217226</td>
-    </tr>
-    <tr>
-      <th>Northeast</th>
-      <td>0.229200</td>
-      <td>0.219917</td>
-      <td>0.238895</td>
-    </tr>
-    <tr>
-      <th>Midwest</th>
-      <td>0.249868</td>
-      <td>0.245851</td>
-      <td>0.254063</td>
-    </tr>
-    <tr>
-      <th>South</th>
-      <td>0.298357</td>
-      <td>0.303423</td>
-      <td>0.293066</td>
-    </tr>
-    <tr>
-      <th>West</th>
-      <td>0.222576</td>
-      <td>0.230809</td>
-      <td>0.213976</td>
-    </tr>
-    <tr>
-      <th>Experience</th>
-      <td>12.510201</td>
-      <td>12.202282</td>
-      <td>12.831798</td>
-    </tr>
-  </tbody>
-</table><p>In particular, the table above shows that the difference in average <em>logwage</em> between men and women is equal to <span class="math notranslate nohighlight">\(0,075\)</span></p>
+<p>In particular, the table above shows that the difference in average <em>logwage</em> between men and women is equal to <span class="math notranslate nohighlight">\(0,075\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_female</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span> <span class="n">data_male</span><span class="p">[</span><span class="s1">&#39;lwage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -1340,7 +1148,7 @@ Coefficient for OLS with controls -0.06763389814419515 and the corresponding rob
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x25aa197e840&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x1f9e90099d0&gt;
 </pre></div>
 </div>
 </div>
@@ -1459,9 +1267,9 @@ or penalization for regularization purposes.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_2932\2694192782.py:21: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_27012\1085068983.py:17: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   &#39;Partialling out&#39;: partial_fit.params[0]}
-C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_2932\2694192782.py:25: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_27012\1085068983.py:21: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   &#39;Partialling out&#39;: partial_fit.bse[0]}
 </pre></div>
 </div>
@@ -1737,15 +1545,35 @@ memory usage: 736.3+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alpha=45.0, Average MSE: 0.41942
-Alpha=50.0, Average MSE: 0.41920
-Alpha=55.0, Average MSE: 0.41912
-Alpha=60.0, Average MSE: 0.41906
-Alpha=65.0, Average MSE: 0.41907
-Best Alpha: 60.0, Minimum Average MSE: 0.41906
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_27012\2859175766.py:9: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  y_train_fold, y_val_fold = y_train[train_index], y_train[val_index]
 </pre></div>
 </div>
-<img alt="../../_images/eaecf6e067cfc454e8bdee8afd784d46c7161c09114f42d973a5e1e9bbd26329.png" src="../../_images/eaecf6e067cfc454e8bdee8afd784d46c7161c09114f42d973a5e1e9bbd26329.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alpha=45.0, Average MSE: 0.41942
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Alpha=50.0, Average MSE: 0.41920
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">val_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X_train</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">X_train_fold</span><span class="p">,</span> <span class="n">X_val_fold</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">val_index</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">9</span>     <span class="n">y_train_fold</span><span class="p">,</span> <span class="n">y_val_fold</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[</span><span class="n">val_index</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="c1"># Train Lasso regression model with the current alpha</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">lasso_regression</span><span class="p">(</span><span class="n">X_train_fold</span><span class="p">,</span> <span class="n">y_train_fold</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\series.py:1086,</span> in <span class="ni">Series.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1083</span>     <span class="n">out</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+<span class="g g-Whitespace">   </span><span class="mi">1084</span>     <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1086</span> <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1087</span>     <span class="n">check_dict_or_set_indexers</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1088</span>     <span class="n">key</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="n">apply_if_callable</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
 </div>
 </div>
 <p><strong>7. Model Training and Evaluation</strong></p>

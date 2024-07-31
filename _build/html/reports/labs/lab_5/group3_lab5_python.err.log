@@ -18,73 +18,161 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Import data and see first observations
-df = pd.read_csv("../../data/processed_esti.csv")
-df.head()
+# DML with RLasso:
+modely = make_pipeline(StandardScaler(), RLasso(post=False))
+modeld = make_pipeline(StandardScaler(), RLasso(post=False))
+result_RLasso = dml(x,d,y, modely, modeld, nfolds=10, classifier=False, cluster = False)
+table_RLasso = summary(*result_RLasso, x,d,y, name = 'Lasso')
+print(table_RLasso)
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Cell [1;32mIn[2], line 2[0m
-[0;32m      1[0m [38;5;66;03m# Import data and see first observations[39;00m
-[1;32m----> 2[0m df [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43m../../data/processed_esti.csv[39;49m[38;5;124;43m"[39;49m[43m)[49m
-[0;32m      3[0m df[38;5;241m.[39mhead()
+[1;31m_RemoteTraceback[0m                          Traceback (most recent call last)
+[1;31m_RemoteTraceback[0m: 
+"""
+Traceback (most recent call last):
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\externals\loky\process_executor.py", line 463, in _process_worker
+    r = call_item()
+        ^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\externals\loky\process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py", line 598, in __call__
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\parallel.py", line 129, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\model_selection\_validation.py", line 1378, in _fit_and_predict
+    estimator.fit(X_train, y_train, **fit_params)
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\base.py", line 1474, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\pipeline.py", line 475, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+  File "C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_24128\3396256270.py", line 7, in fit
+NameError: name 'hdmpy' is not defined
+"""
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1026[0m, in [0;36mread_csv[1;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)[0m
-[0;32m   1013[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
-[0;32m   1014[0m     dialect,
-[0;32m   1015[0m     delimiter,
-[1;32m   (...)[0m
-[0;32m   1022[0m     dtype_backend[38;5;241m=[39mdtype_backend,
-[0;32m   1023[0m )
-[0;32m   1024[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
-[1;32m-> 1026[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
+The above exception was the direct cause of the following exception:
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:620[0m, in [0;36m_read[1;34m(filepath_or_buffer, kwds)[0m
-[0;32m    617[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
-[0;32m    619[0m [38;5;66;03m# Create the parser.[39;00m
-[1;32m--> 620[0m parser [38;5;241m=[39m [43mTextFileReader[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwds[49m[43m)[49m
-[0;32m    622[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
-[0;32m    623[0m     [38;5;28;01mreturn[39;00m parser
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[19], line 4[0m
+[0;32m      2[0m modely [38;5;241m=[39m make_pipeline(StandardScaler(), RLasso(post[38;5;241m=[39m[38;5;28;01mFalse[39;00m))
+[0;32m      3[0m modeld [38;5;241m=[39m make_pipeline(StandardScaler(), RLasso(post[38;5;241m=[39m[38;5;28;01mFalse[39;00m))
+[1;32m----> 4[0m result_RLasso [38;5;241m=[39m [43mdml[49m[43m([49m[43mx[49m[43m,[49m[43md[49m[43m,[49m[43my[49m[43m,[49m[43m [49m[43mmodely[49m[43m,[49m[43m [49m[43mmodeld[49m[43m,[49m[43m [49m[43mnfolds[49m[38;5;241;43m=[39;49m[38;5;241;43m10[39;49m[43m,[49m[43m [49m[43mclassifier[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m[43m,[49m[43m [49m[43mcluster[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m
+[0;32m      5[0m table_RLasso [38;5;241m=[39m summary([38;5;241m*[39mresult_RLasso, x,d,y, name [38;5;241m=[39m [38;5;124m'[39m[38;5;124mLasso[39m[38;5;124m'[39m)
+[0;32m      6[0m [38;5;28mprint[39m(table_RLasso)
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1620[0m, in [0;36mTextFileReader.__init__[1;34m(self, f, engine, **kwds)[0m
-[0;32m   1617[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
-[0;32m   1619[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[1;32m-> 1620[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
+Cell [1;32mIn[15], line 3[0m, in [0;36mdml[1;34m(X, D, y, modely, modeld, nfolds, classifier, time, clu, cluster)[0m
+[0;32m      1[0m [38;5;28;01mdef[39;00m [38;5;21mdml[39m(X, D, y, modely, modeld, [38;5;241m*[39m, nfolds, classifier[38;5;241m=[39m[38;5;28;01mFalse[39;00m, time [38;5;241m=[39m [38;5;28;01mNone[39;00m, clu [38;5;241m=[39m [38;5;28;01mNone[39;00m, cluster [38;5;241m=[39m [38;5;28;01mTrue[39;00m):
+[0;32m      2[0m     cv [38;5;241m=[39m KFold(n_splits[38;5;241m=[39mnfolds, shuffle[38;5;241m=[39m[38;5;28;01mTrue[39;00m, random_state[38;5;241m=[39m[38;5;241m123[39m) [38;5;66;03m# shuffled k-folds[39;00m
+[1;32m----> 3[0m     yhat [38;5;241m=[39m [43mcross_val_predict[49m[43m([49m[43mmodely[49m[43m,[49m[43m [49m[43mX[49m[43m,[49m[43m [49m[43my[49m[43m,[49m[43m [49m[43mcv[49m[38;5;241;43m=[39;49m[43mcv[49m[43m,[49m[43m [49m[43mn_jobs[49m[38;5;241;43m=[39;49m[38;5;241;43m-[39;49m[38;5;241;43m1[39;49m[43m)[49m [38;5;66;03m# out-of-fold predictions for y[39;00m
+[0;32m      4[0m     [38;5;66;03m# out-of-fold predictions for D[39;00m
+[0;32m      5[0m     [38;5;66;03m# use predict or predict_proba dependent on classifier or regressor for D[39;00m
+[0;32m      6[0m     [38;5;28;01mif[39;00m classifier:
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\parsers\readers.py:1880[0m, in [0;36mTextFileReader._make_engine[1;34m(self, f, engine)[0m
-[0;32m   1878[0m     [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
-[0;32m   1879[0m         mode [38;5;241m+[39m[38;5;241m=[39m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m
-[1;32m-> 1880[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m
-[0;32m   1881[0m [43m    [49m[43mf[49m[43m,[49m
-[0;32m   1882[0m [43m    [49m[43mmode[49m[43m,[49m
-[0;32m   1883[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1884[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1885[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1886[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
-[0;32m   1887[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
-[0;32m   1888[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[0;32m   1889[0m [43m[49m[43m)[49m
-[0;32m   1890[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
-[0;32m   1891[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\_param_validation.py:213[0m, in [0;36mvalidate_params.<locals>.decorator.<locals>.wrapper[1;34m(*args, **kwargs)[0m
+[0;32m    207[0m [38;5;28;01mtry[39;00m:
+[0;32m    208[0m     [38;5;28;01mwith[39;00m config_context(
+[0;32m    209[0m         skip_parameter_validation[38;5;241m=[39m(
+[0;32m    210[0m             prefer_skip_nested_validation [38;5;129;01mor[39;00m global_skip_validation
+[0;32m    211[0m         )
+[0;32m    212[0m     ):
+[1;32m--> 213[0m         [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    214[0m [38;5;28;01mexcept[39;00m InvalidParameterError [38;5;28;01mas[39;00m e:
+[0;32m    215[0m     [38;5;66;03m# When the function is just a wrapper around an estimator, we allow[39;00m
+[0;32m    216[0m     [38;5;66;03m# the function to delegate validation to the estimator, but we replace[39;00m
+[0;32m    217[0m     [38;5;66;03m# the name of the estimator by the name of the function in the error[39;00m
+[0;32m    218[0m     [38;5;66;03m# message to avoid confusion.[39;00m
+[0;32m    219[0m     msg [38;5;241m=[39m re[38;5;241m.[39msub(
+[0;32m    220[0m         [38;5;124mr[39m[38;5;124m"[39m[38;5;124mparameter of [39m[38;5;124m\[39m[38;5;124mw+ must be[39m[38;5;124m"[39m,
+[0;32m    221[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mparameter of [39m[38;5;132;01m{[39;00mfunc[38;5;241m.[39m[38;5;18m__qualname__[39m[38;5;132;01m}[39;00m[38;5;124m must be[39m[38;5;124m"[39m,
+[0;32m    222[0m         [38;5;28mstr[39m(e),
+[0;32m    223[0m     )
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\io\common.py:873[0m, in [0;36mget_handle[1;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
-[0;32m    868[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(handle, [38;5;28mstr[39m):
-[0;32m    869[0m     [38;5;66;03m# Check whether the filename is to be opened in binary mode.[39;00m
-[0;32m    870[0m     [38;5;66;03m# Binary mode does not support 'encoding' and 'newline'.[39;00m
-[0;32m    871[0m     [38;5;28;01mif[39;00m ioargs[38;5;241m.[39mencoding [38;5;129;01mand[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ioargs[38;5;241m.[39mmode:
-[0;32m    872[0m         [38;5;66;03m# Encoding[39;00m
-[1;32m--> 873[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m
-[0;32m    874[0m [43m            [49m[43mhandle[49m[43m,[49m
-[0;32m    875[0m [43m            [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m,[49m
-[0;32m    876[0m [43m            [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mioargs[49m[38;5;241;43m.[39;49m[43mencoding[49m[43m,[49m
-[0;32m    877[0m [43m            [49m[43merrors[49m[38;5;241;43m=[39;49m[43merrors[49m[43m,[49m
-[0;32m    878[0m [43m            [49m[43mnewline[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m    879[0m [43m        [49m[43m)[49m
-[0;32m    880[0m     [38;5;28;01melse[39;00m:
-[0;32m    881[0m         [38;5;66;03m# Binary mode[39;00m
-[0;32m    882[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\model_selection\_validation.py:1293[0m, in [0;36mcross_val_predict[1;34m(estimator, X, y, groups, cv, n_jobs, verbose, fit_params, params, pre_dispatch, method)[0m
+[0;32m   1290[0m [38;5;66;03m# We clone the estimator to make sure that all the folds are[39;00m
+[0;32m   1291[0m [38;5;66;03m# independent, and that it is pickle-able.[39;00m
+[0;32m   1292[0m parallel [38;5;241m=[39m Parallel(n_jobs[38;5;241m=[39mn_jobs, verbose[38;5;241m=[39mverbose, pre_dispatch[38;5;241m=[39mpre_dispatch)
+[1;32m-> 1293[0m predictions [38;5;241m=[39m [43mparallel[49m[43m([49m
+[0;32m   1294[0m [43m    [49m[43mdelayed[49m[43m([49m[43m_fit_and_predict[49m[43m)[49m[43m([49m
+[0;32m   1295[0m [43m        [49m[43mclone[49m[43m([49m[43mestimator[49m[43m)[49m[43m,[49m
+[0;32m   1296[0m [43m        [49m[43mX[49m[43m,[49m
+[0;32m   1297[0m [43m        [49m[43my[49m[43m,[49m
+[0;32m   1298[0m [43m        [49m[43mtrain[49m[43m,[49m
+[0;32m   1299[0m [43m        [49m[43mtest[49m[43m,[49m
+[0;32m   1300[0m [43m        [49m[43mrouted_params[49m[38;5;241;43m.[39;49m[43mestimator[49m[38;5;241;43m.[39;49m[43mfit[49m[43m,[49m
+[0;32m   1301[0m [43m        [49m[43mmethod[49m[43m,[49m
+[0;32m   1302[0m [43m    [49m[43m)[49m
+[0;32m   1303[0m [43m    [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mtrain[49m[43m,[49m[43m [49m[43mtest[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43msplits[49m
+[0;32m   1304[0m [43m[49m[43m)[49m
+[0;32m   1306[0m inv_test_indices [38;5;241m=[39m np[38;5;241m.[39mempty([38;5;28mlen[39m(test_indices), dtype[38;5;241m=[39m[38;5;28mint[39m)
+[0;32m   1307[0m inv_test_indices[test_indices] [38;5;241m=[39m np[38;5;241m.[39marange([38;5;28mlen[39m(test_indices))
 
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '../../data/processed_esti.csv'
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\utils\parallel.py:67[0m, in [0;36mParallel.__call__[1;34m(self, iterable)[0m
+[0;32m     62[0m config [38;5;241m=[39m get_config()
+[0;32m     63[0m iterable_with_config [38;5;241m=[39m (
+[0;32m     64[0m     (_with_config(delayed_func, config), args, kwargs)
+[0;32m     65[0m     [38;5;28;01mfor[39;00m delayed_func, args, kwargs [38;5;129;01min[39;00m iterable
+[0;32m     66[0m )
+[1;32m---> 67[0m [38;5;28;01mreturn[39;00m [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[38;5;21;43m__call__[39;49m[43m([49m[43miterable_with_config[49m[43m)[49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:2007[0m, in [0;36mParallel.__call__[1;34m(self, iterable)[0m
+[0;32m   2001[0m [38;5;66;03m# The first item from the output is blank, but it makes the interpreter[39;00m
+[0;32m   2002[0m [38;5;66;03m# progress until it enters the Try/Except block of the generator and[39;00m
+[0;32m   2003[0m [38;5;66;03m# reach the first `yield` statement. This starts the aynchronous[39;00m
+[0;32m   2004[0m [38;5;66;03m# dispatch of the tasks to the workers.[39;00m
+[0;32m   2005[0m [38;5;28mnext[39m(output)
+[1;32m-> 2007[0m [38;5;28;01mreturn[39;00m output [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mreturn_generator [38;5;28;01melse[39;00m [38;5;28;43mlist[39;49m[43m([49m[43moutput[49m[43m)[49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1650[0m, in [0;36mParallel._get_outputs[1;34m(self, iterator, pre_dispatch)[0m
+[0;32m   1647[0m     [38;5;28;01myield[39;00m
+[0;32m   1649[0m     [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39m_backend[38;5;241m.[39mretrieval_context():
+[1;32m-> 1650[0m         [38;5;28;01myield from[39;00m [38;5;28mself[39m[38;5;241m.[39m_retrieve()
+[0;32m   1652[0m [38;5;28;01mexcept[39;00m [38;5;167;01mGeneratorExit[39;00m:
+[0;32m   1653[0m     [38;5;66;03m# The generator has been garbage collected before being fully[39;00m
+[0;32m   1654[0m     [38;5;66;03m# consumed. This aborts the remaining tasks if possible and warn[39;00m
+[0;32m   1655[0m     [38;5;66;03m# the user if necessary.[39;00m
+[0;32m   1656[0m     [38;5;28mself[39m[38;5;241m.[39m_exception [38;5;241m=[39m [38;5;28;01mTrue[39;00m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1754[0m, in [0;36mParallel._retrieve[1;34m(self)[0m
+[0;32m   1747[0m [38;5;28;01mwhile[39;00m [38;5;28mself[39m[38;5;241m.[39m_wait_retrieval():
+[0;32m   1748[0m 
+[0;32m   1749[0m     [38;5;66;03m# If the callback thread of a worker has signaled that its task[39;00m
+[0;32m   1750[0m     [38;5;66;03m# triggered an exception, or if the retrieval loop has raised an[39;00m
+[0;32m   1751[0m     [38;5;66;03m# exception (e.g. `GeneratorExit`), exit the loop and surface the[39;00m
+[0;32m   1752[0m     [38;5;66;03m# worker traceback.[39;00m
+[0;32m   1753[0m     [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39m_aborting:
+[1;32m-> 1754[0m         [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_raise_error_fast[49m[43m([49m[43m)[49m
+[0;32m   1755[0m         [38;5;28;01mbreak[39;00m
+[0;32m   1757[0m     [38;5;66;03m# If the next job is not ready for retrieval yet, we just wait for[39;00m
+[0;32m   1758[0m     [38;5;66;03m# async callbacks to progress.[39;00m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:1789[0m, in [0;36mParallel._raise_error_fast[1;34m(self)[0m
+[0;32m   1785[0m [38;5;66;03m# If this error job exists, immediatly raise the error by[39;00m
+[0;32m   1786[0m [38;5;66;03m# calling get_result. This job might not exists if abort has been[39;00m
+[0;32m   1787[0m [38;5;66;03m# called directly or if the generator is gc'ed.[39;00m
+[0;32m   1788[0m [38;5;28;01mif[39;00m error_job [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m-> 1789[0m     [43merror_job[49m[38;5;241;43m.[39;49m[43mget_result[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mtimeout[49m[43m)[49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:745[0m, in [0;36mBatchCompletionCallBack.get_result[1;34m(self, timeout)[0m
+[0;32m    739[0m backend [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mparallel[38;5;241m.[39m_backend
+[0;32m    741[0m [38;5;28;01mif[39;00m backend[38;5;241m.[39msupports_retrieve_callback:
+[0;32m    742[0m     [38;5;66;03m# We assume that the result has already been retrieved by the[39;00m
+[0;32m    743[0m     [38;5;66;03m# callback thread, and is stored internally. It's just waiting to[39;00m
+[0;32m    744[0m     [38;5;66;03m# be returned.[39;00m
+[1;32m--> 745[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_return_or_raise[49m[43m([49m[43m)[49m
+[0;32m    747[0m [38;5;66;03m# For other backends, the main thread needs to run the retrieval step.[39;00m
+[0;32m    748[0m [38;5;28;01mtry[39;00m:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\parallel.py:763[0m, in [0;36mBatchCompletionCallBack._return_or_raise[1;34m(self)[0m
+[0;32m    761[0m [38;5;28;01mtry[39;00m:
+[0;32m    762[0m     [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mstatus [38;5;241m==[39m TASK_ERROR:
+[1;32m--> 763[0m         [38;5;28;01mraise[39;00m [38;5;28mself[39m[38;5;241m.[39m_result
+[0;32m    764[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_result
+[0;32m    765[0m [38;5;28;01mfinally[39;00m:
+
+[1;31mNameError[0m: name 'hdmpy' is not defined
 

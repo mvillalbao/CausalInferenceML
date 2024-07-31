@@ -554,20 +554,22 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in file(file, &quot;rt&quot;):
-&quot;cannot open file &#39;../../data/processed_esti.csv&#39;: No such file or directory&quot;
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">):</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">connection</span>
-<span class="ne">Traceback</span>:
-
-<span class="mi">1</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;../../data/processed_esti.csv&quot;</span><span class="p">)</span>
-<span class="mi">2</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">header</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">sep</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="n">quote</span><span class="p">,</span> 
- <span class="o">.</span>     <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">fill</span><span class="p">,</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
-<span class="mi">3</span><span class="o">.</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 6 × 15</caption>
+<thead>
+	<tr><th></th><th scope=col>y</th><th scope=col>w</th><th scope=col>gender_female</th><th scope=col>gender_male</th><th scope=col>gender_transgender</th><th scope=col>ethnicgrp_asian</th><th scope=col>ethnicgrp_black</th><th scope=col>ethnicgrp_mixed_multiple</th><th scope=col>ethnicgrp_other</th><th scope=col>ethnicgrp_white</th><th scope=col>partners1</th><th scope=col>postlaunch</th><th scope=col>msm</th><th scope=col>age</th><th scope=col>imd_decile</th></tr>
+	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>27</td><td>5</td></tr>
+	<tr><th scope=row>2</th><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>19</td><td>6</td></tr>
+	<tr><th scope=row>3</th><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>26</td><td>4</td></tr>
+	<tr><th scope=row>4</th><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>20</td><td>2</td></tr>
+	<tr><th scope=row>5</th><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>24</td><td>3</td></tr>
+	<tr><th scope=row>6</th><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>24</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -707,7 +709,7 @@ Adjusted    815.66     921
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d35a06876dc825fc55e417a5a76763eeae1008bdcbe0c08dffd7d8e9491693ea.png" src="../../_images/d35a06876dc825fc55e417a5a76763eeae1008bdcbe0c08dffd7d8e9491693ea.png" />
+<a class="reference internal image-reference" href="../../_images/5cffbf0e98d62de83b5e034ad3510692ecab95ba84c9b9581f117be4bdd5a6c0.png"><img alt="../../_images/5cffbf0e98d62de83b5e034ad3510692ecab95ba84c9b9581f117be4bdd5a6c0.png" src="../../_images/5cffbf0e98d62de83b5e034ad3510692ecab95ba84c9b9581f117be4bdd5a6c0.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>As we saw in section 1.1., there is a similar percentage of males and females participants in each treatment group in the sample.</p>
@@ -718,7 +720,7 @@ Adjusted    815.66     921
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9d81b29602ee32598081820c3c8f2ac93706688dd654ef2f6261f4206f28a04a.png" src="../../_images/9d81b29602ee32598081820c3c8f2ac93706688dd654ef2f6261f4206f28a04a.png" />
+<a class="reference internal image-reference" href="../../_images/460794b78684982232f9f84be191ad802ef028a7927ada8e988d3bad57963319.png"><img alt="../../_images/460794b78684982232f9f84be191ad802ef028a7927ada8e988d3bad57963319.png" src="../../_images/460794b78684982232f9f84be191ad802ef028a7927ada8e988d3bad57963319.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>In a similar manner, we note an equal percentage of participants with 2 or more sexual partners as well as those with 1 sexual partner in the last 12 months from the beginning of the study, per treatment or control group.</p>
@@ -730,8 +732,8 @@ Adjusted    815.66     921
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b5b0e6cda3ca6c501bb8123ec01b3cb03028365dbdbedf2fca32220d1d646ceb.png" src="../../_images/b5b0e6cda3ca6c501bb8123ec01b3cb03028365dbdbedf2fca32220d1d646ceb.png" />
-<img alt="../../_images/c529d754e265ba70ce313302de0ede283371bbb20a1c445e4e990f67c7a9facf.png" src="../../_images/c529d754e265ba70ce313302de0ede283371bbb20a1c445e4e990f67c7a9facf.png" />
+<a class="reference internal image-reference" href="../../_images/8cf8d81258a43b464c23d44e2015fd58cc95cb43b3cfc814117ab3dabc38fe6b.png"><img alt="../../_images/8cf8d81258a43b464c23d44e2015fd58cc95cb43b3cfc814117ab3dabc38fe6b.png" src="../../_images/8cf8d81258a43b464c23d44e2015fd58cc95cb43b3cfc814117ab3dabc38fe6b.png" style="width: 420px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="../../_images/55fcda9edd482bd25db16c87efb6fdd786b6710f3934d5db9710c4ef3fafdafe.png"><img alt="../../_images/55fcda9edd482bd25db16c87efb6fdd786b6710f3934d5db9710c4ef3fafdafe.png" src="../../_images/55fcda9edd482bd25db16c87efb6fdd786b6710f3934d5db9710c4ef3fafdafe.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>We can see a higher percentage of participants aged between 23 and 27 in the treatment group. Also, there is a higher perceptange of participants aged between 21 and 22 and 27 and 29 in the control group.</p>
@@ -773,17 +775,17 @@ Coefficients:
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
 lm(formula = y ~ w + age + gender_female + ethnicgrp_white + 
     ethnicgrp_black + ethnicgrp_mixed_multiple + partners1 + 
-    postlaunch + imd_decile, data = data)
+    postlaunch + imd_decile + msm, data = data)
 
 Coefficients:
              (Intercept)                         w                       age  
-               -0.163972                  0.255827                  0.012437  
+               -0.162682                  0.255716                  0.012476  
            gender_female           ethnicgrp_white           ethnicgrp_black  
-                0.092892                  0.049888                 -0.039745  
+                0.091026                  0.049819                 -0.040238  
 ethnicgrp_mixed_multiple                 partners1                postlaunch  
-               -0.035726                 -0.059088                  0.077025  
-              imd_decile  
-               -0.004108  
+               -0.035933                 -0.059428                  0.077319  
+              imd_decile                       msm  
+               -0.004155                 -0.006273  
 </pre></div>
 </div>
 </div>
@@ -817,6 +819,21 @@ ethnicgrp_mixed_multiple                 partners1                postlaunch
 <span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="m">1</span><span class="p">])</span><span class="w">         </span><span class="c1"># outcome: growth rate</span>
 <span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">         </span><span class="c1"># treatment: initial wealth</span>
 <span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">data_train</span><span class="p">[,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">)])</span><span class="w"> </span><span class="c1"># controls: country characteristics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in file(file, &quot;rt&quot;):
+&quot;cannot open file &#39;../../../data/processed_esti.csv&#39;: No such file or directory&quot;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">):</span> <span class="n">cannot</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">connection</span>
+<span class="ne">Traceback</span>:
+
+<span class="mi">1</span><span class="o">.</span> <span class="k">as</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span><span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../../data/processed_esti.csv&quot;</span><span class="p">,</span> 
+ <span class="o">.</span>     <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">))</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s2">&quot;../../../data/processed_esti.csv&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">file</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

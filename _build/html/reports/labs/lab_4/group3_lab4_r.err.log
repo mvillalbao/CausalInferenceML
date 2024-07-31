@@ -37,6 +37,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-install.packages("boot")
+['Y.forest = regression_forest(X, Y, clusters = school.id, equalize.cluster.weights = TRUE)', 'Y.hat = predict(Y.forest)$predictions', 'W.forest = regression_forest(X, W, clusters = school.id, equalize.cluster.weights = TRUE)', 'W.hat = predict(W.forest)$predictions', '']
+...
+['                   clusters = school.id,', '                   equalize.cluster.weights = TRUE,', '                   tune.parameters = "all")', '', 'tau.hat = predict(cf)$predictions']
 -------------------
 

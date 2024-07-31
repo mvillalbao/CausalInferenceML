@@ -18,18 +18,19 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-load("../../data/wage2015_subsample_inference.Rdata")
+load("..\..\data\wage2015_subsample_inference.csv")
+
+# Print a summary of the data frame
+print("Summary of the data:")
+summary(data)
+
+# Print dimensions of the data frame
+print("Dimensions of the data:")
 dim(data)
 ------------------
 
------ stderr -----
-Warning message in readChar(con, 5L, useBytes = TRUE):
-"cannot open compressed file '../../data/wage2015_subsample_inference.Rdata', probable reason 'No such file or directory'"
-------------------
 
-Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection
+Error: '\.' is an unrecognized escape in character string (<text>:1:10)
 Traceback:
 
-1. load("../../data/wage2015_subsample_inference.Rdata")
-2. readChar(con, 5L, useBytes = TRUE)
 
