@@ -37,14 +37,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-using DataFrames
-using StatsModels
-using GLM
-
-model_1 = @formula(y ~ w)
-est_1 = lm(model_1, df)
-
-print(est_1)
-
+['using Pkg', 'Pkg.add("DataFrames")', 'Pkg.add("CSV")', 'Pkg.add("Statistics")', 'Pkg.add("StatsModels")']
+...
+['Pkg.add("MLJXGBoostInterface")', 'Pkg.add("MLJGLMInterface")', 'Pkg.add("Lasso")', 'Pkg.add("GLMNet")', 'Pkg.add("CovarianceMatrices")']
 -------------------
 

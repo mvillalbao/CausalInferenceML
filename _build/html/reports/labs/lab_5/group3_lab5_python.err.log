@@ -51,7 +51,7 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\pipeline.py", line 475, in fit
     self._final_estimator.fit(Xt, y, **last_step_params["fit"])
-  File "C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_24128\3396256270.py", line 7, in fit
+  File "C:\Users\Matias Villalba\AppData\Local\Temp\ipykernel_10508\3396256270.py", line 7, in fit
 NameError: name 'hdmpy' is not defined
 """
 
