@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom_style.css?v=12b0e881" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -633,7 +634,89 @@ S_{2}=0\)</span></p>
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/c550223856a7f3e006999df54d26dc6abfe0ca31702cebdd8f69bdc22154ce7a.png" src="../../_images/c550223856a7f3e006999df54d26dc6abfe0ca31702cebdd8f69bdc22154ce7a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time taken for 100 iteration simulation: 9.08 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time taken for 100 iteration simulation: 8.57 seconds
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception in thread Thread-8 (_handle_workers):
+Traceback (most recent call last):
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\threading.py&quot;, line 1073, in _bootstrap_inner
+    self.run()
+  File &quot;C:\Users\Matias Villalba\AppData\Roaming\Python\Python312\site-packages\ipykernel\ipkernel.py&quot;, line 761, in run_closure
+    _threading_Thread_run(self)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\threading.py&quot;, line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\pool.py&quot;, line 516, in _handle_workers
+    cls._maintain_pool(ctx, Process, processes, pool, inqueue,
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\pool.py&quot;, line 340, in _maintain_pool
+    Pool._repopulate_pool_static(ctx, Process, processes, pool,
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\pool.py&quot;, line 329, in _repopulate_pool_static
+    w.start()
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\process.py&quot;, line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\context.py&quot;, line 337, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\popen_spawn_win32.py&quot;, line 95, in __init__
+    reduction.dump(process_obj, to_child)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\reduction.py&quot;, line 63, in dump
+    ForkingPickler(file, protocol, *args, **kwds).dump(obj)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 420, in dump
+    StockPickler.dump(self, obj)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 481, in dump
+    self.save(obj)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 597, in save
+    self.save_reduce(obj=obj, *rv)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 711, in save_reduce
+    save(state)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 554, in save
+    f(self, obj)  # Call unbound method with explicit self
+    ^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 1217, in save_module_dict
+    StockPickler.save_dict(pickler, obj)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 966, in save_dict
+    self._batch_setitems(obj.items())
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 990, in _batch_setitems
+    save(v)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 554, in save
+    f(self, obj)  # Call unbound method with explicit self
+    ^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 896, in save_tuple
+    save(element)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 597, in save
+    self.save_reduce(obj=obj, *rv)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 711, in save_reduce
+    save(state)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 554, in save
+    f(self, obj)  # Call unbound method with explicit self
+    ^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 896, in save_tuple
+    save(element)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\dill\_dill.py&quot;, line 414, in save
+    StockPickler.save(self, obj, save_persistent_id)
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\pickle.py&quot;, line 572, in save
+    rv = reduce(self.proto)
+         ^^^^^^^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\synchronize.py&quot;, line 110, in __getstate__
+    h = context.get_spawning_popen().duplicate_for_child(sl.handle)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\popen_spawn_win32.py&quot;, line 101, in duplicate_for_child
+    return reduction.duplicate(handle, self.sentinel)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;C:\Users\Matias Villalba\AppData\Local\Programs\Python\Python312\Lib\site-packages\multiprocess\reduction.py&quot;, line 82, in duplicate
+    return _winapi.DuplicateHandle(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
 </pre></div>
 </div>
 </div>
